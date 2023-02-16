@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Arbitroom | Личный кабинет | Пополнение кошелька</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<!-- vendors -->
+	<link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet">
+	<!-- layout css -->
+	<link rel="stylesheet" href="/_layout-assets/css/style6.0.0.css" />
+</head>
+
+<body>
+	<!-- POPPERS -->
+	<div class="notifications popper paper elevation1" data-popper-anchor-element="#notifyBtn">
+		<div class="notifications__header">
+			<div class="notifications__header-title"> 2 новых уведомления </div>
+			<div class="notifications__header-subtitle">
+				<button class="notifications__clean-btn button text small"> Очистить список </button>
+				<a class="notifications__view-all-btn button text small neutral" data-popper-close-element href="/notifications"> Посмотреть все <!-- icon: chevron right -->
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+						<path d="M8.29289 4.29289C7.90237 4.68342 7.90237 5.31658 8.29289 5.70711L14.5858 12L8.29289 18.2929C7.90237 18.6834 7.90237 19.3166 8.29289 19.7071C8.68342 20.0976 9.31658 20.0976 9.70711 19.7071L16.7071 12.7071C17.0976 12.3166 17.0976 11.6834 16.7071 11.2929L9.70711 4.29289C9.31658 3.90237 8.68342 3.90237 8.29289 4.29289Z"></path>
+					</svg>
+				</a>
+			</div>
+		</div>
+		<div class="notifications__body">
+			<div class="notification new">
+				<div class="notification__status status-dot"></div>
+				<div class="notification__title">Deoposit Successful</div>
+				<div class="notification__subtitle"> You have have deposites 13 13 TX at 2021... </div>
+				<div class="notification__date">1 час назад</div>
+			</div>
+			<div class="notification new">
+				<div class="notification__status status-dot"></div>
+				<div class="notification__title">Deoposit Successful</div>
+				<div class="notification__subtitle"> You have have deposites 13 13 TX at 2021... </div>
+				<div class="notification__date">1 час назад</div>
+			</div>
+		</div>
+	</div>
+	<div class="menu paper elevation1 popper" data-popper-anchor-element="#languageBtn, #sideMenuLanguageBtn">
+		<div class="menu__item selected">
+			<img src="/_layout-assets/img/flags/lang-1.svg" alt="">RU
+		</div>
+		<div class="menu__item">
+			<img src="/_layout-assets/img/flags/lang-4.svg" alt="">EN
+		</div>
+		<div class="menu__item">
+			<img src="/_layout-assets/img/flags/lang-3.svg" alt="">FN
+		</div>
+		<div class="menu__item">
+			<img src="/_layout-assets/img/flags/lang-2.svg" alt="">KZ
+		</div>
+	</div>
+	<!-- Оборот структуры -->
+	<div class="structure-turn paper elevation1 popper" data-popper-anchor-element=".program__cell-structure .program__info" data-popper-on-hover>
+		<div class="structure-turn__title">Как считается оборот</div>
+		<div class="structure-turn__header">
+			<div class="structure-turn__row">
+				<div class="structure-turn__cell"> Все инвестиции партнеров </div>
+				<div class="structure-turn__cell"> Процент зачета оборота </div>
+			</div>
+		</div>
+		<div class="structure-turn__body">
+			<div class="structure-turn__row">
+				<div class="structure-turn__cell">Уровень 1</div>
+				<div class="structure-turn__cell">100%</div>
+			</div>
+			<div class="structure-turn__row">
+				<div class="structure-turn__cell">Уровень 2</div>
+				<div class="structure-turn__cell">50%</div>
+			</div>
+			<div class="structure-turn__row">
+				<div class="structure-turn__cell">Уровень 3</div>
+				<div class="structure-turn__cell">30%</div>
+			</div>
+			<div class="structure-turn__row selected">
+				<div class="structure-turn__cell">Уровень 4</div>
+				<div class="structure-turn__cell">10%</div>
+			</div>
+			<div class="structure-turn__row">
+				<div class="structure-turn__cell">Уровень 5</div>
+				<div class="structure-turn__cell">5%</div>
+			</div>
+		</div>
+	</div>
+	<!-- MODALS -->
+	<div class="modal" id="cashoutConfirm">
+		<div class="modal__content">
+			<div class="cashout-confirm block paper max-width-440 full-width">
+				<div class="block__title"> Подтверждение вывода <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small">
+							<!-- icon: close -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="cashout-confirm__rate">
+						<div class="cashout-confirm__rate-label"> Текущая ставка </div>
+						<div class="cashout-confirm__rate-value"> 5<span class="h5 no-margin">&nbsp;%</span>
+						</div>
+					</div>
+					<div class="cashout-confirm__message"> При выводе средств взимается комиссия. Регламент вывода до 3-х дней. Вы уверены, что хотите продолжить? </div>
+					<div class="cashout-confirm__tfa-title"> Включена двухфакторная аутентификация </div>
+					<div class="cashout-confirm__tfa-fields">
+						<div class="cashout-confirm__tfa-field">
+							<div class="cashout-confirm__tfa-label"> Введите 6-значный код, отправленный на почту <span class="email">andrey7****</span>
+							</div>
+							<div class="cashout-confirm__tfa-input contained-input input-code">
+								<input type="text" placeholder="Код">
+								<button class="cashout-confirm__tfa-send-btn"> Отправить код </button>
+								<span class="cashout-confirm__tfa-confirmed"> Подтверждено </span>
+							</div>
+						</div>
+						<div class="cashout-confirm__tfa-field">
+							<div class="cashout-confirm__tfa-label"> Введите 6-значный код из приложения Authenticator </div>
+							<div class="cashout-confirm__tfa-input contained-input input-code">
+								<input type="text" placeholder="Код подтверждения Google">
+								<button class="cashout-confirm__tfa-send-btn"> Вставить </button>
+								<span class="cashout-confirm__tfa-confirmed"> Подтверждено </span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions">
+					<button class="modal__close-btn button contained full-width">Продолжить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="userdataEditModal">
+		<div class="modal__content">
+			<div class="block paper max-width-xs full-width">
+				<div class="block__title"> Изменить личные данные <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small">
+							<!-- icon: close -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="fields">
+						<div class="field">
+							<label class="field__label">Логин</label>
+							<div class="field__input">
+								<div class="input">
+									<input type="text" placeholder="kris_anfalova" value="Кристина">
+								</div>
+							</div>
+						</div>
+						<div class="field disabled">
+							<label class="field__label">Ваше имя</label>
+							<div class="field__input">
+								<div class="input">
+									<input type="text" placeholder="Кристина">
+								</div>
+							</div>
+						</div>
+						<div class="field disabled">
+							<label class="field__label">Электронная почта</label>
+							<div class="field__input">
+								<div class="input">
+									<input type="text" placeholder="anfalovakristina@mail.ru">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions">
+					<button class="modal__close-btn button contained full-width">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="walletEditModal">
+		<div class="modal__content">
+			<div class="block paper max-width-xs full-width">
+				<div class="block__title"> Изменить адрес кошелька <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small">
+							<!-- icon: close -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="inputs">
+						<div class="input">
+							<input type="text" placeholder="anfalovakristina@mail.ru" value="0x29D7d1dd5B6f9C864d9db560D72a28qwerqv">
+						</div>
+						<div class="input">
+							<input type="text" placeholder="Код с Google Authenticator">
+						</div>
+					</div>
+				</div>
+				<div class="block__actions">
+					<button class="modal__close-btn button contained full-width">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="passwordEditModal">
+		<div class="modal__content">
+			<div class="block paper max-width-xs full-width">
+				<div class="block__title"> Сменить пароль <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small">
+							<!-- icon: close -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="fields">
+						<div class="field">
+							<label class="field__label">Старый пароль</label>
+							<div class="field__input">
+								<div class="input input-password">
+									<input type="password" placeholder="••••••••">
+									<button class="input-password__eye-btn icon-button text color-text-color">
+										<svg class="input-password__eye-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M12.0004 9.00462C14.2095 9.00462 16.0004 10.7955 16.0004 13.0046C16.0004 15.2138 14.2095 17.0046 12.0004 17.0046C9.79122 17.0046 8.00036 15.2138 8.00036 13.0046C8.00036 10.7955 9.79122 9.00462 12.0004 9.00462ZM12.0004 5.5C16.6139 5.5 20.5965 8.65001 21.7015 13.0644C21.8021 13.4662 21.5579 13.8735 21.1561 13.9741C20.7542 14.0746 20.347 13.8305 20.2464 13.4286C19.3075 9.67796 15.9217 7 12.0004 7C8.07729 7 4.69046 9.68026 3.75322 13.4332C3.65286 13.835 3.24572 14.0794 2.84385 13.9791C2.44197 13.8787 2.19755 13.4716 2.29792 13.0697C3.40101 8.65272 7.38484 5.5 12.0004 5.5Z"></path>
+										</svg>
+										<svg class="input-password__eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"></path>
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="field">
+							<label class="field__label">Новый пароль</label>
+							<div class="field__input">
+								<div class="input input-password">
+									<input type="password" placeholder="••••••••">
+									<button class="input-password__eye-btn icon-button text color-text-color">
+										<svg class="input-password__eye-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M12.0004 9.00462C14.2095 9.00462 16.0004 10.7955 16.0004 13.0046C16.0004 15.2138 14.2095 17.0046 12.0004 17.0046C9.79122 17.0046 8.00036 15.2138 8.00036 13.0046C8.00036 10.7955 9.79122 9.00462 12.0004 9.00462ZM12.0004 5.5C16.6139 5.5 20.5965 8.65001 21.7015 13.0644C21.8021 13.4662 21.5579 13.8735 21.1561 13.9741C20.7542 14.0746 20.347 13.8305 20.2464 13.4286C19.3075 9.67796 15.9217 7 12.0004 7C8.07729 7 4.69046 9.68026 3.75322 13.4332C3.65286 13.835 3.24572 14.0794 2.84385 13.9791C2.44197 13.8787 2.19755 13.4716 2.29792 13.0697C3.40101 8.65272 7.38484 5.5 12.0004 5.5Z"></path>
+										</svg>
+										<svg class="input-password__eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"></path>
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="field">
+							<label class="field__label">Повторите новый пароль</label>
+							<div class="field__input">
+								<div class="input input-password">
+									<input type="password" placeholder="••••••••">
+									<button class="input-password__eye-btn icon-button text color-text-color">
+										<svg class="input-password__eye-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M12.0004 9.00462C14.2095 9.00462 16.0004 10.7955 16.0004 13.0046C16.0004 15.2138 14.2095 17.0046 12.0004 17.0046C9.79122 17.0046 8.00036 15.2138 8.00036 13.0046C8.00036 10.7955 9.79122 9.00462 12.0004 9.00462ZM12.0004 5.5C16.6139 5.5 20.5965 8.65001 21.7015 13.0644C21.8021 13.4662 21.5579 13.8735 21.1561 13.9741C20.7542 14.0746 20.347 13.8305 20.2464 13.4286C19.3075 9.67796 15.9217 7 12.0004 7C8.07729 7 4.69046 9.68026 3.75322 13.4332C3.65286 13.835 3.24572 14.0794 2.84385 13.9791C2.44197 13.8787 2.19755 13.4716 2.29792 13.0697C3.40101 8.65272 7.38484 5.5 12.0004 5.5Z"></path>
+										</svg>
+										<svg class="input-password__eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"></path>
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions">
+					<button class="modal__close-btn button contained full-width">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="predictionModal">
+		<div class="modal__content">
+			<div class="block paper max-width-440 full-width">
+				<div class="block__title"> Сделать прогноз <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small">
+							<!-- icon: close -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="prediction-form">
+						<div class="prediction-form__description"> Укажите количество билетов, которые хотите использовать в прогнозе: </div>
+						<div class="prediction-form__tickets">
+							<div class="prediction-form__tickets-label">
+								<!-- icon: ticket diagonal -->
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+									<path d="M15.5908 2.5301C14.7121 1.65142 13.2875 1.65142 12.4088 2.5301L2.5301 12.4088C1.65143 13.2875 1.65142 14.7121 2.5301 15.5908L3.70164 16.7623C4.21233 17.273 4.92921 17.1816 5.36237 16.9241C5.54837 16.8135 5.7654 16.7498 5.99959 16.7498C6.68994 16.7498 7.24959 17.3095 7.24959 17.9998C7.24959 18.234 7.18589 18.451 7.07533 18.6371C6.81786 19.0702 6.72643 19.7871 7.23712 20.2978L8.40878 21.4694C9.28746 22.3481 10.7121 22.3481 11.5908 21.4694L21.4694 11.5908C22.3481 10.7121 22.3481 9.28747 21.4694 8.40878L20.2978 7.23718C19.7871 6.72642 19.0701 6.81795 18.6369 7.07549C18.4509 7.18611 18.2338 7.24983 17.9996 7.24983C17.3092 7.24983 16.7496 6.69019 16.7496 5.99983C16.7496 5.76558 16.8133 5.54851 16.9239 5.36247C17.1815 4.92931 17.273 4.21233 16.7622 3.70158L15.5908 2.5301Z"></path>
+								</svg> Мои билеты:
+							</div>
+							<div class="prediction-form__tickets-amount"> 10 шт </div>
+						</div>
+						<div class="prediction-form__fields">
+							<div class="field">
+								<label class="field__label color-text-more-secondary">Моя ставка</label>
+								<div class="field__input">
+									<div class="input">
+										<input type="text" placeholder="Введите ставку">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="prediction-form__details">
+							<div class="prediction-form__detail">
+								<div class="prediction-form__detail-label"> Пара: </div>
+								<div class="prediction-form__detail-value"> BTC/USDT </div>
+							</div>
+							<div class="prediction-form__detail">
+								<div class="prediction-form__detail-label"> Цена: </div>
+								<div class="prediction-form__detail-value"> 16561.02 </div>
+							</div>
+							<div class="prediction-form__detail">
+								<div class="prediction-form__detail-label"> Мой прогноз: </div>
+								<div class="prediction-form__detail-value color-success"> Рост </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions two-actions">
+					<button class="modal__close-btn button outlined">Отмена</button>
+					<button class="modal__close-btn button contained">Ставка</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="finishQuestModal">
+		<div class="modal__content">
+			<div class="block paper max-width-440 full-width">
+				<div class="block__title"> Сделать прогноз <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small">
+							<!-- icon: close -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="finish-quest-form">
+						<div class="finish-quest-form__description"> Вставте ссылку с выполненым заданием </div>
+						<div class="finish-quest-form__fields">
+							<div class="field">
+								<label class="field__label color-text-more-secondary">Ссылка</label>
+								<div class="field__input">
+									<div class="input">
+										<input type="text" placeholder="Вставьте ссылку">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions two-actions">
+					<button class="modal__close-btn button outlined">Отмена</button>
+					<button class="modal__close-btn button contained">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- YOUTUBE VIDEOS -->
+	<!-- Как пополнить баланс личного кабинета Arbitroom? -->
+	<div class="youtube-embedded" id="howToRechargeBalance">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- Как инвестировать в пул ликвидности Arbitroom? -->
+	<div class="youtube-embedded" id="howToInvestPool">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- Как вывести средства c платформы Arbitroom? - "Кошелек" - USDT TRC 20 -->
+	<div class="youtube-embedded" id="howToCashoutWalletUSDT">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- Как вывести средства c платформы Arbitroom? - "Кошелек" - Внутренний перевод -->
+	<div class="youtube-embedded" id="howToCashoutWalletInner">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- Как вывести средства c платформы Arbitroom? - "Партнерский баланс"-->
+	<div class="youtube-embedded" id="howToCashoutPartner">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- Как вывести средства c платформы Arbitroom? - "Прибыль с пула"-->
+	<div class="youtube-embedded" id="howToCashoutPoolIncome">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- Как вывести средства c платформы Arbitroom? - "Пул ликвидности"-->
+	<div class="youtube-embedded" id="howToCashoutPool">
+		<div class="youtube-embedded__overlay"></div>
+		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<!-- VIDEO PLAYER -->
+	<div class="video-player" id="videoPlayer">
+		<div class="video-player__backdrop"></div>
+		<button class="video-player__close-btn icon-button text">
+			<!-- icon: close -->
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+				<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+			</svg>
+		</button>
+		<div class="video-player__video">
+			<div data-vjs-player>
+				<video class="video-js"></video>
+			</div>
+		</div>
+	</div>
+	<!-- MEDIA VIEWER -->
+	<div class="media-viewer">
+		<div class="media-viewer__body">
+			<div class="media-viewer__prev">
+				<svg data-icon-name="chevron-left" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+					<path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z"></path>
+				</svg>
+			</div>
+			<div class="media-viewer__media-container">
+				<a class="media-viewer__download-image download-image large" href="#" download>
+					<svg data-icon-name="arrow-download" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+						<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
+					</svg>
+				</a>
+				<img class="media-viewer__image" src="#" alt="">
+			</div>
+			<div class="media-viewer__next">
+				<svg data-icon-name="chevron-right" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+					<path d="M8.29289 4.29289C7.90237 4.68342 7.90237 5.31658 8.29289 5.70711L14.5858 12L8.29289 18.2929C7.90237 18.6834 7.90237 19.3166 8.29289 19.7071C8.68342 20.0976 9.31658 20.0976 9.70711 19.7071L16.7071 12.7071C17.0976 12.3166 17.0976 11.6834 16.7071 11.2929L9.70711 4.29289C9.31658 3.90237 8.68342 3.90237 8.29289 4.29289Z"></path>
+				</svg>
+			</div>
+		</div>
+	</div>
+	<!-- MAIN -->
+	<div class="container">
+		<section class="main">
+			<div class="side-menu" id="sideMenu">
+				<div class="side-menu__overlay"></div>
+				<div class="side-menu__body">
+					<a class="side-menu__link" href="#">
+						<svg data-icon-name="arrow-left" class="svg-icon astro-MHGFQI37" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<path d="M8.73171 16.7948C9.03264 17.0795 9.50733 17.0662 9.79196 16.7653C10.0766 16.4644 10.0634 15.9897 9.76243 15.7051L4.52339 10.75H17.2471C17.6613 10.75 17.9971 10.4142 17.9971 9.99995C17.9971 9.58574 17.6613 9.24995 17.2471 9.24995H4.52112L9.76243 4.29269C10.0634 4.00807 10.0766 3.53338 9.79196 3.23245C9.50733 2.93151 9.03264 2.91829 8.73171 3.20291L2.31449 9.27236C2.14819 9.42964 2.04819 9.62975 2.01448 9.83854C2.00308 9.89053 1.99707 9.94454 1.99707 9.99995C1.99707 10.0575 2.00356 10.1136 2.01585 10.1675C2.05084 10.3733 2.15039 10.5702 2.31449 10.7254L8.73171 16.7948Z"></path>
+						</svg> Вернуться на сайт </a>
+					<div class="profile">
+						<div class="profile__img">
+							<img src="/_layout-assets/img/profile.png" alt="">
+						</div>
+						<div class="profile__descr">
+							<div class="profile__name">kris_anfalova</div>
+							<div class="profile__level">4 уровень</div>
+						</div>
+					</div>
+					<div class="side-menu__tabs">
+						<a class="tab tab_to_main" data-key="home" href="/">
+							<svg data-icon-name="home" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M11.0025 2.38811C10.4323 1.87584 9.56767 1.87584 8.9975 2.38811L3.4975 7.32965C3.18086 7.61414 3 8.01977 3 8.44544V15.4996C3 16.328 3.67157 16.9996 4.5 16.9996H6.5C7.32843 16.9996 8 16.328 8 15.4996V11.4996C8 11.2234 8.22386 10.9996 8.5 10.9996H11.5C11.7761 10.9996 12 11.2234 12 11.4996V15.4996C12 16.328 12.6716 16.9996 13.5 16.9996H15.5C16.3284 16.9996 17 16.328 17 15.4996V8.44544C17 8.01977 16.8191 7.61414 16.5025 7.32965L11.0025 2.38811Z"></path>
+							</svg>
+							<div class="tab__name">Главная</div>
+						</a><a class="tab tab_active" data-key="balance" href="/balance">
+							<svg data-icon-name="wallet" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M3 4.5C3 3.67157 3.67157 3 4.5 3H14.5C15.3284 3 16 3.67157 16 4.5V5.08535C16.5826 5.29127 17 5.84689 17 6.5V15.5C17 16.3284 16.3284 17 15.5 17H5.5C4.11929 17 3 15.8807 3 14.5V4.5ZM4 4.5C4 4.77614 4.22386 5 4.5 5H15V4.5C15 4.22386 14.7761 4 14.5 4H4.5C4.22386 4 4 4.22386 4 4.5ZM14.5 11H13.5C13.2239 11 13 11.2239 13 11.5C13 11.7761 13.2239 12 13.5 12H14.5C14.7761 12 15 11.7761 15 11.5C15 11.2239 14.7761 11 14.5 11Z"></path>
+							</svg>
+							<div class="tab__name">Пополнение кошелька</div>
+						</a><a class="tab" data-key="pool" href="/pool">
+							<svg data-icon-name="tag" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M18.0065 4.03302C18.0049 2.93471 17.1179 2.04321 16.0196 2.03601L11.1292 2.00395C10.5951 2.00045 10.0818 2.21071 9.7037 2.58789L3.02216 9.25243C2.23941 10.0332 2.2386 11.3009 3.02036 12.0827L7.96875 17.0311C8.7498 17.8121 10.0161 17.8121 10.7972 17.0311L17.428 10.4002C17.8038 10.0244 18.0146 9.51453 18.0138 8.98308L18.0065 4.03302ZM14 6.99985C13.4477 6.99985 13 6.55213 13 5.99985C13 5.44756 13.4477 4.99985 14 4.99985C14.5523 4.99985 15 5.44756 15 5.99985C15 6.55213 14.5523 6.99985 14 6.99985Z"></path>
+							</svg>
+							<div class="tab__name">Пул ликвидности</div>
+						</a><a class="tab" data-key="learn" href="/learn">
+							<svg data-icon-name="book" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M6 2C4.89543 2 4 2.89543 4 4V16C4 17.1046 4.89543 18 6 18H15.5C15.7761 18 16 17.7761 16 17.5C16 17.2239 15.7761 17 15.5 17H6C5.44772 17 5 16.5523 5 16H15C15.5523 16 16 15.5523 16 15V4C16 2.89543 15.1046 2 14 2H6ZM6.75 4.5H13.25C13.6642 4.5 14 4.83579 14 5.25C14 5.66421 13.6642 6 13.25 6H6.75C6.33579 6 6 5.66421 6 5.25C6 4.83579 6.33579 4.5 6.75 4.5Z"></path>
+							</svg>
+							<div class="tab__name">Обучение</div>
+						</a><a class="tab" data-key="leader" href="/leader">
+							<svg data-icon-name="trophy" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M5.50073 4.00006C5.50176 2.89636 6.39679 2.00195 7.50073 2.00195H12.5007C13.6047 2.00195 14.4997 2.89636 14.5007 4.00006H15.4961C16.3245 4.00006 16.9961 4.67163 16.9961 5.50006V7.0047C16.9961 8.52535 15.8629 9.78134 14.395 9.97434C13.9848 11.8328 12.4257 13.2598 10.5007 13.4726V14.9684H12.5042C13.6087 14.9684 14.5042 15.8638 14.5042 16.9684V17.4684C14.5042 17.7445 14.2803 17.9684 14.0042 17.9684H6.00415C5.72801 17.9684 5.50415 17.7445 5.50415 17.4684V16.9684C5.50415 15.8638 6.39958 14.9684 7.50415 14.9684H9.50073V13.4726C7.57486 13.2597 6.01528 11.8315 5.60593 9.97185C4.13769 9.77722 2.99609 8.52171 2.99609 6.99804V5.50006C2.99609 4.67163 3.66767 4.00006 4.49609 4.00006H5.50073ZM14.5007 8.9369C15.3608 8.71499 15.9961 7.93404 15.9961 7.0047V5.50006C15.9961 5.22392 15.7722 5.00006 15.4961 5.00006H14.5007V8.9369ZM5.50073 5.00006H4.49609C4.21995 5.00006 3.99609 5.22392 3.99609 5.50006V6.99804C3.99609 7.92741 4.63664 8.71114 5.50073 8.93434V5.00006Z"></path>
+							</svg>
+							<div class="tab__name">Leader bonus</div>
+						</a><a class="tab" data-key="partners" href="/partners">
+							<svg data-icon-name="globe-persone" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M9.99966 1.66602C14.6028 1.66602 18.3343 5.39755 18.3343 10.0006C18.3343 10.5537 18.2804 11.0942 18.1776 11.6172C17.9733 11.0663 17.5804 10.607 17.0773 10.3178C17.082 10.2126 17.0843 10.1069 17.0843 10.0006C17.0843 9.42614 17.0159 8.8676 16.8868 8.33274L14.0885 8.33345C14.1406 8.87296 14.1676 9.43063 14.1676 10.0006C14.1676 10.2129 14.1639 10.4234 14.1565 10.6319C13.6507 11.0894 13.3329 11.7508 13.3329 12.4865C13.3329 12.9806 13.4762 13.4411 13.7235 13.8289C13.696 13.9395 13.6672 14.0486 13.6373 14.1562C12.8849 14.1961 12.2384 14.6353 11.9058 15.2658C12.1126 14.8241 12.2964 14.3143 12.4488 13.7504H7.55058C8.09395 15.7622 9.0384 17.0853 9.99966 17.0853C10.6632 17.0853 11.3187 16.4549 11.8398 15.4028C11.7282 15.6581 11.6663 15.9401 11.6663 16.2365C11.6663 16.9174 11.8311 17.5336 12.1296 18.0606C11.4497 18.2398 10.7358 18.3353 9.99966 18.3353C5.39658 18.3353 1.66504 14.6037 1.66504 10.0006C1.66504 5.39755 5.39658 1.66602 9.99966 1.66602ZM6.25659 13.7509L3.98785 13.7508C4.78647 15.0283 5.98101 16.033 7.39966 16.593C6.96443 15.9098 6.60527 15.0545 6.3411 14.0801L6.25659 13.7509ZM5.91085 8.33343H3.11285L3.10888 8.34777C2.98215 8.87807 2.91504 9.43152 2.91504 10.0006C2.91504 10.8808 3.07553 11.7234 3.36884 12.5009L6.01314 12.5006C5.89456 11.7097 5.83171 10.8695 5.83171 10.0006C5.83171 9.43063 5.85876 8.87296 5.91085 8.33343ZM7.16889 8.33349C7.11221 8.86704 7.08171 9.42513 7.08171 10.0006C7.08171 10.8836 7.15349 11.7255 7.28148 12.5007H12.7178C12.8458 11.7255 12.9176 10.8836 12.9176 10.0006C12.9176 9.42513 12.8871 8.86704 12.8304 8.33349H7.16889ZM7.40054 3.40827L7.38145 3.41553C5.67536 4.09446 4.29534 5.41722 3.54145 7.08377L6.08156 7.08407C6.34268 5.62341 6.79839 4.35181 7.40054 3.40827ZM9.99966 2.91602L9.90329 2.92043C8.84875 3.0169 7.83002 4.6852 7.35693 7.08373H12.6424C12.1706 4.69192 11.1563 3.02625 10.1049 2.92128L9.99966 2.91602ZM12.5997 3.40832L12.6887 3.5534C13.2464 4.48045 13.6698 5.69702 13.9178 7.08407L16.4579 7.08377C15.7373 5.49093 14.4448 4.21215 12.8423 3.50938L12.5997 3.40832Z"></path>
+								<path d="M17.9163 14.9865C18.6066 14.9865 19.1663 15.5462 19.1663 16.2365C19.1663 17.1666 18.7838 17.9118 18.1561 18.4155C17.5384 18.9114 16.7105 19.1532 15.8329 19.1532C14.9554 19.1532 14.1274 18.9114 13.5097 18.4155C13.2898 18.239 13.1 18.0328 12.9461 17.7995C12.661 17.3668 12.4996 16.8407 12.4996 16.2365C12.4996 15.6865 12.8549 15.2194 13.3485 15.0523C13.4744 15.0096 13.6093 14.9865 13.7496 14.9865L17.9163 14.9865Z"></path>
+								<path d="M17.4996 12.4865C17.4996 13.407 16.7534 14.1532 15.8329 14.1532C15.8025 14.1532 15.7722 14.1524 15.7421 14.1508C15.3628 14.1304 15.0172 13.9832 14.7469 13.7508C14.3947 13.448 14.1705 13.0006 14.1663 12.5006C14.1663 12.4959 14.1663 12.4912 14.1663 12.4865C14.1663 11.5661 14.9125 10.8199 15.8329 10.8199C16.273 10.8199 16.6732 10.9904 16.9711 11.269C17.2963 11.5731 17.4996 12.0061 17.4996 12.4865Z"></path>
+							</svg>
+							<div class="tab__name">Мои партнеры</div>
+						</a><a class="tab" data-key="cashout" href="/cashout">
+							<svg data-icon-name="home" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M11.0025 2.38811C10.4323 1.87584 9.56767 1.87584 8.9975 2.38811L3.4975 7.32965C3.18086 7.61414 3 8.01977 3 8.44544V15.4996C3 16.328 3.67157 16.9996 4.5 16.9996H6.5C7.32843 16.9996 8 16.328 8 15.4996V11.4996C8 11.2234 8.22386 10.9996 8.5 10.9996H11.5C11.7761 10.9996 12 11.2234 12 11.4996V15.4996C12 16.328 12.6716 16.9996 13.5 16.9996H15.5C16.3284 16.9996 17 16.328 17 15.4996V8.44544C17 8.01977 16.8191 7.61414 16.5025 7.32965L11.0025 2.38811Z"></path>
+							</svg>
+							<div class="tab__name">Вывод средств</div>
+						</a><a class="tab" data-key="materials" href="/materials">
+							<svg data-icon-name="document" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M10 6.5V2H5.5C4.67157 2 4 2.67157 4 3.5V16.5C4 17.3284 4.67157 18 5.5 18H14.5C15.3284 18 16 17.3284 16 16.5V8H11.5C10.6716 8 10 7.32843 10 6.5ZM6 10.5C6 10.2239 6.22386 10 6.5 10C6.77614 10 7 10.2239 7 10.5C7 10.7761 6.77614 11 6.5 11C6.22386 11 6 10.7761 6 10.5ZM6 12.5C6 12.2239 6.22386 12 6.5 12C6.77614 12 7 12.2239 7 12.5C7 12.7761 6.77614 13 6.5 13C6.22386 13 6 12.7761 6 12.5ZM6 14.5C6 14.2239 6.22386 14 6.5 14C6.77614 14 7 14.2239 7 14.5C7 14.7761 6.77614 15 6.5 15C6.22386 15 6 14.7761 6 14.5ZM8 10.5C8 10.2239 8.22386 10 8.5 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H8.5C8.22386 11 8 10.7761 8 10.5ZM8 12.5C8 12.2239 8.22386 12 8.5 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7761 13.7761 13 13.5 13H8.5C8.22386 13 8 12.7761 8 12.5ZM8 14.5C8 14.2239 8.22386 14 8.5 14H13.5C13.7761 14 14 14.2239 14 14.5C14 14.7761 13.7761 15 13.5 15H8.5C8.22386 15 8 14.7761 8 14.5ZM11 6.5V2.25L15.75 7H11.5C11.2239 7 11 6.77614 11 6.5Z"></path>
+							</svg>
+							<div class="tab__name">Партнерские материалы</div>
+						</a><a class="tab" data-key="promo" href="/promo">
+							<svg data-icon-name="video-clip" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M4.5 3C3.11929 3 2 4.11929 2 5.5V14.5C2 15.8807 3.11929 17 4.5 17H15.5C16.8807 17 18 15.8807 18 14.5V5.5C18 4.11929 16.8807 3 15.5 3H4.5ZM8.76512 7.07608L12.7651 9.57764C12.9093 9.6678 12.9978 9.82505 13 9.99508C13.0022 10.1651 12.9178 10.3246 12.776 10.4185L8.77603 13.0669C8.62252 13.1685 8.42557 13.1776 8.26337 13.0905C8.10118 13.0033 8 12.8341 8 12.65V7.5C8 7.31821 8.09867 7.15075 8.25768 7.06264C8.41669 6.97454 8.61099 6.97969 8.76512 7.07608Z"></path>
+							</svg>
+							<div class="tab__name">Promo</div>
+						</a><a class="tab" data-key="events" href="/events">
+							<svg data-icon-name="calendar" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M5.5 3C4.11929 3 3 4.11929 3 5.5V6H17V5.5C17 4.11929 15.8807 3 14.5 3H5.5ZM17 7H3V14.5C3 15.8807 4.11929 17 5.5 17H14.5C15.8807 17 17 15.8807 17 14.5V7ZM8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10C6 9.44771 6.44772 9 7 9C7.55228 9 8 9.44771 8 10ZM7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13C8 13.5523 7.55228 14 7 14ZM11 10C11 10.5523 10.5523 11 10 11C9.44771 11 9 10.5523 9 10C9 9.44771 9.44771 9 10 9C10.5523 9 11 9.44771 11 10ZM10 14C9.44771 14 9 13.5523 9 13C9 12.4477 9.44771 12 10 12C10.5523 12 11 12.4477 11 13C11 13.5523 10.5523 14 10 14ZM14 10C14 10.5523 13.5523 11 13 11C12.4477 11 12 10.5523 12 10C12 9.44771 12.4477 9 13 9C13.5523 9 14 9.44771 14 10Z"></path>
+							</svg>
+							<div class="tab__name">Мероприятия</div>
+						</a><a class="tab" data-key="operations" href="/operations">
+							<svg data-icon-name="clock" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M10 2C14.4183 2 18 5.58172 18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2ZM9.5 5C9.22386 5 9 5.22386 9 5.5V10.5L9.00806 10.5899C9.05039 10.8231 9.25454 11 9.5 11H12.5L12.5899 10.9919C12.8231 10.9496 13 10.7455 13 10.5C13 10.2239 12.7761 10 12.5 10H10V5.5L9.99194 5.41012C9.94961 5.17688 9.74546 5 9.5 5Z"></path>
+							</svg>
+							<div class="tab__name">История операций</div>
+						</a><a class="tab" data-key="profile" href="/profile">
+							<svg data-icon-name="settings" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M1.91099 7.38266C2.28028 6.24053 2.88863 5.19213 3.69133 4.30364C3.82707 4.15339 4.04002 4.09984 4.23069 4.16802L6.14897 4.85392C6.66905 5.03977 7.24131 4.76883 7.42716 4.24875C7.44544 4.19762 7.45952 4.14507 7.46925 4.09173L7.83471 2.08573C7.87104 1.88627 8.02422 1.7285 8.22251 1.6863C8.8027 1.5628 9.39758 1.5 10.0003 1.5C10.6026 1.5 11.1971 1.56273 11.7769 1.68607C11.9752 1.72824 12.1284 1.88591 12.1648 2.08529L12.5313 4.09165C12.6303 4.63497 13.1511 4.9951 13.6944 4.89601C13.7479 4.88627 13.8004 4.87219 13.8515 4.85395L15.7698 4.16802C15.9605 4.09984 16.1734 4.15339 16.3092 4.30364C17.1119 5.19213 17.7202 6.24053 18.0895 7.38266C18.1518 7.57534 18.0918 7.78658 17.9374 7.91764L16.3825 9.23773C15.9615 9.5952 15.9101 10.2263 16.2675 10.6473C16.3027 10.6887 16.3411 10.7271 16.3825 10.7623L17.9374 12.0824C18.0918 12.2134 18.1518 12.4247 18.0895 12.6173C17.7202 13.7595 17.1119 14.8079 16.3092 15.6964C16.1734 15.8466 15.9605 15.9002 15.7698 15.832L13.8515 15.1461C13.3315 14.9602 12.7592 15.2312 12.5733 15.7512C12.5551 15.8024 12.541 15.8549 12.5312 15.9085L12.1648 17.9147C12.1284 18.1141 11.9752 18.2718 11.7769 18.3139C11.1971 18.4373 10.6026 18.5 10.0003 18.5C9.39758 18.5 8.8027 18.4372 8.22251 18.3137C8.02422 18.2715 7.87104 18.1137 7.83471 17.9143L7.46926 15.9084C7.37018 15.365 6.8494 15.0049 6.30608 15.104C6.25265 15.1137 6.20011 15.1278 6.14906 15.1461L4.23069 15.832C4.04002 15.9002 3.82707 15.8466 3.69133 15.6964C2.88863 14.8079 2.28028 13.7595 1.91099 12.6173C1.84869 12.4247 1.90876 12.2134 2.06313 12.0824L3.61798 10.7623C4.03897 10.4048 4.09046 9.77373 3.73299 9.35274C3.69784 9.31135 3.65937 9.27288 3.618 9.23775L2.06313 7.91764C1.90876 7.78658 1.84869 7.57534 1.91099 7.38266ZM8.00026 10C8.00026 11.1046 8.89569 12 10.0003 12C11.1048 12 12.0003 11.1046 12.0003 10C12.0003 8.89543 11.1048 8 10.0003 8C8.89569 8 8.00026 8.89543 8.00026 10Z"></path>
+							</svg>
+							<div class="tab__name">Настройки</div>
+						</a><a class="tab" data-key="contacts" href="/contacts">
+							<svg data-icon-name="chat-multiple" class="svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M8.53828 2C4.94843 2 2.03828 4.91015 2.03828 8.5C2.03828 9.65101 2.33787 10.7334 2.86353 11.6719L2.06779 13.7542C1.7745 14.5216 2.48048 15.2957 3.2716 15.0741L5.75898 14.3774C6.60219 14.7768 7.5448 15 8.53828 15C12.1281 15 15.0383 12.0899 15.0383 8.5C15.0383 4.91015 12.1281 2 8.53828 2ZM6.57422 15.7402C7.76622 17.1239 9.53124 18 11.5009 18C12.4943 18 13.437 17.7768 14.2802 17.3774L16.7675 18.0741C17.5587 18.2957 18.2646 17.5216 17.9714 16.7542L17.1756 14.6719C17.7013 13.7333 18.0009 12.651 18.0009 11.5C18.0009 9.5596 17.1506 7.81779 15.8024 6.6268C15.9475 7.19137 16.0286 7.78165 16.0374 8.38943C16.6452 9.27414 17.0009 10.3455 17.0009 11.5C17.0009 12.5508 16.7067 13.5313 16.1964 14.3655L16.0681 14.5752L17.0373 17.1111L14.1773 16.3101L14.0031 16.3993C13.253 16.7832 12.403 17 11.5009 17C10.3218 17 9.22932 16.629 8.33392 15.9973C7.7266 15.981 7.13727 15.8926 6.57422 15.7402Z"></path>
+							</svg>
+							<div class="tab__name">Контакты</div>
+						</a>
+					</div>
+					<div class="side-menu__language">
+						<div class="language-btn" id="sideMenuLanguageBtn">
+							<span class="language-btn__text"> RU</span>
+							<svg data-icon-name="chevron-bottom" class="language-btn__icon svg-icon astro-MHGFQI37" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z"></path>
+							</svg>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="header" id="header">
+				<div class="header__wrapper">
+					<div class="header__left">
+						<button class="header__burger-btn icon-button text color-text-color large">
+							<div class="pseudo-svg">
+								<div class="pseudo-rect" style="top: 20%; left: 10%; width: 80%; height: 7.5%; border-radius: 10px">
+								</div>
+								<div class="pseudo-rect" style="top: 45%; left: 10%; width: 80%; height: 7.5%; border-radius: 10px">
+								</div>
+								<div class="pseudo-rect" style="top: 70%; left: 10%; width: 80%; height: 7.5%; border-radius: 10px">
+								</div>
+							</div>
+						</button>
+						<div class="header__title overflow"> Пополнение кошелька </div>
+					</div>
+					<div class="header__right">
+						<div class="header__balance">
+							<div class="header__balance-icon">
+								<!-- icon: wallet outlined -->
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+									<path d="M14.5 11H13.5C13.2239 11 13 11.2239 13 11.5C13 11.7761 13.2239 12 13.5 12H14.5C14.7761 12 15 11.7761 15 11.5C15 11.2239 14.7761 11 14.5 11ZM4.5 3C3.67157 3 3 3.67157 3 4.5V14.5C3 15.8807 4.11929 17 5.5 17H15.5C16.3284 17 17 16.3284 17 15.5V6.5C17 5.84689 16.5826 5.29127 16 5.08535V4.5C16 3.67157 15.3284 3 14.5 3H4.5ZM4 14.5V5.91465C4.15639 5.96992 4.32468 6 4.5 6H15.5C15.7761 6 16 6.22386 16 6.5V15.5C16 15.7761 15.7761 16 15.5 16H5.5C4.67157 16 4 15.3284 4 14.5ZM4.5 4H14.5C14.7761 4 15 4.22386 15 4.5V5H4.5C4.22386 5 4 4.77614 4 4.5C4 4.22386 4.22386 4 4.5 4Z"></path>
+								</svg>
+							</div>
+							<div class="header__balance-value">0 USDT</div>
+						</div>
+						<div class="header__widgets">
+							<div class="header__widget">
+								<div class="header__widget-icon">
+									<!-- icon: mail -->
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+										<path d="M22 8.608V16.75C22 18.483 20.6435 19.8992 18.9344 19.9949L18.75 20H5.25C3.51697 20 2.10075 18.6435 2.00514 16.9344L2 16.75V8.608L11.652 13.6644C11.87 13.7785 12.13 13.7785 12.348 13.6644L22 8.608ZM5.25 4H18.75C20.4347 4 21.8201 5.28191 21.9838 6.92355L12 12.1533L2.01619 6.92355C2.17386 5.34271 3.46432 4.09545 5.06409 4.00523L5.25 4H18.75H5.25Z"></path>
+									</svg>
+								</div>
+							</div>
+							<div class="header__widget" id="notifyBtn">
+								<div class="header__widget-icon">
+									<!-- icon: alert -->
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+										<path d="M9.04173 19.003H14.9583C14.7196 20.4211 13.486 21.5015 12 21.5015C10.514 21.5015 9.28037 20.4211 9.04173 19.003ZM12 2.00391C16.1421 2.00391 19.5 5.36177 19.5 9.50391V13.5024L20.9183 16.6625C20.9732 16.7848 21.0016 16.9174 21.0016 17.0515C21.0016 17.5762 20.5763 18.0015 20.0516 18.0015H3.95219C3.8184 18.0015 3.68613 17.9733 3.56402 17.9186C3.08515 17.7042 2.87073 17.1422 3.08511 16.6633L4.50001 13.5028L4.50011 9.49099L4.50453 9.24107C4.6436 5.21035 7.95588 2.00391 12 2.00391Z"></path>
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div class="header__language language-btn" id="languageBtn">
+							<span class="language-btn__text"> RU</span>
+							<!-- icon: chevron bottom -->
+							<svg class="language-btn__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z"></path>
+							</svg>
+						</div>
+						<a class="header__exit mdn" href="#">Выйти</a>
+					</div>
+				</div>
+				<div class="tab__content" data-key="balance">
+					<div class="tab__balance">
+						<div class="tab__balance-balance-form">
+							<form class="balance-form block paper" id="balanceForm">
+								<div class="balance-form__content block__content">
+									<div class="balance-form__fields">
+										<div class="field">
+											<label class="field__label">Способ оплаты</label>
+											<div class="field__input">
+												<div class="select">
+													<input name="paymentMethod" value="USD TRC 20">
+													<div class="select__trigger" tabindex="0">
+														<div class="select__trigger-value"></div>
+														<svg class="select__trigger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+															<path d="M4.21967 8.46967C4.51256 8.17678 4.98744 8.17678 5.28033 8.46967L12 15.1893L18.7197 8.46967C19.0126 8.17678 19.4874 8.17678 19.7803 8.46967C20.0732 8.76256 20.0732 9.23744 19.7803 9.53033L12.5303 16.7803C12.2374 17.0732 11.7626 17.0732 11.4697 16.7803L4.21967 9.53033C3.92678 9.23744 3.92678 8.76256 4.21967 8.46967Z"></path>
+														</svg>
+													</div>
+													<div class="select__menu paper elevation1">
+														<div class="select__menu-item" data-value="USD TRC 20"> USD TRC 20 </div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="field">
+											<label class="field__label">Сумма</label>
+											<div class="field__input">
+												<div class="input">
+													<input type="text" placeholder="Введите сумму в USDT">
+												</div>
+											</div>
+										</div>
+									</div>
+									<button type="button" class="button contained full-width" data-toggle-class="hidden" data-target="#balanceForm, #usdt"> Пополнить кошелёк </button>
+								</div>
+							</form>
+							<div class="usdt block paper hidden" id="usdt">
+								<div class="block__title"> USDT (TRC20) </div>
+								<div class="usdt__content block__content">
+									<div class="usdt__qr-wrapper">
+										<img src="/_layout-assets/img/qrcode-example.png">
+									</div>
+									<div class="usdt__link-description"> Для пополнения баланса, переведите сумму <span>100 USDT</span> на этот адрес: </div>
+									<div class="usdt__link copy-text full-width">
+										<div class="copy-text__value"> 0x29D7d1dd5B6f9C864d9db560D72a247c64d9db560D772a247c64 </div>
+										<div class="copy-text__icon-wrapper">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+												<path d="M9.636 1.042c-.977.107-1.891.771-2.335 1.694-.244.506-.267.672-.29 2.028l-.02 1.224-.725.025c-.815.028-1.103.082-1.53.288a3.16 3.16 0 0 0-1.645 2c-.067.262-.071.645-.071 6.199s.004 5.937.071 6.199a3.138 3.138 0 0 0 2.21 2.21c.26.066.585.071 4.699.071s4.439-.005 4.699-.071a3.16 3.16 0 0 0 2-1.645c.206-.427.26-.715.288-1.528l.025-.724.724-.025c.813-.028 1.101-.082 1.528-.288a3.16 3.16 0 0 0 1.645-2c.066-.26.071-.599.071-5.039 0-4.474-.004-4.779-.073-5.072a3.255 3.255 0 0 0-.697-1.323c-.367-.414-3.524-3.484-3.782-3.678a2.954 2.954 0 0 0-.982-.478c-.296-.082-.389-.085-2.906-.093-1.43-.004-2.737.007-2.904.026m5.479 2.039c.117.053.438.337.96.848 2.272 2.224 2.778 2.738 2.849 2.891.071.153.074.371.074 4.8 0 4.408-.003 4.648-.073 4.801a1.099 1.099 0 0 1-.504.504c-.153.069-.381.073-4.421.073s-4.268-.004-4.421-.073a1.099 1.099 0 0 1-.504-.504c-.07-.154-.073-.444-.073-6.421s.003-6.267.073-6.421c.093-.205.299-.411.504-.504.151-.069.328-.073 2.761-.073 2.509 0 2.606.003 2.775.079M7.01 12.23c.013 3.861.021 4.253.084 4.489a3.175 3.175 0 0 0 1.642 1.98c.578.279.507.273 3.534.29l2.73.016-.001.628c-.001.521-.013.654-.074.788a1.099 1.099 0 0 1-.504.504c-.153.069-.381.073-4.421.073s-4.268-.004-4.421-.073a1.099 1.099 0 0 1-.504-.504c-.07-.154-.073-.428-.073-5.921s.003-5.767.073-5.921c.093-.205.299-.411.504-.504.134-.061.267-.073.789-.074L6.996 8l.014 4.23" fill-rule="evenodd"></path>
+											</svg>
+										</div>
+										<div class="copy-text__success-tooltip tooltip top">
+											<div class="tooltip__content"> Скопировано ✓ </div>
+										</div>
+									</div>
+									<div class="usdt__hint1"> В течение 30 мин. после подтверждения сети (TRC20) средства автоматически отобразятся в вашем кабинете! </div>
+								</div>
+								<div class="block__actions">
+									<button class="usdt__ok-button button contained" data-toggle-class="hidden" data-target="#balanceForm, #usdt"> Отменить </button>
+								</div>
+							</div>
+						</div>
+						<div class="tab__balance-instructions balance-instructions block paper">
+							<div class="block__title"> Как пополнить баланс личного кабинета Arbitroom? </div>
+							<div class="block__content">
+								<div class="balance-instructions__steps steps">
+									<div class="step"> Перейти на вкладку «Пополнение кошелька» </div>
+									<div class="step"> В строке «Сумма» ввести желаемую сумму пополнения и нажать кнопку «Пополнить кошелек» </div>
+									<div class="step"> В появившемся окне необходимо отсканировать QR код с номером кошелька или скопировать его в строке ниже </div>
+									<div class="step"> Далее совершить перевод на кошелек USDT TRC20 указанную ранее сумму и нажать кнопку «Ок» </div>
+								</div>
+								<div class="balance-instructions__tip">
+									<div class="balance-instructions__tip-text"> В течение 5-15 мин после подтверждения сети, средства автоматически отобразятся на балансе кошелька </div>
+									<button class="balance-instructions__video-btn button text youtube-trigger" data-youtube-trigger-target="#howToRechargeBalance"> Видеоинструкция <svg class="button__icon" width="24" height="24" viewBox="0 0 24 24">
+											<path d="M5 5.27392C5 3.56707 6.82609 2.48176 8.32538 3.29755L20.687 10.0237C22.2531 10.8759 22.2531 13.1243 20.687 13.9764L8.32538 20.7026C6.82609 21.5184 5 20.4331 5 18.7262V5.27392Z"></path>
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="tab__balance-operations operations block">
+							<div class="operations__title block__title"> История операций <div class="operations__title-action block__title-action">
+									<a class="button text" href="/operations"> Все операции </a>
+								</div>
+							</div>
+							<div class="operations__table scroll-container">
+								<div class="scroll-container__inner">
+									<div class="table">
+										<div class="table__header">
+											<div class="table__row">
+												<div class="table__cell">Операции</div>
+												<div class="table__cell">Статус</div>
+												<div class="table__cell">Сумма</div>
+												<div class="table__cell">Дата</div>
+												<div class="table__cell">Комментарий</div>
+											</div>
+										</div>
+										<div class="table__body">
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value">Пополнение кошелька</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip success">Оплачено</div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">USDT</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value">Пополнение кошелька</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip">В&nbsp;процессе</div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">Внутренний перевод</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value">Пополнение кошелька</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip success">Оплачено</div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">Внутренний перевод</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value">Пополнение кошелька</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip error">Отклонено</div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">Внутренний перевод</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value">Пополнение кошелька</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip success">Оплачено</div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">USDT</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value">Пополнение кошелька</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip">В&nbsp;процессе</div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">USDT</div>
+												</div>
+											</div>
+										</div>
+										<div class="table__footer">
+											<div class="pages">
+												<div class="page active">1</div>
+												<div class="page">2</div>
+												<div class="page">3</div>
+												<div class="pages__skip">...</div>
+												<div class="page">20</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<!-- vendors -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+	<script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
+	<!-- layout script -->
+	<script src="/_layout-assets/js/bundle6.0.0.js"></script>
+</body>
+
+</html>
