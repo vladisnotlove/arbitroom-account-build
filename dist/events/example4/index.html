@@ -59,6 +59,217 @@
 		</div>
 	</div>
 	<!-- MODALS -->
+	<!-- buy -->
+	<form class="buy-event-ticket-modal modal" id="buyEventTicketModal" data-api-url="https://httpstat.us/random/200,400">
+		<div class="modal__content">
+			<div class="block paper max-width-sm full-width">
+				<div class="block__title"> Покупка билетов <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small" type="button">
+							<svg data-icon-name="close" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="buy-event-ticket-modal__conditions">
+						<div class="buy-event-ticket-modal__conditions-title"> Условия приобретения билетов на мероприятие </div>
+						<ul class="buy-event-ticket-modal__conditions-list">
+							<li> Все приобретённые билеты являются невозвратными; </li>
+							<li> Стоимость одного билета <span class="buy-event-ticket-modal__conditions-price">0 USDT </span>; </li>
+							<li> Заполнив данные о посетителе, Вы соглашаетесь с передачей личных данных, в том числе третьим лицам, на усмотрение организаторов мероприятия; </li>
+							<li> Данные об участнике мероприятия можно заполнить после покупки билета до 24 марта; </li>
+							<li> Если персональные данные об участнике мероприятия не будут внесены в билет до 24 марта, он автоматически сгорает; </li>
+							<li> На один аккаунт можно приобрести не более 3-ех билетов. </li>
+						</ul>
+						<div class="buy-event-ticket-modal__conditions-warning"> Нажимая кнопку «Купить», Вы соглашаетесь со всеми условиями. *Дата проведения 24.03.2023 </div>
+					</div>
+					<div class="buy-event-ticket-modal__forms">
+						<template class="buy-event-ticket-modal__form-template">
+							<div class="buy-event-ticket-modal__form">
+								<div class="buy-event-ticket-modal__form-header">
+									<div class="buy-event-ticket-modal__form-title">
+										<svg data-icon-name="ticket" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+											<path d="M12.7353 2.53014C12.0519 1.84672 10.9438 1.84672 10.2604 2.53014L2.52819 10.2624C1.84477 10.9458 1.84477 12.0538 2.52819 12.7372L3.30335 13.5124C3.70987 13.9189 4.28898 13.8493 4.64925 13.6521C4.82658 13.5551 5.0301 13.4998 5.24805 13.4998C5.9384 13.4998 6.49805 14.0594 6.49805 14.7498C6.49805 14.9677 6.44269 15.1712 6.34567 15.3486C6.14854 15.7088 6.07887 16.2879 6.4854 16.6945L7.26042 17.4695C7.94384 18.1529 9.05188 18.1529 9.73529 17.4695L17.4675 9.73725C18.1509 9.05383 18.1509 7.94579 17.4675 7.26237L16.6924 6.48728C16.286 6.08081 15.7069 6.15041 15.3467 6.34746C15.1694 6.44443 14.9659 6.49976 14.748 6.49976C14.0577 6.49976 13.498 5.94011 13.498 5.24976C13.498 5.03187 13.5534 4.8284 13.6503 4.65111C13.8474 4.29086 13.917 3.71184 13.5105 3.30537L12.7353 2.53014Z"></path>
+										</svg> Билет
+									</div>
+									<div class="buy-event-ticket-modal__form-price"> 0 USDT </div>
+								</div>
+								<div class="buy-event-ticket-modal__form-fields">
+									<div class="field">
+										<div class="field__input">
+											<div class="input">
+												<input name="name" type="text" placeholder="Фамилия и имя">
+											</div>
+										</div>
+									</div>
+									<div class="field">
+										<div class="field__input">
+											<div class="input">
+												<input name="phone" type="text" placeholder="Телефон">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</template>
+						<div class="buy-event-ticket-modal__form">
+							<div class="buy-event-ticket-modal__form-header">
+								<div class="buy-event-ticket-modal__form-title">
+									<svg data-icon-name="ticket" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+										<path d="M12.7353 2.53014C12.0519 1.84672 10.9438 1.84672 10.2604 2.53014L2.52819 10.2624C1.84477 10.9458 1.84477 12.0538 2.52819 12.7372L3.30335 13.5124C3.70987 13.9189 4.28898 13.8493 4.64925 13.6521C4.82658 13.5551 5.0301 13.4998 5.24805 13.4998C5.9384 13.4998 6.49805 14.0594 6.49805 14.7498C6.49805 14.9677 6.44269 15.1712 6.34567 15.3486C6.14854 15.7088 6.07887 16.2879 6.4854 16.6945L7.26042 17.4695C7.94384 18.1529 9.05188 18.1529 9.73529 17.4695L17.4675 9.73725C18.1509 9.05383 18.1509 7.94579 17.4675 7.26237L16.6924 6.48728C16.286 6.08081 15.7069 6.15041 15.3467 6.34746C15.1694 6.44443 14.9659 6.49976 14.748 6.49976C14.0577 6.49976 13.498 5.94011 13.498 5.24976C13.498 5.03187 13.5534 4.8284 13.6503 4.65111C13.8474 4.29086 13.917 3.71184 13.5105 3.30537L12.7353 2.53014Z"></path>
+									</svg> Билет
+								</div>
+								<div class="buy-event-ticket-modal__form-price"> 0 USDT </div>
+							</div>
+							<div class="buy-event-ticket-modal__form-fields">
+								<div class="field">
+									<div class="field__input">
+										<div class="input">
+											<input name="name1" type="text" placeholder="Фамилия и имя">
+										</div>
+									</div>
+								</div>
+								<div class="field">
+									<div class="field__input">
+										<div class="input">
+											<input name="phone1" type="text" placeholder="Телефон">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="buy-event-ticket-modal__add-form button outlined" type="button">
+						<svg data-icon-name="add" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+							<path d="M11.7515 3C12.1312 3 12.4451 3.28201 12.4948 3.64808L12.5017 3.74985L12.5029 11H19.756C20.1702 11 20.506 11.3358 20.506 11.75C20.506 12.1297 20.2238 12.4435 19.8578 12.4932L19.756 12.5H12.5029L12.505 19.7491C12.505 20.1633 12.1693 20.4993 11.7551 20.4993C11.3754 20.4993 11.0616 20.2173 11.0118 19.8512L11.005 19.7494L11.0029 12.5H3.75391C3.33969 12.5 3.00391 12.1642 3.00391 11.75C3.00391 11.3703 3.28606 11.0565 3.65214 11.0068L3.75391 11H11.0029L11.0017 3.75015C11.0016 3.33594 11.3373 3 11.7515 3Z"></path>
+						</svg> Добавить билет </button>
+				</div>
+				<div class="block__actions">
+					<button class="button contained full-width"> Купить</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- success -->
+	<div class="buy-event-ticket-success-modal modal" id="buyEventTicketSuccessModal">
+		<div class="modal__content">
+			<div class="block paper max-width-md">
+				<div class="block__title"> Покупка прошла успешно! <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small" type="button">
+							<svg data-icon-name="close" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="buy-event-ticket-success-modal__tickets-label">
+						<span data-plural="1" hidden>Вы приобрели 1 билет</span>
+						<span data-plural="2" hidden>Вы приобрели 2 билета</span>
+						<span data-plural="3" hidden>Вы приобрели 3 билета</span>
+					</div>
+					<div class="buy-event-ticket-success-modal__tickets"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- error -->
+	<div class="buy-event-ticket-success-modal modal" id="buyEventTicketErrorModal">
+		<div class="modal__content">
+			<div class="block paper max-width-xs full-width">
+				<div class="block__title"> К сожалению, покупка не удалась <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small" type="button">
+							<svg data-icon-name="close" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div style="display: flex; gap: 1rem">
+						<svg data-icon-name="error-circle" class="svg-icon color-prime" style="flex-shrink: 0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+							<path d="M12 2C17.523 2 22 6.478 22 12C22 17.522 17.523 22 12 22C6.477 22 2 17.522 2 12C2 6.478 6.477 2 12 2ZM12.0018 15.0037C11.4503 15.0037 11.0031 15.4508 11.0031 16.0024C11.0031 16.5539 11.4503 17.001 12.0018 17.001C12.5533 17.001 13.0005 16.5539 13.0005 16.0024C13.0005 15.4508 12.5533 15.0037 12.0018 15.0037ZM11.9996 7C11.4868 7.00018 11.0643 7.38638 11.0067 7.88374L11 8.00036L11.0018 13.0012L11.0086 13.1179C11.0665 13.6152 11.4893 14.0011 12.0022 14.0009C12.515 14.0007 12.9375 13.6145 12.9951 13.1171L13.0018 13.0005L13 7.99964L12.9932 7.88302C12.9353 7.3857 12.5125 6.99982 11.9996 7Z"></path>
+						</svg>
+						<span class="body2" style="min-width: 0"> Проверьте наличие средств на вашем кошельке и попробуйте снова. </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- edit ticket -->
+	<form class="modal" id="editEventTicketModal">
+		<div class="modal__content">
+			<div class="block paper max-width-xs full-width">
+				<div class="block__title"> Редактировать билет <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small" type="button">
+							<svg data-icon-name="close" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="fields">
+						<div class="field">
+							<div class="field__input">
+								<div class="input">
+									<input name="name" type="text" placeholder="Фамилия и имя">
+								</div>
+							</div>
+						</div>
+						<div class="field">
+							<div class="field__input">
+								<div class="input">
+									<input name="phone" type="text" placeholder="Телефон">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions">
+					<button class="button contained full-width">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- send ticket -->
+	<form class="modal" id="sendEventTicketModal">
+		<div class="modal__content">
+			<div class="block paper max-width-xs full-width">
+				<div class="block__title"> Отправить билет <div class="block__title-action align-top">
+						<button class="modal__close-btn icon-button contained color-gray small" type="button">
+							<svg data-icon-name="close" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="block__content">
+					<div class="subtitle2 color-text-secondary" style="font-weight: 400; margin-bottom: 2rem"> Введите данные пользователя, которому хотите отправить билет </div>
+					<div class="fields">
+						<div class="field">
+							<div class="field__input">
+								<div class="input">
+									<input name="email" type="text" placeholder="E-mail">
+								</div>
+							</div>
+						</div>
+						<div class="field">
+							<div class="field__input">
+								<div class="input">
+									<input name="code" type="text" placeholder="Google authenticator">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block__actions">
+					<button class="button contained full-width">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</form>
 	<!-- VIDEO PLAYER -->
 	<div class="video-player" id="videoPlayer">
 		<div class="video-player__backdrop"></div>
@@ -189,7 +400,7 @@
 							</div>
 						</button>
 						<div class="header__title overflow back">
-							<a class="icon-button text color-text-color" href="/events"><svg data-icon-name="arrow-left" class="svg-icon" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<a class="icon-button text color-text-color" href=".."><svg data-icon-name="arrow-left" class="svg-icon" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 									<path d="M8.73171 16.7948C9.03264 17.0795 9.50733 17.0662 9.79196 16.7653C10.0766 16.4644 10.0634 15.9897 9.76243 15.7051L4.52339 10.75H17.2471C17.6613 10.75 17.9971 10.4142 17.9971 9.99995C17.9971 9.58574 17.6613 9.24995 17.2471 9.24995H4.52112L9.76243 4.29269C10.0634 4.00807 10.0766 3.53338 9.79196 3.23245C9.50733 2.93151 9.03264 2.91829 8.73171 3.20291L2.31449 9.27236C2.14819 9.42964 2.04819 9.62975 2.01448 9.83854C2.00308 9.89053 1.99707 9.94454 1.99707 9.99995C1.99707 10.0575 2.00356 10.1136 2.01585 10.1675C2.05084 10.3733 2.15039 10.5702 2.31449 10.7254L8.73171 16.7948Z"></path>
 								</svg>
 							</a>
@@ -238,83 +449,71 @@
 						<div class="event__poster">
 							<img src="../../_layout-assets/img/examples/event/poster1.png" alt=""><img src="../../_layout-assets/img/examples/event/poster2.png" alt=""><img src="../../_layout-assets/img/examples/event/poster3.png" alt="">
 						</div>
-						<div class="event__photos">
-							<div class="event__photos-header">Как это было</div>
-							<div class="event__photos-body" data-drag-to-scroll>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo1.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo1.png" alt="" data-viewable>
-								</div>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo2.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo2.png" alt="" data-viewable>
-								</div>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo3.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo3.png" alt="" data-viewable>
-								</div>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo4.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo4.png" alt="" data-viewable>
-								</div>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo5.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo5.png" alt="" data-viewable>
-								</div>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo6.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo6.png" alt="" data-viewable>
-								</div>
-								<div class="event__photo-wrapper">
-									<a class="event__download-photo download-image" href="../../_layout-assets/img/examples/event/photo7.png" download>
-										<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-											<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-										</svg>
-									</a>
-									<img class="event__photo" src="../../_layout-assets/img/examples/event/photo7.png" alt="" data-viewable>
-								</div>
-							</div>
-						</div>
 						<div class="event__main">
-							<div class="event__title">Презентация Arbitroom в Турции</div>
+							<div class="event__title">Бизнес встреча Arbitroom</div>
 							<div class="event__meta">
 								<div class="event__location">
 									<svg data-icon-name="location" class="svg-icon color-prime large" width="20" height="20" viewBox="0 0 20 20">
 										<path d="M14.9497 13.955C17.6834 11.2201 17.6834 6.78601 14.9497 4.05115C12.2161 1.31628 7.78392 1.31628 5.05025 4.05115C2.31658 6.78601 2.31658 11.2201 5.05025 13.955L6.57128 15.4538L8.61408 17.4389L8.74691 17.5567C9.52168 18.1847 10.6562 18.1455 11.3861 17.4391L13.8223 15.0691L14.9497 13.955ZM10 12C8.34315 12 7 10.6569 7 9C7 7.34315 8.34315 6 10 6C11.6569 6 13 7.34315 13 9C13 10.6569 11.6569 12 10 12Z"></path>
-									</svg> Турция
+									</svg> Саратов
 								</div>
 								<div class="event__date">
 									<svg data-icon-name="calendar" class="svg-icon color-prime large" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 										<path d="M5.5 3C4.11929 3 3 4.11929 3 5.5V6H17V5.5C17 4.11929 15.8807 3 14.5 3H5.5ZM17 7H3V14.5C3 15.8807 4.11929 17 5.5 17H14.5C15.8807 17 17 15.8807 17 14.5V7ZM8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10C6 9.44771 6.44772 9 7 9C7.55228 9 8 9.44771 8 10ZM7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13C8 13.5523 7.55228 14 7 14ZM11 10C11 10.5523 10.5523 11 10 11C9.44771 11 9 10.5523 9 10C9 9.44771 9.44771 9 10 9C10.5523 9 11 9.44771 11 10ZM10 14C9.44771 14 9 13.5523 9 13C9 12.4477 9.44771 12 10 12C10.5523 12 11 12.4477 11 13C11 13.5523 10.5523 14 10 14ZM14 10C14 10.5523 13.5523 11 13 11C12.4477 11 12 10.5523 12 10C12 9.44771 12.4477 9 13 9C13.5523 9 14 9.44771 14 10Z"></path>
-									</svg> 3 Фев 2023
+									</svg> 18 Фев 2023 - 19 Фев 2023
 								</div>
 							</div>
 							<div class="event__actions">
-								<button class="event__join button contained neutral disabled"> Мероприятие завершено </button>
+								<div class="event__buy-section">
+									<button class="event__buy modal-trigger button contained" data-modal-trigger-target="#buyEventTicketModal" data-price="500 USDT"><template class="event__ticket-template">
+											<div class="event-ticket">
+												<div class="event-ticket__actions">
+													<div class="event-ticket__download">
+														<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+															<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
+														</svg>
+													</div>
+													<div class="event-ticket__send modal-trigger" data-modal-trigger-target="#sendEventTicketModal">
+														<svg data-icon-name="send" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+															<path d="M0.349237 8.28432C-0.115667 8.12915 -0.120121 7.87856 0.358143 7.71893L17.3574 2.04546C17.8286 1.8885 18.0984 2.15247 17.9666 2.61441L13.1092 19.6348C12.9756 20.1066 12.7039 20.1226 12.5044 19.675L9.30354 12.4623L14.6473 5.32808L7.5223 10.6787L0.349237 8.28432Z"></path>
+														</svg>
+													</div>
+													<div class="event-ticket__edit modal-trigger" data-modal-trigger-target="#editEventTicketModal">
+														<svg data-icon-name="edit" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+															<path d="M11.677 4.38395L15.613 8.31995L7.57506 16.3586C7.36997 16.5636 7.12323 16.7212 6.85236 16.821L6.68708 16.8739L2.63211 17.9798C2.28552 18.0743 1.96546 17.7857 2.00301 17.4452L2.01817 17.3658L3.12407 13.3109C3.20039 13.031 3.33646 12.7718 3.52212 12.5508L3.63939 12.4229L11.677 4.38395ZM13.2452 2.81706C14.332 1.73025 16.0941 1.73025 17.1809 2.81706C18.2224 3.85858 18.2658 5.52026 17.3111 6.61346L17.1809 6.75273L16.32 7.61295L12.384 3.67695L13.2452 2.81706Z"></path>
+														</svg>
+													</div>
+												</div>
+												<div class="event-ticket__main">
+													<div class="event-ticket__header">
+														<img class="event-ticket__logo" src="../../_layout-assets/img/ticket/ticket-logo.svg">
+														<div class="event-ticket__name"></div>
+													</div>
+													<div class="event-ticket__body">
+														<div class="event-ticket__title">Билет</div>
+														<ul class="event-ticket__info-list">
+															<li>Участие во всех сессиях мероприятия</li>
+															<li>Пакет участника Standart</li>
+															<li>Кофе-брейки</li>
+															<li>Места в зале категории Standart</li>
+														</ul>
+													</div>
+													<div class="event-ticket__divider"></div>
+													<div class="event-ticket__footer">
+														<div class="event-ticket__price">
+															<div class="event-ticket__price-label">Стоимость:</div>
+															<div class="event-ticket__price-value">500 USDT</div>
+														</div>
+														<img class="event-ticket__qrcode" src="../../_layout-assets/img/qrcode-example.png">
+													</div>
+												</div>
+											</div>
+										</template> Купить </button>
+									<div class="event__price">
+										<div class="event__price-label">Стоимость</div>
+										<div class="event__price-value">500 USDT</div>
+									</div>
+								</div>
 							</div>
 							<div class="event__tickets" hidden>
 								<div class="event__tickets-header">

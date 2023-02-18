@@ -3105,7 +3105,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "", "",{"version":3,"sources":[],"names
 ___CSS_LOADER_EXPORT___.locals = {
 	"color-background": "#141321",
 	"color-background-lower1": "#0D0C17",
-	"color-background-upper1": "rgba(255, 198, 255, 0.1215686275)",
+	"color-background-upper1": "rgba(255, 198, 255, 0.12)",
 	"color-text": "rgba(255, 255, 255, 0.92)",
 	"color-text-secondary": "rgba(255, 255, 255, 0.64)",
 	"color-text-more-secondary": "rgba(255, 255, 255, 0.32)",
@@ -3269,6 +3269,1071 @@ module.exports = function (item) {
 
   return [content].join("\n");
 };
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/apply-style.js":
+/*!******************************************************!*\
+  !*** ./node_modules/html-to-image/es/apply-style.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "applyStyle": () => (/* binding */ applyStyle)
+/* harmony export */ });
+function applyStyle(node, options) {
+    const { style } = node;
+    if (options.backgroundColor) {
+        style.backgroundColor = options.backgroundColor;
+    }
+    if (options.width) {
+        style.width = `${options.width}px`;
+    }
+    if (options.height) {
+        style.height = `${options.height}px`;
+    }
+    const manual = options.style;
+    if (manual != null) {
+        Object.keys(manual).forEach((key) => {
+            style[key] = manual[key];
+        });
+    }
+    return node;
+}
+//# sourceMappingURL=apply-style.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/clone-node.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/html-to-image/es/clone-node.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cloneNode": () => (/* binding */ cloneNode)
+/* harmony export */ });
+/* harmony import */ var _clone_pseudos__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./clone-pseudos */ "./node_modules/html-to-image/es/clone-pseudos.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./node_modules/html-to-image/es/util.js");
+/* harmony import */ var _mimes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mimes */ "./node_modules/html-to-image/es/mimes.js");
+/* harmony import */ var _dataurl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dataurl */ "./node_modules/html-to-image/es/dataurl.js");
+
+
+
+
+async function cloneCanvasElement(canvas) {
+    const dataURL = canvas.toDataURL();
+    if (dataURL === 'data:,') {
+        return canvas.cloneNode(false);
+    }
+    return (0,_util__WEBPACK_IMPORTED_MODULE_1__.createImage)(dataURL);
+}
+async function cloneVideoElement(video, options) {
+    if (video.currentSrc) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = video.clientWidth;
+        canvas.height = video.clientHeight;
+        ctx === null || ctx === void 0 ? void 0 : ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL();
+        return (0,_util__WEBPACK_IMPORTED_MODULE_1__.createImage)(dataURL);
+    }
+    const poster = video.poster;
+    const contentType = (0,_mimes__WEBPACK_IMPORTED_MODULE_2__.getMimeType)(poster);
+    const dataURL = await (0,_dataurl__WEBPACK_IMPORTED_MODULE_3__.resourceToDataURL)(poster, contentType, options);
+    return (0,_util__WEBPACK_IMPORTED_MODULE_1__.createImage)(dataURL);
+}
+async function cloneIFrameElement(iframe) {
+    var _a;
+    try {
+        if ((_a = iframe === null || iframe === void 0 ? void 0 : iframe.contentDocument) === null || _a === void 0 ? void 0 : _a.body) {
+            return (await cloneNode(iframe.contentDocument.body, {}, true));
+        }
+    }
+    catch (_b) {
+        // Failed to clone iframe
+    }
+    return iframe.cloneNode(false);
+}
+async function cloneSingleNode(node, options) {
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(node, HTMLCanvasElement)) {
+        return cloneCanvasElement(node);
+    }
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(node, HTMLVideoElement)) {
+        return cloneVideoElement(node, options);
+    }
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(node, HTMLIFrameElement)) {
+        return cloneIFrameElement(node);
+    }
+    return node.cloneNode(false);
+}
+const isSlotElement = (node) => node.tagName != null && node.tagName.toUpperCase() === 'SLOT';
+async function cloneChildren(nativeNode, clonedNode, options) {
+    var _a, _b;
+    let children = [];
+    if (isSlotElement(nativeNode) && nativeNode.assignedNodes) {
+        children = (0,_util__WEBPACK_IMPORTED_MODULE_1__.toArray)(nativeNode.assignedNodes());
+    }
+    else if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(nativeNode, HTMLIFrameElement) &&
+        ((_a = nativeNode.contentDocument) === null || _a === void 0 ? void 0 : _a.body)) {
+        children = (0,_util__WEBPACK_IMPORTED_MODULE_1__.toArray)(nativeNode.contentDocument.body.childNodes);
+    }
+    else {
+        children = (0,_util__WEBPACK_IMPORTED_MODULE_1__.toArray)(((_b = nativeNode.shadowRoot) !== null && _b !== void 0 ? _b : nativeNode).childNodes);
+    }
+    if (children.length === 0 ||
+        (0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(nativeNode, HTMLVideoElement)) {
+        return clonedNode;
+    }
+    await children.reduce((deferred, child) => deferred
+        .then(() => cloneNode(child, options))
+        .then((clonedChild) => {
+        if (clonedChild) {
+            clonedNode.appendChild(clonedChild);
+        }
+    }), Promise.resolve());
+    return clonedNode;
+}
+function cloneCSSStyle(nativeNode, clonedNode) {
+    const targetStyle = clonedNode.style;
+    if (!targetStyle) {
+        return;
+    }
+    const sourceStyle = window.getComputedStyle(nativeNode);
+    if (sourceStyle.cssText) {
+        targetStyle.cssText = sourceStyle.cssText;
+        targetStyle.transformOrigin = sourceStyle.transformOrigin;
+    }
+    else {
+        (0,_util__WEBPACK_IMPORTED_MODULE_1__.toArray)(sourceStyle).forEach((name) => {
+            let value = sourceStyle.getPropertyValue(name);
+            if (name === 'font-size' && value.endsWith('px')) {
+                const reducedFont = Math.floor(parseFloat(value.substring(0, value.length - 2))) - 0.1;
+                value = `${reducedFont}px`;
+            }
+            if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(nativeNode, HTMLIFrameElement) &&
+                name === 'display' &&
+                value === 'inline') {
+                value = 'block';
+            }
+            if (name === 'd' && clonedNode.getAttribute('d')) {
+                value = `path(${clonedNode.getAttribute('d')})`;
+            }
+            targetStyle.setProperty(name, value, sourceStyle.getPropertyPriority(name));
+        });
+    }
+}
+function cloneInputValue(nativeNode, clonedNode) {
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(nativeNode, HTMLTextAreaElement)) {
+        clonedNode.innerHTML = nativeNode.value;
+    }
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(nativeNode, HTMLInputElement)) {
+        clonedNode.setAttribute('value', nativeNode.value);
+    }
+}
+function cloneSelectValue(nativeNode, clonedNode) {
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(nativeNode, HTMLSelectElement)) {
+        const clonedSelect = clonedNode;
+        const selectedOption = Array.from(clonedSelect.children).find((child) => nativeNode.value === child.getAttribute('value'));
+        if (selectedOption) {
+            selectedOption.setAttribute('selected', '');
+        }
+    }
+}
+function decorate(nativeNode, clonedNode) {
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(clonedNode, Element)) {
+        cloneCSSStyle(nativeNode, clonedNode);
+        (0,_clone_pseudos__WEBPACK_IMPORTED_MODULE_0__.clonePseudoElements)(nativeNode, clonedNode);
+        cloneInputValue(nativeNode, clonedNode);
+        cloneSelectValue(nativeNode, clonedNode);
+    }
+    return clonedNode;
+}
+async function ensureSVGSymbols(clone, options) {
+    const uses = clone.querySelectorAll ? clone.querySelectorAll('use') : [];
+    if (uses.length === 0) {
+        return clone;
+    }
+    const processedDefs = {};
+    for (let i = 0; i < uses.length; i++) {
+        const use = uses[i];
+        const id = use.getAttribute('xlink:href');
+        if (id) {
+            const exist = clone.querySelector(id);
+            const definition = document.querySelector(id);
+            if (!exist && definition && !processedDefs[id]) {
+                // eslint-disable-next-line no-await-in-loop
+                processedDefs[id] = (await cloneNode(definition, options, true));
+            }
+        }
+    }
+    const nodes = Object.values(processedDefs);
+    if (nodes.length) {
+        const ns = 'http://www.w3.org/1999/xhtml';
+        const svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('xmlns', ns);
+        svg.style.position = 'absolute';
+        svg.style.width = '0';
+        svg.style.height = '0';
+        svg.style.overflow = 'hidden';
+        svg.style.display = 'none';
+        const defs = document.createElementNS(ns, 'defs');
+        svg.appendChild(defs);
+        for (let i = 0; i < nodes.length; i++) {
+            defs.appendChild(nodes[i]);
+        }
+        clone.appendChild(svg);
+    }
+    return clone;
+}
+async function cloneNode(node, options, isRoot) {
+    if (!isRoot && options.filter && !options.filter(node)) {
+        return null;
+    }
+    return Promise.resolve(node)
+        .then((clonedNode) => cloneSingleNode(clonedNode, options))
+        .then((clonedNode) => cloneChildren(node, clonedNode, options))
+        .then((clonedNode) => decorate(node, clonedNode))
+        .then((clonedNode) => ensureSVGSymbols(clonedNode, options));
+}
+//# sourceMappingURL=clone-node.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/clone-pseudos.js":
+/*!********************************************************!*\
+  !*** ./node_modules/html-to-image/es/clone-pseudos.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clonePseudoElements": () => (/* binding */ clonePseudoElements)
+/* harmony export */ });
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./node_modules/html-to-image/es/util.js");
+
+function formatCSSText(style) {
+    const content = style.getPropertyValue('content');
+    return `${style.cssText} content: '${content.replace(/'|"/g, '')}';`;
+}
+function formatCSSProperties(style) {
+    return (0,_util__WEBPACK_IMPORTED_MODULE_0__.toArray)(style)
+        .map((name) => {
+        const value = style.getPropertyValue(name);
+        const priority = style.getPropertyPriority(name);
+        return `${name}: ${value}${priority ? ' !important' : ''};`;
+    })
+        .join(' ');
+}
+function getPseudoElementStyle(className, pseudo, style) {
+    const selector = `.${className}:${pseudo}`;
+    const cssText = style.cssText
+        ? formatCSSText(style)
+        : formatCSSProperties(style);
+    return document.createTextNode(`${selector}{${cssText}}`);
+}
+function clonePseudoElement(nativeNode, clonedNode, pseudo) {
+    const style = window.getComputedStyle(nativeNode, pseudo);
+    const content = style.getPropertyValue('content');
+    if (content === '' || content === 'none') {
+        return;
+    }
+    const className = (0,_util__WEBPACK_IMPORTED_MODULE_0__.uuid)();
+    try {
+        clonedNode.className = `${clonedNode.className} ${className}`;
+    }
+    catch (err) {
+        return;
+    }
+    const styleElement = document.createElement('style');
+    styleElement.appendChild(getPseudoElementStyle(className, pseudo, style));
+    clonedNode.appendChild(styleElement);
+}
+function clonePseudoElements(nativeNode, clonedNode) {
+    clonePseudoElement(nativeNode, clonedNode, ':before');
+    clonePseudoElement(nativeNode, clonedNode, ':after');
+}
+//# sourceMappingURL=clone-pseudos.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/dataurl.js":
+/*!**************************************************!*\
+  !*** ./node_modules/html-to-image/es/dataurl.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchAsDataURL": () => (/* binding */ fetchAsDataURL),
+/* harmony export */   "isDataUrl": () => (/* binding */ isDataUrl),
+/* harmony export */   "makeDataUrl": () => (/* binding */ makeDataUrl),
+/* harmony export */   "resourceToDataURL": () => (/* binding */ resourceToDataURL)
+/* harmony export */ });
+function getContentFromDataUrl(dataURL) {
+    return dataURL.split(/,/)[1];
+}
+function isDataUrl(url) {
+    return url.search(/^(data:)/) !== -1;
+}
+function makeDataUrl(content, mimeType) {
+    return `data:${mimeType};base64,${content}`;
+}
+async function fetchAsDataURL(url, init, process) {
+    const res = await fetch(url, init);
+    if (res.status === 404) {
+        throw new Error(`Resource "${res.url}" not found`);
+    }
+    const blob = await res.blob();
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onloadend = () => {
+            try {
+                resolve(process({ res, result: reader.result }));
+            }
+            catch (error) {
+                reject(error);
+            }
+        };
+        reader.readAsDataURL(blob);
+    });
+}
+const cache = {};
+function getCacheKey(url, contentType, includeQueryParams) {
+    let key = url.replace(/\?.*/, '');
+    if (includeQueryParams) {
+        key = url;
+    }
+    // font resource
+    if (/ttf|otf|eot|woff2?/i.test(key)) {
+        key = key.replace(/.*\//, '');
+    }
+    return contentType ? `[${contentType}]${key}` : key;
+}
+async function resourceToDataURL(resourceUrl, contentType, options) {
+    const cacheKey = getCacheKey(resourceUrl, contentType, options.includeQueryParams);
+    if (cache[cacheKey] != null) {
+        return cache[cacheKey];
+    }
+    // ref: https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+    if (options.cacheBust) {
+        // eslint-disable-next-line no-param-reassign
+        resourceUrl += (/\?/.test(resourceUrl) ? '&' : '?') + new Date().getTime();
+    }
+    let dataURL;
+    try {
+        const content = await fetchAsDataURL(resourceUrl, options.fetchRequestInit, ({ res, result }) => {
+            if (!contentType) {
+                // eslint-disable-next-line no-param-reassign
+                contentType = res.headers.get('Content-Type') || '';
+            }
+            return getContentFromDataUrl(result);
+        });
+        dataURL = makeDataUrl(content, contentType);
+    }
+    catch (error) {
+        dataURL = options.imagePlaceholder || '';
+        let msg = `Failed to fetch resource: ${resourceUrl}`;
+        if (error) {
+            msg = typeof error === 'string' ? error : error.message;
+        }
+        if (msg) {
+            console.warn(msg);
+        }
+    }
+    cache[cacheKey] = dataURL;
+    return dataURL;
+}
+//# sourceMappingURL=dataurl.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/embed-images.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/html-to-image/es/embed-images.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "embedImages": () => (/* binding */ embedImages)
+/* harmony export */ });
+/* harmony import */ var _embed_resources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./embed-resources */ "./node_modules/html-to-image/es/embed-resources.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./node_modules/html-to-image/es/util.js");
+/* harmony import */ var _dataurl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataurl */ "./node_modules/html-to-image/es/dataurl.js");
+/* harmony import */ var _mimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mimes */ "./node_modules/html-to-image/es/mimes.js");
+
+
+
+
+async function embedProp(propName, node, options) {
+    var _a;
+    const propValue = (_a = node.style) === null || _a === void 0 ? void 0 : _a.getPropertyValue(propName);
+    if (propValue) {
+        const cssString = await (0,_embed_resources__WEBPACK_IMPORTED_MODULE_0__.embedResources)(propValue, null, options);
+        node.style.setProperty(propName, cssString, node.style.getPropertyPriority(propName));
+        return true;
+    }
+    return false;
+}
+async function embedBackground(clonedNode, options) {
+    if (!(await embedProp('background', clonedNode, options))) {
+        await embedProp('background-image', clonedNode, options);
+    }
+    if (!(await embedProp('mask', clonedNode, options))) {
+        await embedProp('mask-image', clonedNode, options);
+    }
+}
+async function embedImageNode(clonedNode, options) {
+    const isImageElement = (0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(clonedNode, HTMLImageElement);
+    if (!(isImageElement && !(0,_dataurl__WEBPACK_IMPORTED_MODULE_2__.isDataUrl)(clonedNode.src)) &&
+        !((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(clonedNode, SVGImageElement) &&
+            !(0,_dataurl__WEBPACK_IMPORTED_MODULE_2__.isDataUrl)(clonedNode.href.baseVal))) {
+        return;
+    }
+    const url = isImageElement ? clonedNode.src : clonedNode.href.baseVal;
+    const dataURL = await (0,_dataurl__WEBPACK_IMPORTED_MODULE_2__.resourceToDataURL)(url, (0,_mimes__WEBPACK_IMPORTED_MODULE_3__.getMimeType)(url), options);
+    await new Promise((resolve, reject) => {
+        clonedNode.onload = resolve;
+        clonedNode.onerror = reject;
+        const image = clonedNode;
+        if (image.decode) {
+            image.decode = resolve;
+        }
+        if (image.loading === 'lazy') {
+            image.loading = 'eager';
+        }
+        if (isImageElement) {
+            clonedNode.srcset = '';
+            clonedNode.src = dataURL;
+        }
+        else {
+            clonedNode.href.baseVal = dataURL;
+        }
+    });
+}
+async function embedChildren(clonedNode, options) {
+    const children = (0,_util__WEBPACK_IMPORTED_MODULE_1__.toArray)(clonedNode.childNodes);
+    const deferreds = children.map((child) => embedImages(child, options));
+    await Promise.all(deferreds).then(() => clonedNode);
+}
+async function embedImages(clonedNode, options) {
+    if ((0,_util__WEBPACK_IMPORTED_MODULE_1__.isInstanceOfElement)(clonedNode, Element)) {
+        await embedBackground(clonedNode, options);
+        await embedImageNode(clonedNode, options);
+        await embedChildren(clonedNode, options);
+    }
+}
+//# sourceMappingURL=embed-images.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/embed-resources.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/html-to-image/es/embed-resources.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "embed": () => (/* binding */ embed),
+/* harmony export */   "embedResources": () => (/* binding */ embedResources),
+/* harmony export */   "parseURLs": () => (/* binding */ parseURLs),
+/* harmony export */   "shouldEmbed": () => (/* binding */ shouldEmbed)
+/* harmony export */ });
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./node_modules/html-to-image/es/util.js");
+/* harmony import */ var _mimes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mimes */ "./node_modules/html-to-image/es/mimes.js");
+/* harmony import */ var _dataurl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataurl */ "./node_modules/html-to-image/es/dataurl.js");
+
+
+
+const URL_REGEX = /url\((['"]?)([^'"]+?)\1\)/g;
+const URL_WITH_FORMAT_REGEX = /url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g;
+const FONT_SRC_REGEX = /src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;
+function toRegex(url) {
+    // eslint-disable-next-line no-useless-escape
+    const escaped = url.replace(/([.*+?^${}()|\[\]\/\\])/g, '\\$1');
+    return new RegExp(`(url\\(['"]?)(${escaped})(['"]?\\))`, 'g');
+}
+function parseURLs(cssText) {
+    const urls = [];
+    cssText.replace(URL_REGEX, (raw, quotation, url) => {
+        urls.push(url);
+        return raw;
+    });
+    return urls.filter((url) => !(0,_dataurl__WEBPACK_IMPORTED_MODULE_2__.isDataUrl)(url));
+}
+async function embed(cssText, resourceURL, baseURL, options, getContentFromUrl) {
+    try {
+        const resolvedURL = baseURL ? (0,_util__WEBPACK_IMPORTED_MODULE_0__.resolveUrl)(resourceURL, baseURL) : resourceURL;
+        const contentType = (0,_mimes__WEBPACK_IMPORTED_MODULE_1__.getMimeType)(resourceURL);
+        let dataURL;
+        if (getContentFromUrl) {
+            const content = await getContentFromUrl(resolvedURL);
+            dataURL = (0,_dataurl__WEBPACK_IMPORTED_MODULE_2__.makeDataUrl)(content, contentType);
+        }
+        else {
+            dataURL = await (0,_dataurl__WEBPACK_IMPORTED_MODULE_2__.resourceToDataURL)(resolvedURL, contentType, options);
+        }
+        return cssText.replace(toRegex(resourceURL), `$1${dataURL}$3`);
+    }
+    catch (error) {
+        // pass
+    }
+    return cssText;
+}
+function filterPreferredFontFormat(str, { preferredFontFormat }) {
+    return !preferredFontFormat
+        ? str
+        : str.replace(FONT_SRC_REGEX, (match) => {
+            // eslint-disable-next-line no-constant-condition
+            while (true) {
+                const [src, , format] = URL_WITH_FORMAT_REGEX.exec(match) || [];
+                if (!format) {
+                    return '';
+                }
+                if (format === preferredFontFormat) {
+                    return `src: ${src};`;
+                }
+            }
+        });
+}
+function shouldEmbed(url) {
+    return url.search(URL_REGEX) !== -1;
+}
+async function embedResources(cssText, baseUrl, options) {
+    if (!shouldEmbed(cssText)) {
+        return cssText;
+    }
+    const filteredCSSText = filterPreferredFontFormat(cssText, options);
+    const urls = parseURLs(filteredCSSText);
+    return urls.reduce((deferred, url) => deferred.then((css) => embed(css, url, baseUrl, options)), Promise.resolve(filteredCSSText));
+}
+//# sourceMappingURL=embed-resources.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/embed-webfonts.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/html-to-image/es/embed-webfonts.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "embedWebFonts": () => (/* binding */ embedWebFonts),
+/* harmony export */   "getWebFontCSS": () => (/* binding */ getWebFontCSS)
+/* harmony export */ });
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./node_modules/html-to-image/es/util.js");
+/* harmony import */ var _dataurl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataurl */ "./node_modules/html-to-image/es/dataurl.js");
+/* harmony import */ var _embed_resources__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./embed-resources */ "./node_modules/html-to-image/es/embed-resources.js");
+
+
+
+const cssFetchCache = {};
+async function fetchCSS(url) {
+    let cache = cssFetchCache[url];
+    if (cache != null) {
+        return cache;
+    }
+    const res = await fetch(url);
+    const cssText = await res.text();
+    cache = { url, cssText };
+    cssFetchCache[url] = cache;
+    return cache;
+}
+async function embedFonts(data, options) {
+    let cssText = data.cssText;
+    const regexUrl = /url\(["']?([^"')]+)["']?\)/g;
+    const fontLocs = cssText.match(/url\([^)]+\)/g) || [];
+    const loadFonts = fontLocs.map(async (loc) => {
+        let url = loc.replace(regexUrl, '$1');
+        if (!url.startsWith('https://')) {
+            url = new URL(url, data.url).href;
+        }
+        return (0,_dataurl__WEBPACK_IMPORTED_MODULE_1__.fetchAsDataURL)(url, options.fetchRequestInit, ({ result }) => {
+            cssText = cssText.replace(loc, `url(${result})`);
+            return [loc, result];
+        });
+    });
+    return Promise.all(loadFonts).then(() => cssText);
+}
+function parseCSS(source) {
+    if (source == null) {
+        return [];
+    }
+    const result = [];
+    const commentsRegex = /(\/\*[\s\S]*?\*\/)/gi;
+    // strip out comments
+    let cssText = source.replace(commentsRegex, '');
+    // eslint-disable-next-line prefer-regex-literals
+    const keyframesRegex = new RegExp('((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})', 'gi');
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+        const matches = keyframesRegex.exec(cssText);
+        if (matches === null) {
+            break;
+        }
+        result.push(matches[0]);
+    }
+    cssText = cssText.replace(keyframesRegex, '');
+    const importRegex = /@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;
+    // to match css & media queries together
+    const combinedCSSRegex = '((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]' +
+        '*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})';
+    // unified regex
+    const unifiedRegex = new RegExp(combinedCSSRegex, 'gi');
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+        let matches = importRegex.exec(cssText);
+        if (matches === null) {
+            matches = unifiedRegex.exec(cssText);
+            if (matches === null) {
+                break;
+            }
+            else {
+                importRegex.lastIndex = unifiedRegex.lastIndex;
+            }
+        }
+        else {
+            unifiedRegex.lastIndex = importRegex.lastIndex;
+        }
+        result.push(matches[0]);
+    }
+    return result;
+}
+async function getCSSRules(styleSheets, options) {
+    const ret = [];
+    const deferreds = [];
+    // First loop inlines imports
+    styleSheets.forEach((sheet) => {
+        if ('cssRules' in sheet) {
+            try {
+                (0,_util__WEBPACK_IMPORTED_MODULE_0__.toArray)(sheet.cssRules || []).forEach((item, index) => {
+                    if (item.type === CSSRule.IMPORT_RULE) {
+                        let importIndex = index + 1;
+                        const url = item.href;
+                        const deferred = fetchCSS(url)
+                            .then((metadata) => embedFonts(metadata, options))
+                            .then((cssText) => parseCSS(cssText).forEach((rule) => {
+                            try {
+                                sheet.insertRule(rule, rule.startsWith('@import')
+                                    ? (importIndex += 1)
+                                    : sheet.cssRules.length);
+                            }
+                            catch (error) {
+                                console.error('Error inserting rule from remote css', {
+                                    rule,
+                                    error,
+                                });
+                            }
+                        }))
+                            .catch((e) => {
+                            console.error('Error loading remote css', e.toString());
+                        });
+                        deferreds.push(deferred);
+                    }
+                });
+            }
+            catch (e) {
+                const inline = styleSheets.find((a) => a.href == null) || document.styleSheets[0];
+                if (sheet.href != null) {
+                    deferreds.push(fetchCSS(sheet.href)
+                        .then((metadata) => embedFonts(metadata, options))
+                        .then((cssText) => parseCSS(cssText).forEach((rule) => {
+                        inline.insertRule(rule, sheet.cssRules.length);
+                    }))
+                        .catch((err) => {
+                        console.error('Error loading remote stylesheet', err);
+                    }));
+                }
+                console.error('Error inlining remote css file', e);
+            }
+        }
+    });
+    return Promise.all(deferreds).then(() => {
+        // Second loop parses rules
+        styleSheets.forEach((sheet) => {
+            if ('cssRules' in sheet) {
+                try {
+                    (0,_util__WEBPACK_IMPORTED_MODULE_0__.toArray)(sheet.cssRules || []).forEach((item) => {
+                        ret.push(item);
+                    });
+                }
+                catch (e) {
+                    console.error(`Error while reading CSS rules from ${sheet.href}`, e);
+                }
+            }
+        });
+        return ret;
+    });
+}
+function getWebFontRules(cssRules) {
+    return cssRules
+        .filter((rule) => rule.type === CSSRule.FONT_FACE_RULE)
+        .filter((rule) => (0,_embed_resources__WEBPACK_IMPORTED_MODULE_2__.shouldEmbed)(rule.style.getPropertyValue('src')));
+}
+async function parseWebFontRules(node, options) {
+    if (node.ownerDocument == null) {
+        throw new Error('Provided element is not within a Document');
+    }
+    const styleSheets = (0,_util__WEBPACK_IMPORTED_MODULE_0__.toArray)(node.ownerDocument.styleSheets);
+    const cssRules = await getCSSRules(styleSheets, options);
+    return getWebFontRules(cssRules);
+}
+async function getWebFontCSS(node, options) {
+    const rules = await parseWebFontRules(node, options);
+    const cssTexts = await Promise.all(rules.map((rule) => {
+        const baseUrl = rule.parentStyleSheet ? rule.parentStyleSheet.href : null;
+        return (0,_embed_resources__WEBPACK_IMPORTED_MODULE_2__.embedResources)(rule.cssText, baseUrl, options);
+    }));
+    return cssTexts.join('\n');
+}
+async function embedWebFonts(clonedNode, options) {
+    const cssText = options.fontEmbedCSS != null
+        ? options.fontEmbedCSS
+        : options.skipFonts
+            ? null
+            : await getWebFontCSS(clonedNode, options);
+    if (cssText) {
+        const styleNode = document.createElement('style');
+        const sytleContent = document.createTextNode(cssText);
+        styleNode.appendChild(sytleContent);
+        if (clonedNode.firstChild) {
+            clonedNode.insertBefore(styleNode, clonedNode.firstChild);
+        }
+        else {
+            clonedNode.appendChild(styleNode);
+        }
+    }
+}
+//# sourceMappingURL=embed-webfonts.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/html-to-image/es/index.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getFontEmbedCSS": () => (/* binding */ getFontEmbedCSS),
+/* harmony export */   "toBlob": () => (/* binding */ toBlob),
+/* harmony export */   "toCanvas": () => (/* binding */ toCanvas),
+/* harmony export */   "toJpeg": () => (/* binding */ toJpeg),
+/* harmony export */   "toPixelData": () => (/* binding */ toPixelData),
+/* harmony export */   "toPng": () => (/* binding */ toPng),
+/* harmony export */   "toSvg": () => (/* binding */ toSvg)
+/* harmony export */ });
+/* harmony import */ var _clone_node__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./clone-node */ "./node_modules/html-to-image/es/clone-node.js");
+/* harmony import */ var _embed_images__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./embed-images */ "./node_modules/html-to-image/es/embed-images.js");
+/* harmony import */ var _apply_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./apply-style */ "./node_modules/html-to-image/es/apply-style.js");
+/* harmony import */ var _embed_webfonts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./embed-webfonts */ "./node_modules/html-to-image/es/embed-webfonts.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./node_modules/html-to-image/es/util.js");
+
+
+
+
+
+async function toSvg(node, options = {}) {
+    const { width, height } = (0,_util__WEBPACK_IMPORTED_MODULE_4__.getImageSize)(node, options);
+    const clonedNode = (await (0,_clone_node__WEBPACK_IMPORTED_MODULE_0__.cloneNode)(node, options, true));
+    await (0,_embed_webfonts__WEBPACK_IMPORTED_MODULE_3__.embedWebFonts)(clonedNode, options);
+    await (0,_embed_images__WEBPACK_IMPORTED_MODULE_1__.embedImages)(clonedNode, options);
+    (0,_apply_style__WEBPACK_IMPORTED_MODULE_2__.applyStyle)(clonedNode, options);
+    const datauri = await (0,_util__WEBPACK_IMPORTED_MODULE_4__.nodeToDataURL)(clonedNode, width, height);
+    return datauri;
+}
+async function toCanvas(node, options = {}) {
+    const { width, height } = (0,_util__WEBPACK_IMPORTED_MODULE_4__.getImageSize)(node, options);
+    const svg = await toSvg(node, options);
+    const img = await (0,_util__WEBPACK_IMPORTED_MODULE_4__.createImage)(svg);
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const ratio = options.pixelRatio || (0,_util__WEBPACK_IMPORTED_MODULE_4__.getPixelRatio)();
+    const canvasWidth = options.canvasWidth || width;
+    const canvasHeight = options.canvasHeight || height;
+    canvas.width = canvasWidth * ratio;
+    canvas.height = canvasHeight * ratio;
+    if (!options.skipAutoScale) {
+        (0,_util__WEBPACK_IMPORTED_MODULE_4__.checkCanvasDimensions)(canvas);
+    }
+    canvas.style.width = `${canvasWidth}`;
+    canvas.style.height = `${canvasHeight}`;
+    if (options.backgroundColor) {
+        context.fillStyle = options.backgroundColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas;
+}
+async function toPixelData(node, options = {}) {
+    const { width, height } = (0,_util__WEBPACK_IMPORTED_MODULE_4__.getImageSize)(node, options);
+    const canvas = await toCanvas(node, options);
+    const ctx = canvas.getContext('2d');
+    return ctx.getImageData(0, 0, width, height).data;
+}
+async function toPng(node, options = {}) {
+    const canvas = await toCanvas(node, options);
+    return canvas.toDataURL();
+}
+async function toJpeg(node, options = {}) {
+    const canvas = await toCanvas(node, options);
+    return canvas.toDataURL('image/jpeg', options.quality || 1);
+}
+async function toBlob(node, options = {}) {
+    const canvas = await toCanvas(node, options);
+    const blob = await (0,_util__WEBPACK_IMPORTED_MODULE_4__.canvasToBlob)(canvas);
+    return blob;
+}
+async function getFontEmbedCSS(node, options = {}) {
+    return (0,_embed_webfonts__WEBPACK_IMPORTED_MODULE_3__.getWebFontCSS)(node, options);
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/mimes.js":
+/*!************************************************!*\
+  !*** ./node_modules/html-to-image/es/mimes.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getMimeType": () => (/* binding */ getMimeType)
+/* harmony export */ });
+const WOFF = 'application/font-woff';
+const JPEG = 'image/jpeg';
+const mimes = {
+    woff: WOFF,
+    woff2: WOFF,
+    ttf: 'application/font-truetype',
+    eot: 'application/vnd.ms-fontobject',
+    png: 'image/png',
+    jpg: JPEG,
+    jpeg: JPEG,
+    gif: 'image/gif',
+    tiff: 'image/tiff',
+    svg: 'image/svg+xml',
+    webp: 'image/webp',
+};
+function getExtension(url) {
+    const match = /\.([^./]*?)$/g.exec(url);
+    return match ? match[1] : '';
+}
+function getMimeType(url) {
+    const extension = getExtension(url).toLowerCase();
+    return mimes[extension] || '';
+}
+//# sourceMappingURL=mimes.js.map
+
+/***/ }),
+
+/***/ "./node_modules/html-to-image/es/util.js":
+/*!***********************************************!*\
+  !*** ./node_modules/html-to-image/es/util.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "canvasToBlob": () => (/* binding */ canvasToBlob),
+/* harmony export */   "checkCanvasDimensions": () => (/* binding */ checkCanvasDimensions),
+/* harmony export */   "createImage": () => (/* binding */ createImage),
+/* harmony export */   "delay": () => (/* binding */ delay),
+/* harmony export */   "getImageSize": () => (/* binding */ getImageSize),
+/* harmony export */   "getPixelRatio": () => (/* binding */ getPixelRatio),
+/* harmony export */   "isInstanceOfElement": () => (/* binding */ isInstanceOfElement),
+/* harmony export */   "nodeToDataURL": () => (/* binding */ nodeToDataURL),
+/* harmony export */   "resolveUrl": () => (/* binding */ resolveUrl),
+/* harmony export */   "svgToDataURL": () => (/* binding */ svgToDataURL),
+/* harmony export */   "toArray": () => (/* binding */ toArray),
+/* harmony export */   "uuid": () => (/* binding */ uuid)
+/* harmony export */ });
+function resolveUrl(url, baseUrl) {
+    // url is absolute already
+    if (url.match(/^[a-z]+:\/\//i)) {
+        return url;
+    }
+    // url is absolute already, without protocol
+    if (url.match(/^\/\//)) {
+        return window.location.protocol + url;
+    }
+    // dataURI, mailto:, tel:, etc.
+    if (url.match(/^[a-z]+:/i)) {
+        return url;
+    }
+    const doc = document.implementation.createHTMLDocument();
+    const base = doc.createElement('base');
+    const a = doc.createElement('a');
+    doc.head.appendChild(base);
+    doc.body.appendChild(a);
+    if (baseUrl) {
+        base.href = baseUrl;
+    }
+    a.href = url;
+    return a.href;
+}
+const uuid = (() => {
+    // generate uuid for className of pseudo elements.
+    // We should not use GUIDs, otherwise pseudo elements sometimes cannot be captured.
+    let counter = 0;
+    // ref: http://stackoverflow.com/a/6248722/2519373
+    const random = () => 
+    // eslint-disable-next-line no-bitwise
+    `0000${((Math.random() * 36 ** 4) << 0).toString(36)}`.slice(-4);
+    return () => {
+        counter += 1;
+        return `u${random()}${counter}`;
+    };
+})();
+function delay(ms) {
+    return (args) => new Promise((resolve) => {
+        setTimeout(() => resolve(args), ms);
+    });
+}
+function toArray(arrayLike) {
+    const arr = [];
+    for (let i = 0, l = arrayLike.length; i < l; i++) {
+        arr.push(arrayLike[i]);
+    }
+    return arr;
+}
+function px(node, styleProperty) {
+    const win = node.ownerDocument.defaultView || window;
+    const val = win.getComputedStyle(node).getPropertyValue(styleProperty);
+    return val ? parseFloat(val.replace('px', '')) : 0;
+}
+function getNodeWidth(node) {
+    const leftBorder = px(node, 'border-left-width');
+    const rightBorder = px(node, 'border-right-width');
+    return node.clientWidth + leftBorder + rightBorder;
+}
+function getNodeHeight(node) {
+    const topBorder = px(node, 'border-top-width');
+    const bottomBorder = px(node, 'border-bottom-width');
+    return node.clientHeight + topBorder + bottomBorder;
+}
+function getImageSize(targetNode, options = {}) {
+    const width = options.width || getNodeWidth(targetNode);
+    const height = options.height || getNodeHeight(targetNode);
+    return { width, height };
+}
+function getPixelRatio() {
+    let ratio;
+    let FINAL_PROCESS;
+    try {
+        FINAL_PROCESS = process;
+    }
+    catch (e) {
+        // pass
+    }
+    const val = FINAL_PROCESS && FINAL_PROCESS.env
+        ? FINAL_PROCESS.env.devicePixelRatio
+        : null;
+    if (val) {
+        ratio = parseInt(val, 10);
+        if (Number.isNaN(ratio)) {
+            ratio = 1;
+        }
+    }
+    return ratio || window.devicePixelRatio || 1;
+}
+// @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas#maximum_canvas_size
+const canvasDimensionLimit = 16384;
+function checkCanvasDimensions(canvas) {
+    if (canvas.width > canvasDimensionLimit ||
+        canvas.height > canvasDimensionLimit) {
+        if (canvas.width > canvasDimensionLimit &&
+            canvas.height > canvasDimensionLimit) {
+            if (canvas.width > canvas.height) {
+                canvas.height *= canvasDimensionLimit / canvas.width;
+                canvas.width = canvasDimensionLimit;
+            }
+            else {
+                canvas.width *= canvasDimensionLimit / canvas.height;
+                canvas.height = canvasDimensionLimit;
+            }
+        }
+        else if (canvas.width > canvasDimensionLimit) {
+            canvas.height *= canvasDimensionLimit / canvas.width;
+            canvas.width = canvasDimensionLimit;
+        }
+        else {
+            canvas.width *= canvasDimensionLimit / canvas.height;
+            canvas.height = canvasDimensionLimit;
+        }
+    }
+}
+function canvasToBlob(canvas, options = {}) {
+    if (canvas.toBlob) {
+        return new Promise((resolve) => {
+            canvas.toBlob(resolve, options.type ? options.type : 'image/png', options.quality ? options.quality : 1);
+        });
+    }
+    return new Promise((resolve) => {
+        const binaryString = window.atob(canvas
+            .toDataURL(options.type ? options.type : undefined, options.quality ? options.quality : undefined)
+            .split(',')[1]);
+        const len = binaryString.length;
+        const binaryArray = new Uint8Array(len);
+        for (let i = 0; i < len; i += 1) {
+            binaryArray[i] = binaryString.charCodeAt(i);
+        }
+        resolve(new Blob([binaryArray], {
+            type: options.type ? options.type : 'image/png',
+        }));
+    });
+}
+function createImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.decode = () => resolve(img);
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.crossOrigin = 'anonymous';
+        img.decoding = 'async';
+        img.src = url;
+    });
+}
+async function svgToDataURL(svg) {
+    return Promise.resolve()
+        .then(() => new XMLSerializer().serializeToString(svg))
+        .then(encodeURIComponent)
+        .then((html) => `data:image/svg+xml;charset=utf-8,${html}`);
+}
+async function nodeToDataURL(node, width, height) {
+    const xmlns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(xmlns, 'svg');
+    const foreignObject = document.createElementNS(xmlns, 'foreignObject');
+    svg.setAttribute('width', `${width}`);
+    svg.setAttribute('height', `${height}`);
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    foreignObject.setAttribute('width', '100%');
+    foreignObject.setAttribute('height', '100%');
+    foreignObject.setAttribute('x', '0');
+    foreignObject.setAttribute('y', '0');
+    foreignObject.setAttribute('externalResourcesRequired', 'true');
+    svg.appendChild(foreignObject);
+    foreignObject.appendChild(node);
+    return svgToDataURL(svg);
+}
+const isInstanceOfElement = (node, instance) => {
+    if (node instanceof instance)
+        return true;
+    const nodePrototype = Object.getPrototypeOf(node);
+    if (nodePrototype === null)
+        return false;
+    return (nodePrototype.constructor.name === instance.name ||
+        isInstanceOfElement(nodePrototype, instance));
+};
+//# sourceMappingURL=util.js.map
 
 /***/ }),
 
@@ -4280,6 +5345,195 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/js/components/buyEventTicketModals.ts":
+/*!***************************************************!*\
+  !*** ./src/js/components/buyEventTicketModals.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var MAX_TICKETS = 3;
+var addBuyEventTicketModals = function () {
+    var modal = document.getElementById("buyEventTicketModal");
+    if (!modal || !(modal instanceof HTMLFormElement))
+        return;
+    var formTemplate = modal.querySelector("template.buy-event-ticket-modal__form-template");
+    if (!formTemplate || !(formTemplate instanceof HTMLTemplateElement))
+        return;
+    var ticketTemplate = null;
+    var eventCard = null;
+    var successModal = document.getElementById("buyEventTicketSuccessModal");
+    var errorModal = document.getElementById("buyEventTicketErrorModal");
+    // helpers
+    var getTicketsNumber = function (eventCard) {
+        var _a;
+        if (eventCard) {
+            return parseFloat(((_a = eventCard.querySelector(".event-card__tickets > span:not([hidden])")) === null || _a === void 0 ? void 0 : _a.textContent) || "0");
+        }
+        else {
+            return document.querySelectorAll(".event__tickets .event-ticket").length || 0;
+        }
+    };
+    var closeModal = function (modal) {
+        modal.classList.remove("open");
+        document.documentElement.classList.remove("modal-open");
+    };
+    var openModal = function (modal) {
+        modal.classList.add("open");
+        document.documentElement.classList.add("modal-open");
+    };
+    var remainOnePlural = function (container, number) {
+        container.querySelectorAll("[data-plural]").forEach(function (variant) {
+            variant.setAttribute("hidden", "");
+            if (variant.getAttribute("data-plural") === String(number))
+                variant.removeAttribute("hidden");
+        });
+    };
+    // open modal
+    var triggers = document.querySelectorAll(".event__buy, .event-card__buy");
+    triggers.forEach(function (trigger) {
+        trigger.addEventListener("click", function () {
+            // reset form
+            var forms = modal.querySelectorAll(".buy-event-ticket-modal__form");
+            if (forms.length > 1) {
+                for (var i = forms.length - 1; i > 0; i--) {
+                    forms[i].remove();
+                }
+            }
+            if (modal instanceof HTMLFormElement)
+                modal.reset();
+            // update prices
+            var price = trigger.getAttribute("data-price");
+            modal.querySelectorAll(".buy-event-ticket-modal__form-price").forEach(function (element) { return element.textContent = price; });
+            // set ticket template
+            ticketTemplate = trigger.querySelector("template");
+            // set event card
+            eventCard = trigger.closest(".event-card");
+        });
+    });
+    // add form in modal
+    var addButton = modal === null || modal === void 0 ? void 0 : modal.querySelector(".buy-event-ticket-modal__add-form");
+    if (addButton)
+        addButton.addEventListener("click", function () {
+            var _a;
+            var ticketsNumber = getTicketsNumber(eventCard);
+            var forms = modal.querySelectorAll(".buy-event-ticket-modal__form");
+            var formsContainer = modal.querySelector(".buy-event-ticket-modal__forms");
+            if (!formsContainer)
+                return;
+            if (forms.length + ticketsNumber >= MAX_TICKETS)
+                return;
+            var clone = (_a = formTemplate.content.querySelector(".buy-event-ticket-modal__form")) === null || _a === void 0 ? void 0 : _a.cloneNode(true);
+            if (clone instanceof Element) {
+                clone.querySelectorAll("input").forEach(function (input) { return input.name += forms.length + 1; });
+                formsContainer.appendChild(clone);
+            }
+        });
+    // submit
+    var apiUrl = modal.getAttribute("data-api-url");
+    if (apiUrl)
+        modal.addEventListener("submit", function (e) {
+            var _a;
+            e.preventDefault();
+            // if too much tickets
+            var ticketsNumber = getTicketsNumber(eventCard);
+            var forms = modal.querySelectorAll(".buy-event-ticket-modal__form");
+            if (forms.length + ticketsNumber > MAX_TICKETS)
+                return;
+            // @ts-ignore
+            var formObj = Object.fromEntries(new FormData(modal));
+            // disable clicks while loading
+            modal.style.pointerEvents = "none";
+            fetch(apiUrl, {
+                method: "POST",
+                headers: (_a = {},
+                    _a["Content-Type"] = "application/json;charset=utf-8",
+                    _a),
+                body: JSON.stringify(formObj)
+            })
+                .then(function (response) {
+                var _a;
+                if (!response.ok)
+                    return Promise.reject();
+                // enable clicks
+                modal.style.pointerEvents = "";
+                closeModal(modal);
+                // calculate tickets from form
+                var tickets = [];
+                for (var i = 0; i <= MAX_TICKETS; i++) {
+                    var name_1 = (_a = formObj["name" + i]) !== null && _a !== void 0 ? _a : undefined;
+                    if (name_1 !== undefined) {
+                        tickets.push({
+                            name: name_1
+                        });
+                    }
+                }
+                // generate tickets
+                var ticketElements = ticketTemplate ?
+                    tickets.map(function (ticket) {
+                        var _a;
+                        // @ts-ignore
+                        var ticketElement = (_a = ticketTemplate.content.querySelector(".event-ticket")) === null || _a === void 0 ? void 0 : _a.cloneNode(true);
+                        if (ticketElement && ticket.name) {
+                            ticketElement.classList.add("named");
+                            var name_2 = ticketElement.querySelector(".event-ticket__name");
+                            if (name_2)
+                                name_2.textContent = ticket.name;
+                        }
+                        ;
+                        return ticketElement;
+                    }) : null;
+                // open success modal
+                if (successModal) {
+                    openModal(successModal);
+                    // set label
+                    var label = successModal.querySelector(".buy-event-ticket-success-modal__tickets-label");
+                    if (label)
+                        remainOnePlural(label, tickets.length);
+                    // set tickets
+                    var ticketsContainer_1 = successModal.querySelector(".buy-event-ticket-success-modal__tickets");
+                    if (ticketsContainer_1 && ticketTemplate) {
+                        // remove tickets
+                        ticketsContainer_1.querySelectorAll(".event-ticket").forEach(function (el) { return el.remove(); });
+                        // add tickets
+                        ticketElements === null || ticketElements === void 0 ? void 0 : ticketElements.forEach(function (ticketElement) {
+                            ticketsContainer_1.appendChild(ticketElement === null || ticketElement === void 0 ? void 0 : ticketElement.cloneNode(true));
+                        });
+                    }
+                }
+                // update tickets in event
+                var ticketsSection = document.querySelector(".event__tickets");
+                var ticketsSectionBody = document.querySelector(".event__tickets-body");
+                if (ticketsSection && ticketsSectionBody) {
+                    ticketsSection.removeAttribute("hidden");
+                    ticketElements === null || ticketElements === void 0 ? void 0 : ticketElements.forEach(function (ticketElement) {
+                        ticketsSectionBody.appendChild(ticketElement === null || ticketElement === void 0 ? void 0 : ticketElement.cloneNode(true));
+                    });
+                }
+                // update tickets in event card
+                var ticketsChip = eventCard === null || eventCard === void 0 ? void 0 : eventCard.querySelector(".event-card__tickets");
+                var ticketsNumber = getTicketsNumber(eventCard);
+                if (ticketsChip) {
+                    ticketsChip.removeAttribute("hidden");
+                    remainOnePlural(ticketsChip, ticketsNumber + tickets.length);
+                }
+            })["catch"](function (error) {
+                // enable clicks
+                modal.style.pointerEvents = "";
+                // close this modal
+                closeModal(modal);
+                // open error modal
+                if (errorModal)
+                    openModal(errorModal);
+            });
+        });
+};
+exports["default"] = addBuyEventTicketModals;
+
+
+/***/ }),
+
 /***/ "./src/js/components/dragToScroll.ts":
 /*!*******************************************!*\
   !*** ./src/js/components/dragToScroll.ts ***!
@@ -4343,6 +5597,72 @@ var addDragToScroll = function () {
     });
 };
 exports["default"] = addDragToScroll;
+
+
+/***/ }),
+
+/***/ "./src/js/components/event.ts":
+/*!************************************!*\
+  !*** ./src/js/components/event.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var addEvent = function () {
+    var ticketsList = document.querySelectorAll(".event__tickets");
+    ticketsList.forEach(function (tickets) {
+        var expand = tickets.querySelector(".event__tickets-header");
+        expand === null || expand === void 0 ? void 0 : expand.addEventListener("click", function () {
+            tickets.classList.toggle("expanded");
+        });
+    });
+};
+exports["default"] = addEvent;
+
+
+/***/ }),
+
+/***/ "./src/js/components/eventTicket.ts":
+/*!******************************************!*\
+  !*** ./src/js/components/eventTicket.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var html_to_image_1 = __webpack_require__(/*! html-to-image */ "./node_modules/html-to-image/es/index.js");
+var TICKET_IMG_WIDTH = 1080;
+var addEventTicket = function () {
+    document.documentElement.addEventListener("click", function (e) {
+        var _a, _b, _c, _d, _e, _f;
+        var target = e.target;
+        if (!(target instanceof Element))
+            return;
+        if (!target.classList.contains("event-ticket__download") &&
+            !((_a = target.parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("event-ticket__download")) &&
+            !((_c = (_b = target.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("event-ticket__download")) &&
+            !((_f = (_e = (_d = target.parentElement) === null || _d === void 0 ? void 0 : _d.parentElement) === null || _e === void 0 ? void 0 : _e.parentElement) === null || _f === void 0 ? void 0 : _f.classList.contains("event-ticket__download")))
+            return;
+        var ticket = target.closest(".event-ticket");
+        var main = ticket === null || ticket === void 0 ? void 0 : ticket.querySelector(".event-ticket__main");
+        if (!(main instanceof HTMLElement))
+            return;
+        (0, html_to_image_1.toPng)(main, {
+            quality: 0.95,
+            canvasWidth: TICKET_IMG_WIDTH,
+            canvasHeight: TICKET_IMG_WIDTH / main.clientWidth * main.clientHeight
+        })
+            .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = 'ticket.png';
+            link.href = dataUrl;
+            link.click();
+            link.remove();
+        });
+    });
+};
+exports["default"] = addEventTicket;
 
 
 /***/ }),
@@ -4441,6 +5761,46 @@ var addSwiper = function () {
     });
 };
 exports["default"] = addSwiper;
+
+
+/***/ }),
+
+/***/ "./src/js/components/timer.ts":
+/*!************************************!*\
+  !*** ./src/js/components/timer.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var getFinishDate = function (el) {
+    var str = el.getAttribute("data-timer-finish-date");
+    var finishDate = str ? new Date(str) : undefined;
+    return finishDate;
+};
+var addTimer = function () {
+    var timers = document.querySelectorAll(".timer");
+    timers.forEach(function (timer) {
+        var finishDate = getFinishDate(timer);
+        if (!finishDate)
+            return;
+        var updateTimer = function () {
+            var finishDate = getFinishDate(timer);
+            if (!finishDate)
+                return;
+            var finish = finishDate.getTime();
+            var now = Date.now();
+            var diff = finish - now;
+            var sec = String(Math.floor(diff / 1000) % 60).padStart(2, "0");
+            var minutes = String(Math.floor(diff / (60 * 1000)) % 60).padStart(2, "0");
+            var hours = Math.floor(diff / (60 * 60 * 1000));
+            timer.textContent = "".concat(hours, ":").concat(minutes, ":").concat(sec);
+        };
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    });
+};
+exports["default"] = addTimer;
 
 
 /***/ }),
@@ -15230,7 +16590,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! video.js */ "video.js");
 /* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
 /* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.js");
 /* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
 /* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
@@ -15239,8 +16599,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/dragToScroll */ "./src/js/components/dragToScroll.ts");
 /* harmony import */ var _components_mediaViewer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/mediaViewer */ "./src/js/components/mediaViewer.ts");
 /* harmony import */ var _components_swiper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/swiper */ "./src/js/components/swiper.ts");
-/* harmony import */ var _css_variables_module_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../css/variables.module.scss */ "./src/css/variables.module.scss");
-/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! throttle-debounce */ "./node_modules/throttle-debounce/esm/index.js");
+/* harmony import */ var _components_timer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/timer */ "./src/js/components/timer.ts");
+/* harmony import */ var _components_event__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/event */ "./src/js/components/event.ts");
+/* harmony import */ var _components_eventTicket__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/eventTicket */ "./src/js/components/eventTicket.ts");
+/* harmony import */ var _components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/buyEventTicketModals */ "./src/js/components/buyEventTicketModals.ts");
+/* harmony import */ var _css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../css/variables.module.scss */ "./src/css/variables.module.scss");
+/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! throttle-debounce */ "./node_modules/throttle-debounce/esm/index.js");
 
 
 
@@ -15258,9 +16622,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const ANIMATION_SLOW_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_10__["default"]["animation-slow"]) * 1000;
-const ANIMATION_NORMAL_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_10__["default"]["animation-normal"]) * 1000;
-const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_6__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_10__["default"]["popper-viewport-padding"]);
+
+
+
+
+const ANIMATION_SLOW_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["animation-slow"]) * 1000;
+const ANIMATION_NORMAL_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["animation-normal"]) * 1000;
+const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_6__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["popper-viewport-padding"]);
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
@@ -15281,7 +16649,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 				..._options,
 			}
 			clearTimeout(closingTimeout);
-			if (!popper) popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_12__.createPopper)(currentAnchorElement, popperMenu, {
+			if (!popper) popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(currentAnchorElement, popperMenu, {
 				strategy: "fixed",
 				modifiers: [{
 
@@ -15403,7 +16771,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		updateSelected();
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_12__.createPopper)(jquery__WEBPACK_IMPORTED_MODULE_0___default()(trigger).get(0), jquery__WEBPACK_IMPORTED_MODULE_0___default()(menu).get(0), {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(jquery__WEBPACK_IMPORTED_MODULE_0___default()(trigger).get(0), jquery__WEBPACK_IMPORTED_MODULE_0___default()(menu).get(0), {
 			strategy: "fixed",
 			modifiers: [
 				_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__.sameWidth
@@ -15500,6 +16868,21 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		jquery__WEBPACK_IMPORTED_MODULE_0___default()(modalTrigger).click(() => openModal(modal));
 	});
 
+	document.documentElement.addEventListener("click", (e) => {
+		const target = e.target;
+		if (!(target instanceof Element)) return;
+		if (
+			target.classList.contains("modal-trigger") ||
+			target.parentElement?.classList.contains("modal-trigger") ||
+			target.parentElement?.parentElement?.classList.contains("modal-trigger") ||
+			target.parentElement?.parentElement?.parentElement?.classList.contains("modal-trigger")
+		) {
+			const modalTrigger = target.closest(".modal-trigger");
+			const modal = document.querySelector(modalTrigger.getAttribute("data-modal-trigger-target"));
+			openModal(modal);
+		}
+	})
+
 	// copy text
 
 	jquery__WEBPACK_IMPORTED_MODULE_0___default()('.copy-text').each((i, copyText) => {
@@ -15511,7 +16894,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		const placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0]
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_12__.createPopper)(copyText, tooltip, {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(copyText, tooltip, {
 			placement: placement,
 			strategy: "absolute",
 			modifiers: [
@@ -15631,7 +17014,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 			}
 		}
 
-		const updateMenu = (0,throttle_debounce__WEBPACK_IMPORTED_MODULE_11__.throttle)(250, () => {
+		const updateMenu = (0,throttle_debounce__WEBPACK_IMPORTED_MODULE_15__.throttle)(250, () => {
 			let visibleWidth = moreItems.clientWidth;
 			let lastVisible = -1;
 			menuItems.forEach((menuItem, index) => {
@@ -15669,7 +17052,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		let overlay;
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_12__.createPopper)(moreItems, moreItemsMenu, {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(moreItems, moreItemsMenu, {
 			strategy: "fixed",
 		})
 
@@ -15764,7 +17147,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		const placement = trigger.dataset.withTooltipPlacement || "top";
 		const tooltip = trigger.querySelector(".tooltip");
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_12__.createPopper)(trigger, tooltip, {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(trigger, tooltip, {
 			placement: placement,
 			strategy: "absolute",
 			modifiers: [
@@ -16190,10 +17573,22 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 	// swiper
 	(0,_components_swiper__WEBPACK_IMPORTED_MODULE_9__["default"])();
+
+	// timer 
+	(0,_components_timer__WEBPACK_IMPORTED_MODULE_10__["default"])();
+
+	// event 
+	(0,_components_event__WEBPACK_IMPORTED_MODULE_11__["default"])();
+
+	// event-ticket
+	(0,_components_eventTicket__WEBPACK_IMPORTED_MODULE_12__["default"])();
+
+	// buy event tickets
+	(0,_components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_13__["default"])();
 });
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle6.1.0.js.map
+//# sourceMappingURL=bundle7.0.0.js.map
