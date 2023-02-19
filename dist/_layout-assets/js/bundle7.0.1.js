@@ -1221,6 +1221,70 @@ var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, 
 
 /***/ }),
 
+/***/ "./node_modules/@popperjs/core/lib/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/@popperjs/core/lib/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "afterMain": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.afterMain),
+/* harmony export */   "afterRead": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.afterRead),
+/* harmony export */   "afterWrite": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.afterWrite),
+/* harmony export */   "applyStyles": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.applyStyles),
+/* harmony export */   "arrow": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.arrow),
+/* harmony export */   "auto": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.auto),
+/* harmony export */   "basePlacements": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.basePlacements),
+/* harmony export */   "beforeMain": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.beforeMain),
+/* harmony export */   "beforeRead": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.beforeRead),
+/* harmony export */   "beforeWrite": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.beforeWrite),
+/* harmony export */   "bottom": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.bottom),
+/* harmony export */   "clippingParents": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.clippingParents),
+/* harmony export */   "computeStyles": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.computeStyles),
+/* harmony export */   "createPopper": () => (/* reexport safe */ _popper_js__WEBPACK_IMPORTED_MODULE_4__.createPopper),
+/* harmony export */   "createPopperBase": () => (/* reexport safe */ _createPopper_js__WEBPACK_IMPORTED_MODULE_2__.createPopper),
+/* harmony export */   "createPopperLite": () => (/* reexport safe */ _popper_lite_js__WEBPACK_IMPORTED_MODULE_5__.createPopper),
+/* harmony export */   "detectOverflow": () => (/* reexport safe */ _createPopper_js__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "end": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.end),
+/* harmony export */   "eventListeners": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.eventListeners),
+/* harmony export */   "flip": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.flip),
+/* harmony export */   "hide": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.hide),
+/* harmony export */   "left": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.left),
+/* harmony export */   "main": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.main),
+/* harmony export */   "modifierPhases": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.modifierPhases),
+/* harmony export */   "offset": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.offset),
+/* harmony export */   "placements": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.placements),
+/* harmony export */   "popper": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.popper),
+/* harmony export */   "popperGenerator": () => (/* reexport safe */ _createPopper_js__WEBPACK_IMPORTED_MODULE_2__.popperGenerator),
+/* harmony export */   "popperOffsets": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.popperOffsets),
+/* harmony export */   "preventOverflow": () => (/* reexport safe */ _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__.preventOverflow),
+/* harmony export */   "read": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.read),
+/* harmony export */   "reference": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.reference),
+/* harmony export */   "right": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.right),
+/* harmony export */   "start": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.start),
+/* harmony export */   "top": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.top),
+/* harmony export */   "variationPlacements": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.variationPlacements),
+/* harmony export */   "viewport": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.viewport),
+/* harmony export */   "write": () => (/* reexport safe */ _enums_js__WEBPACK_IMPORTED_MODULE_0__.write)
+/* harmony export */ });
+/* harmony import */ var _enums_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./enums.js */ "./node_modules/@popperjs/core/lib/enums.js");
+/* harmony import */ var _modifiers_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modifiers/index.js */ "./node_modules/@popperjs/core/lib/modifiers/index.js");
+/* harmony import */ var _createPopper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createPopper.js */ "./node_modules/@popperjs/core/lib/createPopper.js");
+/* harmony import */ var _createPopper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./createPopper.js */ "./node_modules/@popperjs/core/lib/utils/detectOverflow.js");
+/* harmony import */ var _popper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./popper.js */ "./node_modules/@popperjs/core/lib/popper.js");
+/* harmony import */ var _popper_lite_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./popper-lite.js */ "./node_modules/@popperjs/core/lib/popper-lite.js");
+
+ // eslint-disable-next-line import/no-unused-modules
+
+ // eslint-disable-next-line import/no-unused-modules
+
+ // eslint-disable-next-line import/no-unused-modules
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@popperjs/core/lib/modifiers/applyStyles.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@popperjs/core/lib/modifiers/applyStyles.js ***!
@@ -5349,184 +5413,60 @@ module.exports = styleTagTransform;
 /*!***************************************************!*\
   !*** ./src/js/components/buyEventTicketModals.ts ***!
   \***************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 exports.__esModule = true;
-var MAX_TICKETS = 3;
+var showTooltip_1 = __webpack_require__(/*! ../utils/showTooltip */ "./src/js/utils/showTooltip.ts");
 var addBuyEventTicketModals = function () {
     var modal = document.getElementById("buyEventTicketModal");
-    if (!modal || !(modal instanceof HTMLFormElement))
+    if (!modal)
         return;
-    var formTemplate = modal.querySelector("template.buy-event-ticket-modal__form-template");
-    if (!formTemplate || !(formTemplate instanceof HTMLTemplateElement))
+    var form = modal.querySelector(".buy-event-ticket-modal__form");
+    if (!form)
         return;
-    var ticketTemplate = null;
-    var eventCard = null;
-    var successModal = document.getElementById("buyEventTicketSuccessModal");
-    var errorModal = document.getElementById("buyEventTicketErrorModal");
     // helpers
-    var getTicketsNumber = function (eventCard) {
-        var _a;
-        if (eventCard) {
-            return parseFloat(((_a = eventCard.querySelector(".event-card__tickets > span:not([hidden])")) === null || _a === void 0 ? void 0 : _a.textContent) || "0");
-        }
-        else {
-            return document.querySelectorAll(".event__tickets .event-ticket").length || 0;
-        }
+    var getMaxTickets = function () {
+        var str = form.getAttribute("data-max-tickets");
+        var number = str ? parseFloat(str) : NaN;
+        return isNaN(number) ? 3 : number;
     };
-    var closeModal = function (modal) {
-        modal.classList.remove("open");
-        document.documentElement.classList.remove("modal-open");
-    };
-    var openModal = function (modal) {
-        modal.classList.add("open");
-        document.documentElement.classList.add("modal-open");
-    };
-    var remainOnePlural = function (container, number) {
-        container.querySelectorAll("[data-plural]").forEach(function (variant) {
-            variant.setAttribute("hidden", "");
-            if (variant.getAttribute("data-plural") === String(number))
-                variant.removeAttribute("hidden");
-        });
+    var getMaxTicketsMessage = function () {
+        return form.getAttribute("data-max-tickets-message");
     };
     // open modal
     var triggers = document.querySelectorAll(".event__buy, .event-card__buy");
     triggers.forEach(function (trigger) {
         trigger.addEventListener("click", function () {
             // reset form
-            var forms = modal.querySelectorAll(".buy-event-ticket-modal__form");
-            if (forms.length > 1) {
-                for (var i = forms.length - 1; i > 0; i--) {
-                    forms[i].remove();
+            var subForms = form === null || form === void 0 ? void 0 : form.querySelectorAll(".buy-event-ticket-modal__sub-form");
+            if (subForms && subForms.length > 1) {
+                for (var i = subForms.length - 1; i > 0; i--) {
+                    subForms[i].remove();
                 }
             }
-            if (modal instanceof HTMLFormElement)
-                modal.reset();
-            // update prices
-            var price = trigger.getAttribute("data-price");
-            modal.querySelectorAll(".buy-event-ticket-modal__form-price").forEach(function (element) { return element.textContent = price; });
-            // set ticket template
-            ticketTemplate = trigger.querySelector("template");
-            // set event card
-            eventCard = trigger.closest(".event-card");
+            if (form instanceof HTMLFormElement)
+                form.reset();
         });
     });
-    // add form in modal
-    var addButton = modal === null || modal === void 0 ? void 0 : modal.querySelector(".buy-event-ticket-modal__add-form");
+    // add ticket in modal
+    var addButton = modal === null || modal === void 0 ? void 0 : modal.querySelector(".buy-event-ticket-modal__add-ticket");
     if (addButton)
         addButton.addEventListener("click", function () {
-            var _a;
-            var ticketsNumber = getTicketsNumber(eventCard);
-            var forms = modal.querySelectorAll(".buy-event-ticket-modal__form");
-            var formsContainer = modal.querySelector(".buy-event-ticket-modal__forms");
-            if (!formsContainer)
-                return;
-            if (forms.length + ticketsNumber >= MAX_TICKETS)
-                return;
-            var clone = (_a = formTemplate.content.querySelector(".buy-event-ticket-modal__form")) === null || _a === void 0 ? void 0 : _a.cloneNode(true);
-            if (clone instanceof Element) {
-                clone.querySelectorAll("input").forEach(function (input) { return input.name += forms.length + 1; });
-                formsContainer.appendChild(clone);
+            var maxTickets = getMaxTickets();
+            var maxTicketsMessage = getMaxTicketsMessage();
+            var subForms = (form === null || form === void 0 ? void 0 : form.querySelectorAll(".buy-event-ticket-modal__sub-form")) || [];
+            if (subForms.length >= maxTickets) {
+                if (maxTicketsMessage)
+                    (0, showTooltip_1["default"])(addButton, maxTicketsMessage);
             }
-        });
-    // submit
-    var apiUrl = modal.getAttribute("data-api-url");
-    if (apiUrl)
-        modal.addEventListener("submit", function (e) {
-            var _a;
-            e.preventDefault();
-            // if too much tickets
-            var ticketsNumber = getTicketsNumber(eventCard);
-            var forms = modal.querySelectorAll(".buy-event-ticket-modal__form");
-            if (forms.length + ticketsNumber > MAX_TICKETS)
-                return;
-            // @ts-ignore
-            var formObj = Object.fromEntries(new FormData(modal));
-            // disable clicks while loading
-            modal.style.pointerEvents = "none";
-            fetch(apiUrl, {
-                method: "POST",
-                headers: (_a = {},
-                    _a["Content-Type"] = "application/json;charset=utf-8",
-                    _a),
-                body: JSON.stringify(formObj)
-            })
-                .then(function (response) {
-                var _a;
-                if (!response.ok)
-                    return Promise.reject();
-                // enable clicks
-                modal.style.pointerEvents = "";
-                closeModal(modal);
-                // calculate tickets from form
-                var tickets = [];
-                for (var i = 0; i <= MAX_TICKETS; i++) {
-                    var name_1 = (_a = formObj["name" + i]) !== null && _a !== void 0 ? _a : undefined;
-                    if (name_1 !== undefined) {
-                        tickets.push({
-                            name: name_1
-                        });
-                    }
-                }
-                // generate tickets
-                var ticketElements = ticketTemplate ?
-                    tickets.map(function (ticket) {
-                        var _a;
-                        // @ts-ignore
-                        var ticketElement = (_a = ticketTemplate.content.querySelector(".event-ticket")) === null || _a === void 0 ? void 0 : _a.cloneNode(true);
-                        if (ticketElement && ticket.name) {
-                            ticketElement.classList.add("named");
-                            var name_2 = ticketElement.querySelector(".event-ticket__name");
-                            if (name_2)
-                                name_2.textContent = ticket.name;
-                        }
-                        ;
-                        return ticketElement;
-                    }) : null;
-                // open success modal
-                if (successModal) {
-                    openModal(successModal);
-                    // set label
-                    var label = successModal.querySelector(".buy-event-ticket-success-modal__tickets-label");
-                    if (label)
-                        remainOnePlural(label, tickets.length);
-                    // set tickets
-                    var ticketsContainer_1 = successModal.querySelector(".buy-event-ticket-success-modal__tickets");
-                    if (ticketsContainer_1 && ticketTemplate) {
-                        // remove tickets
-                        ticketsContainer_1.querySelectorAll(".event-ticket").forEach(function (el) { return el.remove(); });
-                        // add tickets
-                        ticketElements === null || ticketElements === void 0 ? void 0 : ticketElements.forEach(function (ticketElement) {
-                            ticketsContainer_1.appendChild(ticketElement === null || ticketElement === void 0 ? void 0 : ticketElement.cloneNode(true));
-                        });
-                    }
-                }
-                // update tickets in event
-                var ticketsSection = document.querySelector(".event__tickets");
-                var ticketsSectionBody = document.querySelector(".event__tickets-body");
-                if (ticketsSection && ticketsSectionBody) {
-                    ticketsSection.removeAttribute("hidden");
-                    ticketElements === null || ticketElements === void 0 ? void 0 : ticketElements.forEach(function (ticketElement) {
-                        ticketsSectionBody.appendChild(ticketElement === null || ticketElement === void 0 ? void 0 : ticketElement.cloneNode(true));
-                    });
-                }
-                // update tickets in event card
-                var ticketsChip = eventCard === null || eventCard === void 0 ? void 0 : eventCard.querySelector(".event-card__tickets");
-                var ticketsNumber = getTicketsNumber(eventCard);
-                if (ticketsChip) {
-                    ticketsChip.removeAttribute("hidden");
-                    remainOnePlural(ticketsChip, ticketsNumber + tickets.length);
-                }
-            })["catch"](function (error) {
-                // enable clicks
-                modal.style.pointerEvents = "";
-                // close this modal
-                closeModal(modal);
-                // open error modal
-                if (errorModal)
-                    openModal(errorModal);
-            });
+            else if (subForms[0]) {
+                var newSubForm = subForms[0].cloneNode(true);
+                newSubForm.querySelectorAll("input").forEach(function (input) {
+                    input.name = input.name.replace("1", String(subForms.length + 1));
+                });
+                form === null || form === void 0 ? void 0 : form.appendChild(newSubForm);
+            }
         });
 };
 exports["default"] = addBuyEventTicketModals;
@@ -5723,8 +5663,7 @@ var addMediaViewer = function () {
         });
         nextButton.addEventListener("click", openNext);
         prevButton.addEventListener("click", openPrev);
-        var downTime = performance.now();
-        window.addEventListener("click", function (e) {
+        document.documentElement.addEventListener("click", function (e) {
             var target = e.target;
             if (target instanceof HTMLImageElement && target.hasAttribute("data-viewable")) {
                 open_1(target);
@@ -5801,6 +5740,105 @@ var addTimer = function () {
     });
 };
 exports["default"] = addTimer;
+
+
+/***/ }),
+
+/***/ "./src/js/utils/popperModifiers.ts":
+/*!*****************************************!*\
+  !*** ./src/js/utils/popperModifiers.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+exports.createPlacementHandler = exports.sameWidth = void 0;
+exports.sameWidth = {
+    name: "sameWidth",
+    enabled: true,
+    phase: "beforeWrite",
+    requires: ["computeStyles"],
+    fn: function (_a) {
+        var state = _a.state;
+        state.styles.popper.width = "".concat(state.rects.reference.width, "px");
+    },
+    effect: function (_a) {
+        var state = _a.state;
+        state.elements.popper.style.width = "".concat(state.elements.reference.offsetWidth, "px");
+    }
+};
+var createPlacementHandler = function (onPlacementChange) {
+    return {
+        name: "placementHandler",
+        enabled: true,
+        phase: "beforeWrite",
+        requires: ["computeStyles"],
+        fn: function (_a) {
+            var state = _a.state;
+            onPlacementChange(state.placement, state.elements.popper);
+        }
+    };
+};
+exports.createPlacementHandler = createPlacementHandler;
+
+
+/***/ }),
+
+/***/ "./src/js/utils/showTooltip.ts":
+/*!*************************************!*\
+  !*** ./src/js/utils/showTooltip.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var core_1 = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js");
+var popperModifiers_1 = __webpack_require__(/*! ./popperModifiers */ "./src/js/utils/popperModifiers.ts");
+var variables_module_scss_1 = __webpack_require__(/*! ../../css/variables.module.scss */ "./src/css/variables.module.scss");
+var ANIMATION_SLOW_MS = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
+var showTooltip = function (anchor, message, options) {
+    if (options === void 0) { options = {}; }
+    var tooltipContent = document.createElement("div");
+    tooltipContent.classList.add("tooltip__content");
+    tooltipContent.textContent = message;
+    var tooltip = document.createElement("div");
+    tooltip.classList.add("tooltip");
+    tooltip.appendChild(tooltipContent);
+    document.body.appendChild(tooltip);
+    var popper = (0, core_1.createPopper)(anchor, tooltip, {
+        placement: options.placement || "auto",
+        strategy: "absolute",
+        modifiers: [
+            {
+                name: "flip",
+                options: {
+                    fallbackPlacements: ['auto']
+                }
+            },
+            (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
+                element.classList.remove("top");
+                element.classList.remove("left");
+                element.classList.remove("right");
+                element.classList.remove("bottom");
+                element.classList.add(placement);
+            }),
+        ]
+    });
+    var onCLick = function (e) {
+        document.documentElement.removeEventListener("click", onCLick);
+        tooltip.classList.add("fade-out-slow");
+        setTimeout(function () {
+            popper.destroy();
+            tooltip.remove();
+        }, ANIMATION_SLOW_MS);
+    };
+    popper.update();
+    tooltip.classList.add("show");
+    setTimeout(function () {
+        document.documentElement.addEventListener("click", onCLick);
+    }, 10);
+};
+exports["default"] = showTooltip;
 
 
 /***/ }),
@@ -5897,50 +5935,6 @@ const parsePx = (value) => {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (parsePx);
 
-
-/***/ }),
-
-/***/ "./src/js/utils/popperModifiers.js":
-/*!*****************************************!*\
-  !*** ./src/js/utils/popperModifiers.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createPlacementHandler": () => (/* binding */ createPlacementHandler),
-/* harmony export */   "sameWidth": () => (/* binding */ sameWidth)
-/* harmony export */ });
-const sameWidth = {
-	name: "sameWidth",
-	enabled: true,
-	phase: "beforeWrite",
-	requires: ["computeStyles"],
-	fn: ({ state }) => {
-		state.styles.popper.width = `${state.rects.reference.width}px`;
-	},
-	effect: ({ state }) => {
-		state.elements.popper.style.width = `${
-			state.elements.reference.offsetWidth
-		}px`;
-	}
-};
-
-/**
- * @param {(placement: string, element: HTMLElement) => void} onPlacementChange
- * @returns {{phase: string, effect: effect, name: string, enabled: boolean, requires: string[]}}
- */
-const createPlacementHandler = (onPlacementChange) => {
-	return {
-		name: "placementHandler",
-		enabled: true,
-		phase: "beforeWrite",
-		requires: ["computeStyles"],
-		fn: ({ state }) => {
-			onPlacementChange(state.placement, state.elements.popper);
-		}
-	}
-}
 
 /***/ }),
 
@@ -16591,7 +16585,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! video.js */ "video.js");
 /* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
-/* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.js");
+/* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.ts");
 /* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
 /* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
 /* harmony import */ var _utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.js");
@@ -16855,12 +16849,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 	jquery__WEBPACK_IMPORTED_MODULE_0___default()('.modal').each((i, modal) => {
 		jquery__WEBPACK_IMPORTED_MODULE_0___default()(modal).addClass("ready");
-		jquery__WEBPACK_IMPORTED_MODULE_0___default()(modal).find(".modal__close-btn").click(() => closeModal(modal));
-		jquery__WEBPACK_IMPORTED_MODULE_0___default()(modal).find(".modal__content").click((e) => {
-			if (e.target === e.currentTarget) {
-				closeModal(modal);
-			}
-		});
+		jquery__WEBPACK_IMPORTED_MODULE_0___default()(modal).find(".block__title-action > .modal__close-btn").click(() => closeModal(modal));
 	});
 
 	jquery__WEBPACK_IMPORTED_MODULE_0___default()('.modal-trigger').each((i, modalTrigger) => {
@@ -17591,4 +17580,4 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle7.0.0.js.map
+//# sourceMappingURL=bundle7.0.1.js.map

@@ -1740,8 +1740,8 @@ html.modal-open {
   align-self: center;
   justify-self: center;
   background: rgba(255, 198, 255, 0.12);
-  -webkit-mask-image: url("../_layout-assets/img/tooltip-arrow-down.svg");
-  mask-image: url("../_layout-assets/img/tooltip-arrow-down.svg");
+  -webkit-mask-image: url("../img/tooltip-arrow-down.svg");
+  mask-image: url("../img/tooltip-arrow-down.svg");
   -webkit-mask-size: 100% auto;
   -webkit-mask-repeat: no-repeat;
   backdrop-filter: blur(4rem);
@@ -1759,9 +1759,9 @@ html.modal-open {
 .tooltip.right::before {
   width: 1rem;
   height: 1.5rem;
-  -webkit-mask-image: url("../_layout-assets/img/tooltip-arrow-right.svg");
+  -webkit-mask-image: url("../img/tooltip-arrow-right.svg");
   -webkit-mask-size: auto 100%;
-  mask-image: url("../_layout-assets/img/tooltip-arrow-right.svg");
+  mask-image: url("../img/tooltip-arrow-right.svg");
   transform: rotate(180deg);
 }
 .tooltip.left {
@@ -1770,9 +1770,9 @@ html.modal-open {
 .tooltip.left::before {
   width: 1rem;
   height: 1.5rem;
-  -webkit-mask-image: url("../_layout-assets/img/tooltip-arrow-right.svg");
+  -webkit-mask-image: url("../img/tooltip-arrow-right.svg");
   -webkit-mask-size: auto 100%;
-  mask-image: url("../_layout-assets/img/tooltip-arrow-right.svg");
+  mask-image: url("../img/tooltip-arrow-right.svg");
 }
 
 .tooltip__content {
@@ -8399,7 +8399,7 @@ html.media-viewer-open {
   color: rgba(255, 255, 255, 0.64);
 }
 
-.buy-event-ticket-modal__forms {
+.buy-event-ticket-modal__form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -8773,4 +8773,4 @@ html.media-viewer-open {
   display: none;
 }
 
-/*# sourceMappingURL=styles7.0.0.css.map */
+/*# sourceMappingURL=styles7.0.1.css.map */
