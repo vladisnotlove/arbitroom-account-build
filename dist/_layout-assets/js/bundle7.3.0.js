@@ -5744,6 +5744,90 @@ exports["default"] = addTimer;
 
 /***/ }),
 
+/***/ "./src/js/components/videoPlayer.ts":
+/*!******************************************!*\
+  !*** ./src/js/components/videoPlayer.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var addOnAttrChange_1 = __webpack_require__(/*! ../utils/addOnAttrChange */ "./src/js/utils/addOnAttrChange.ts");
+var addVideoPlayer = function () {
+    var _a, _b;
+    var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
+    var videoPlayer = document.getElementById("videoPlayer");
+    if (!videoPlayer)
+        return;
+    if (!player)
+        return;
+    (0, addOnAttrChange_1["default"])(videoPlayer, "class", function () {
+        var isOpen = videoPlayer.classList.contains("open");
+        if (!isOpen) {
+            player === null || player === void 0 ? void 0 : player.api("pause");
+        }
+    });
+    (0, addOnAttrChange_1["default"])(videoPlayer, "data-src", function () {
+        var src = videoPlayer.getAttribute("data-src");
+        if (src) {
+            player === null || player === void 0 ? void 0 : player.api("file", src);
+        }
+    });
+    var openVideoPlayer = function (src) {
+        videoPlayer.classList.add("open");
+        videoPlayer.setAttribute("data-src", src);
+    };
+    var closeVideoPlayer = function () {
+        videoPlayer.classList.remove("open");
+        videoPlayer.removeAttribute("data-src");
+    };
+    (_a = videoPlayer.querySelector(".video-player__close-btn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", closeVideoPlayer);
+    (_b = videoPlayer.querySelector(".video-player__backdrop")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", closeVideoPlayer);
+    document.querySelectorAll("[data-video-triggers-container]").forEach(function (container) {
+        container.addEventListener("click", function (e) {
+            if (!(e.target instanceof Element))
+                return;
+            var trigger = e.target.closest("[data-video-trigger]");
+            var url = trigger === null || trigger === void 0 ? void 0 : trigger.getAttribute("data-video-trigger");
+            if (url) {
+                openVideoPlayer(url);
+            }
+        });
+    });
+};
+exports["default"] = addVideoPlayer;
+
+
+/***/ }),
+
+/***/ "./src/js/utils/addOnAttrChange.ts":
+/*!*****************************************!*\
+  !*** ./src/js/utils/addOnAttrChange.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var addOnAttrChange = function (element, attrName, callback) {
+    var prevAttr = element.getAttribute(attrName);
+    var observer = new MutationObserver(function (mutationList) {
+        var attr = element.getAttribute(attrName);
+        if (attr !== prevAttr) {
+            callback(attr);
+        }
+    });
+    observer.observe(element, {
+        attributes: true
+    });
+    return function () {
+        observer.disconnect();
+    };
+};
+exports["default"] = addOnAttrChange;
+
+
+/***/ }),
+
 /***/ "./src/js/utils/popperModifiers.ts":
 /*!*****************************************!*\
   !*** ./src/js/utils/popperModifiers.ts ***!
@@ -5964,16 +6048,6 @@ const remToPx = (rem) => {
 /***/ ((module) => {
 
 module.exports = jQuery;
-
-/***/ }),
-
-/***/ "video.js":
-/*!**************************!*\
-  !*** external "videojs" ***!
-  \**************************/
-/***/ ((module) => {
-
-module.exports = videojs;
 
 /***/ }),
 
@@ -16582,14 +16656,13 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! video.js */ "video.js");
-/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
-/* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.ts");
-/* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
-/* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
-/* harmony import */ var _utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.js");
-/* harmony import */ var _utils_parsePx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils/parsePx */ "./src/js/utils/parsePx.js");
+/* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.ts");
+/* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
+/* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
+/* harmony import */ var _utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.js");
+/* harmony import */ var _utils_parsePx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/parsePx */ "./src/js/utils/parsePx.js");
+/* harmony import */ var _components_videoPlayer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/videoPlayer */ "./src/js/components/videoPlayer.ts");
 /* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/dragToScroll */ "./src/js/components/dragToScroll.ts");
 /* harmony import */ var _components_mediaViewer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/mediaViewer */ "./src/js/components/mediaViewer.ts");
 /* harmony import */ var _components_swiper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/swiper */ "./src/js/components/swiper.ts");
@@ -16599,7 +16672,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/buyEventTicketModals */ "./src/js/components/buyEventTicketModals.ts");
 /* harmony import */ var _css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../css/variables.module.scss */ "./src/css/variables.module.scss");
 /* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! throttle-debounce */ "./node_modules/throttle-debounce/esm/index.js");
-
 
 
 
@@ -16620,9 +16692,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const ANIMATION_SLOW_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["animation-slow"]) * 1000;
 const ANIMATION_NORMAL_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["animation-normal"]) * 1000;
-const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_6__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["popper-viewport-padding"]);
+const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_5__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["popper-viewport-padding"]);
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
@@ -16768,7 +16841,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(jquery__WEBPACK_IMPORTED_MODULE_0___default()(trigger).get(0), jquery__WEBPACK_IMPORTED_MODULE_0___default()(menu).get(0), {
 			strategy: "fixed",
 			modifiers: [
-				_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__.sameWidth
+				_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__.sameWidth
 			]
 		});
 
@@ -16893,7 +16966,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 						fallbackPlacements: ['auto'],
 					},
 				},
-				(0,_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__.createPlacementHandler)((placement, element) => {
+				(0,_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__.createPlacementHandler)((placement, element) => {
 					jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).removeClass("top");
 					jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).removeClass("left");
 					jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).removeClass("right");
@@ -16929,7 +17002,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		let autoHidingTimeout;
 
 		jquery__WEBPACK_IMPORTED_MODULE_0___default()(copyText).click(() => {
-			(0,_utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_3__["default"])(value).then(() => {
+			(0,_utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_2__["default"])(value).then(() => {
 				showTooltip();
 
 				clearTimeout(autoHidingTimeout);
@@ -17146,7 +17219,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 						fallbackPlacements: ['auto'],
 					},
 				},
-				(0,_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_2__.createPlacementHandler)((placement, element) => {
+				(0,_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__.createPlacementHandler)((placement, element) => {
 					jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).removeClass("top");
 					jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).removeClass("left");
 					jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).removeClass("right");
@@ -17427,12 +17500,12 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 	window.addEventListener('load', () => {
 
-		if ((0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__["default"])()) return;
+		if ((0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__["default"])()) return;
 
 		document.querySelectorAll("[data-drag-scroll]").forEach(elem => {
 			const content = elem.querySelector("[data-drag-scroll-content]");
 
-			new scrollbooster__WEBPACK_IMPORTED_MODULE_4__["default"]({
+			new scrollbooster__WEBPACK_IMPORTED_MODULE_3__["default"]({
 				viewport: elem,
 				content: content,
 				scrollMode: 'native',
@@ -17477,83 +17550,10 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 	})
 
 	// video player
-
-	const videoPlayer = document.getElementById("videoPlayer");
-	let prevOpen = videoPlayer.classList.contains("open");
-	let prevSrc = videoPlayer.getAttribute("data-src");
-	let vjs;
-
-	const observer = new MutationObserver((mutationList) => {
-		const videoPlayer = document.getElementById("videoPlayer");
-		if (!videoPlayer) return;
-
-		const open = videoPlayer.classList.contains("open");
-		const src = videoPlayer.getAttribute("data-src");
-
-		const isOpening = open && !prevOpen;
-		const isClosing = !open && prevOpen;
-		const isSrcChanging = src !== prevSrc;
-
-		if ((isOpening || isSrcChanging) && src) {
-			if (vjs) {
-				vjs.dispose();
-				vjs = undefined;
-			}
-			const vjsElem = videoPlayer.querySelector(".video-js");
-			vjs = video_js__WEBPACK_IMPORTED_MODULE_1___default()(vjsElem, {
-				controls: true,
-				restoreEl: true,
-				fluid: true,
-				preload: "auto"
-			});
-			vjs.src(src);
-		}
-		if (isClosing) {
-			if (vjs) {
-				vjs.dispose();
-				vjs = undefined;
-			}
-		}
-
-		prevOpen = open;
-		prevSrc = src;
-	});
-
-	observer.observe(videoPlayer, {
-		attributes: true,
-	});
-
-	const openVideoPlayer = (src) => {
-		const videoPlayer = document.getElementById("videoPlayer");
-		videoPlayer.classList.add("open");
-		videoPlayer.setAttribute("data-src", src);
-	}
-	const closeVideoPlayer = () => {
-		const videoPlayer = document.getElementById("videoPlayer");
-		videoPlayer.classList.remove("open");
-		videoPlayer.removeAttribute("data-src");
-	}
-
-	document.querySelector("#videoPlayer .video-player__close-btn").addEventListener("click", closeVideoPlayer);
-	document.querySelector("#videoPlayer .video-player__backdrop").addEventListener("click", closeVideoPlayer);
-
-	document.querySelectorAll("[data-video-triggers-container]").forEach(container => {
-		container.addEventListener("click", (e) => {
-			const trigger = e.target?.closest ?
-				e.target.closest("[data-video-trigger]") :
-				undefined;
-			const url = trigger?.getAttribute ?
-				trigger?.getAttribute("data-video-trigger") :
-				undefined;
-
-			if (url) {
-				openVideoPlayer(url);
-			}
-		})
-	})
+	;(0,_components_videoPlayer__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
 	// drag to scroll
-	if (!(0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__["default"])()) {
+	if (!(0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__["default"])()) {
 		(0,_components_dragToScroll__WEBPACK_IMPORTED_MODULE_7__["default"])();
 	}
 
@@ -17580,4 +17580,4 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle7.2.0.js.map
+//# sourceMappingURL=bundle7.3.0.js.map

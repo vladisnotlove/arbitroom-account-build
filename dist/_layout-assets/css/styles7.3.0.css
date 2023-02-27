@@ -3295,11 +3295,15 @@ p {
   justify-content: center;
   align-items: center;
   min-height: 0;
+  max-height: 100%;
   min-width: 50%;
   width: 100%;
   max-width: min(1280px, 100%);
-  max-height: 100%;
   z-index: 2;
+}
+.video-player__video > div {
+  width: 1920px;
+  height: 1080px;
 }
 
 .banner {
@@ -9151,4 +9155,4 @@ html.media-viewer-open {
   display: none;
 }
 
-/*# sourceMappingURL=styles7.2.0.css.map */
+/*# sourceMappingURL=styles7.3.0.css.map */

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- layout css -->
+	<link href="../_layout-assets/css/styles7.3.0.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="video-player" id="videoPlayer">
+		<div class="video-player__backdrop"></div>
+		<button class="video-player__close-btn icon-button text">
+			<!-- icon: close -->
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+				<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+			</svg>
+		</button>
+		<div class="video-player__video">
+			<div id="player"></div>
+		</div>
+	</div>
+	<script src="../_layout-assets/js/playerjs.js" type="text/javascript"></script>
+	<script>
+	var player = new Playerjs({
+		id: "player",
+		file: "https://plrjs.com/sample.mp4",
+	});
+	</script>
+</body>
+
+</html>
