@@ -3850,18 +3850,40 @@ html.media-viewer-open {
   color: rgba(255, 255, 255, 0.64);
 }
 
-.income__chart {
-  height: 296px;
+.income__title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
-.income__chart-legend {
-  margin-top: 1rem;
+.income__title-action {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+  flex-grow: 0;
+  justify-content: flex-end;
+}
+
+.income__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.income__chart {
+  min-height: 296px;
+  min-width: 140px;
+  flex-grow: 1;
 }
 
 .legend {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 0.5rem;
 }
 
@@ -3955,10 +3977,27 @@ html.media-viewer-open {
   padding: 1rem;
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 1350px) {
   .tab__home {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "b s" "c c" "i i" "p p" "o o";
+  }
+}
+@media screen and (max-width: 1280px) {
+  .tab__home {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas: "b b b s s s" "c c c c c c" "i i i i p p" "o o o o o o";
+  }
+}
+@media screen and (max-width: 1060px) {
+  .tab__home {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "b s" "c c" "i i" "p p" "o o";
+  }
+}
+@media screen and (max-width: 850px) {
+  .legend {
+    flex-flow: row wrap;
   }
 }
 @media screen and (max-width: 660px) {
@@ -9155,4 +9194,4 @@ html.media-viewer-open {
   display: none;
 }
 
-/*# sourceMappingURL=styles7.3.0.css.map */
+/*# sourceMappingURL=styles7.4.0.css.map */
