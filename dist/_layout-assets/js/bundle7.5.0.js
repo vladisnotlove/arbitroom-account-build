@@ -5800,6 +5800,74 @@ exports["default"] = addVideoPlayer;
 
 /***/ }),
 
+/***/ "./src/js/components/youtubePlayer.ts":
+/*!********************************************!*\
+  !*** ./src/js/components/youtubePlayer.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var variables_module_scss_1 = __webpack_require__(/*! ../../css/variables.module.scss */ "./src/css/variables.module.scss");
+var ANIMATION_SLOW_MS = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
+var addYoutubePlayer = function () {
+    var stopVideo = function (iframe) {
+        iframe.src = iframe.src;
+    };
+    var setSrc = function (iframe, youtubeId) {
+        var src = youtubeId !== undefined ?
+            "https://www.youtube.com/embed/".concat(youtubeId) :
+            iframe.dataset.src;
+        if (src && iframe.src !== src) {
+            iframe.src = src;
+        }
+    };
+    document.querySelectorAll(".youtube-trigger").forEach(function (trigger) {
+        if (!(trigger instanceof HTMLElement))
+            return;
+        var targetId = trigger.dataset.youtubeTriggerTarget;
+        var target = targetId ? document.getElementById(targetId) : undefined;
+        if (!(target instanceof HTMLElement))
+            return;
+        var youtubeId = trigger.dataset.youtubeId;
+        trigger.addEventListener("click", function () {
+            var iframe = target.querySelector("iframe");
+            if (iframe)
+                setSrc(iframe, youtubeId);
+            document.querySelectorAll(".youtube-embedded").forEach(function (other) {
+                if (!(other instanceof HTMLElement))
+                    return;
+                other.classList.remove("open");
+                other.hidden = true;
+            });
+            target.classList.add("open");
+            target.hidden = false;
+        });
+    });
+    document.querySelectorAll(".youtube-embedded").forEach(function (container) {
+        if (!(container instanceof HTMLElement))
+            return;
+        var overlay = container.querySelector(".youtube-embedded__overlay");
+        var iframe = container.querySelector("iframe");
+        if (!(overlay instanceof HTMLElement) || !iframe)
+            return;
+        container.hidden = true;
+        var hiddenTimeout = -1;
+        overlay.addEventListener("click", function () {
+            clearTimeout(hiddenTimeout);
+            container.classList.remove("open");
+            stopVideo(iframe);
+            hiddenTimeout = window.setTimeout(function () {
+                container.hidden = true;
+            }, ANIMATION_SLOW_MS);
+        });
+    });
+};
+exports["default"] = addYoutubePlayer;
+
+
+/***/ }),
+
 /***/ "./src/js/utils/addOnAttrChange.ts":
 /*!*****************************************!*\
   !*** ./src/js/utils/addOnAttrChange.ts ***!
@@ -5815,9 +5883,11 @@ var addOnAttrChange = function (element, attrName, callback) {
         if (attr !== prevAttr) {
             callback(attr);
         }
+        prevAttr = attr;
     });
     observer.observe(element, {
-        attributes: true
+        attributes: true,
+        attributeFilter: [attrName]
     });
     return function () {
         observer.disconnect();
@@ -16656,22 +16726,23 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
 /* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.ts");
 /* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
 /* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
 /* harmony import */ var _utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.js");
 /* harmony import */ var _utils_parsePx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/parsePx */ "./src/js/utils/parsePx.js");
 /* harmony import */ var _components_videoPlayer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/videoPlayer */ "./src/js/components/videoPlayer.ts");
-/* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/dragToScroll */ "./src/js/components/dragToScroll.ts");
-/* harmony import */ var _components_mediaViewer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/mediaViewer */ "./src/js/components/mediaViewer.ts");
-/* harmony import */ var _components_swiper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/swiper */ "./src/js/components/swiper.ts");
-/* harmony import */ var _components_timer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/timer */ "./src/js/components/timer.ts");
-/* harmony import */ var _components_event__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/event */ "./src/js/components/event.ts");
-/* harmony import */ var _components_eventTicket__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/eventTicket */ "./src/js/components/eventTicket.ts");
-/* harmony import */ var _components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/buyEventTicketModals */ "./src/js/components/buyEventTicketModals.ts");
-/* harmony import */ var _css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../css/variables.module.scss */ "./src/css/variables.module.scss");
-/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! throttle-debounce */ "./node_modules/throttle-debounce/esm/index.js");
+/* harmony import */ var _components_youtubePlayer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/youtubePlayer */ "./src/js/components/youtubePlayer.ts");
+/* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/dragToScroll */ "./src/js/components/dragToScroll.ts");
+/* harmony import */ var _components_mediaViewer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/mediaViewer */ "./src/js/components/mediaViewer.ts");
+/* harmony import */ var _components_swiper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/swiper */ "./src/js/components/swiper.ts");
+/* harmony import */ var _components_timer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/timer */ "./src/js/components/timer.ts");
+/* harmony import */ var _components_event__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/event */ "./src/js/components/event.ts");
+/* harmony import */ var _components_eventTicket__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/eventTicket */ "./src/js/components/eventTicket.ts");
+/* harmony import */ var _components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/buyEventTicketModals */ "./src/js/components/buyEventTicketModals.ts");
+/* harmony import */ var _css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../css/variables.module.scss */ "./src/css/variables.module.scss");
+/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! throttle-debounce */ "./node_modules/throttle-debounce/esm/index.js");
 
 
 
@@ -16693,9 +16764,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const ANIMATION_SLOW_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["animation-slow"]) * 1000;
-const ANIMATION_NORMAL_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["animation-normal"]) * 1000;
-const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_5__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_14__["default"]["popper-viewport-padding"]);
+
+const ANIMATION_SLOW_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["animation-slow"]) * 1000;
+const ANIMATION_NORMAL_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["animation-normal"]) * 1000;
+const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_5__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["popper-viewport-padding"]);
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
@@ -16716,7 +16788,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 				..._options,
 			}
 			clearTimeout(closingTimeout);
-			if (!popper) popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(currentAnchorElement, popperMenu, {
+			if (!popper) popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_17__.createPopper)(currentAnchorElement, popperMenu, {
 				strategy: "fixed",
 				modifiers: [{
 
@@ -16838,7 +16910,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		updateSelected();
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(jquery__WEBPACK_IMPORTED_MODULE_0___default()(trigger).get(0), jquery__WEBPACK_IMPORTED_MODULE_0___default()(menu).get(0), {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_17__.createPopper)(jquery__WEBPACK_IMPORTED_MODULE_0___default()(trigger).get(0), jquery__WEBPACK_IMPORTED_MODULE_0___default()(menu).get(0), {
 			strategy: "fixed",
 			modifiers: [
 				_utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__.sameWidth
@@ -16956,7 +17028,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		const placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0]
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(copyText, tooltip, {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_17__.createPopper)(copyText, tooltip, {
 			placement: placement,
 			strategy: "absolute",
 			modifiers: [
@@ -17076,7 +17148,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 			}
 		}
 
-		const updateMenu = (0,throttle_debounce__WEBPACK_IMPORTED_MODULE_15__.throttle)(250, () => {
+		const updateMenu = (0,throttle_debounce__WEBPACK_IMPORTED_MODULE_16__.throttle)(250, () => {
 			let visibleWidth = moreItems.clientWidth;
 			let lastVisible = -1;
 			menuItems.forEach((menuItem, index) => {
@@ -17114,7 +17186,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		let overlay;
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(moreItems, moreItemsMenu, {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_17__.createPopper)(moreItems, moreItemsMenu, {
 			strategy: "fixed",
 		})
 
@@ -17209,7 +17281,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		const placement = trigger.dataset.withTooltipPlacement || "top";
 		const tooltip = trigger.querySelector(".tooltip");
 
-		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_16__.createPopper)(trigger, tooltip, {
+		const popper = (0,_popperjs_core__WEBPACK_IMPORTED_MODULE_17__.createPopper)(trigger, tooltip, {
 			placement: placement,
 			strategy: "absolute",
 			modifiers: [
@@ -17383,56 +17455,6 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		jquery__WEBPACK_IMPORTED_MODULE_0___default()(".chat").toggleClass("open");
 	})
 
-	// youtube
-
-	const stopVideo = (iframe) => {
-		iframe.src = iframe.src;
-	}
-
-	const setSrc = (iframe) => {
-		if (iframe.src !== iframe.dataset.src) {
-			iframe.src = iframe.dataset.src;
-		}
-	}
-
-	document.querySelectorAll(".youtube-trigger").forEach(trigger => {
-		const target = document.querySelector(trigger.dataset.youtubeTriggerTarget);
-
-		trigger.addEventListener("click", () => {
-			if (target) {
-				const iframe = target.querySelector("iframe");
-				if (iframe) setSrc(iframe);
-
-				document.querySelectorAll(".youtube-embedded").forEach(other => {
-					other.classList.remove("open");
-					other.hidden = true;
-				});
-				target.classList.add("open");
-				target.hidden = false;
-			}
-		})
-	})
-
-	document.querySelectorAll(".youtube-embedded").forEach(container => {
-		const overlay = container.querySelector(".youtube-embedded__overlay");
-		const iframe = container.querySelector("iframe");
-
-		container.hidden = true;
-
-		if (overlay) {
-			let hiddenTimeout = -1;
-			overlay.addEventListener("click", () => {
-				clearTimeout(hiddenTimeout);
-				container.classList.remove("open");
-				stopVideo(iframe);
-
-				hiddenTimeout = setTimeout(() => {
-					container.hidden = true;
-				}, ANIMATION_SLOW_MS);
-			})
-		}
-	})
-
 	// cashout pool
 
 	const expressToggler = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#expressToggler");
@@ -17554,30 +17576,33 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 	// drag to scroll
 	if (!(0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__["default"])()) {
-		(0,_components_dragToScroll__WEBPACK_IMPORTED_MODULE_7__["default"])();
+		(0,_components_dragToScroll__WEBPACK_IMPORTED_MODULE_8__["default"])();
 	}
 
 	// media viewer
-	(0,_components_mediaViewer__WEBPACK_IMPORTED_MODULE_8__["default"])();
+	(0,_components_mediaViewer__WEBPACK_IMPORTED_MODULE_9__["default"])();
 
 	// swiper
-	(0,_components_swiper__WEBPACK_IMPORTED_MODULE_9__["default"])();
+	(0,_components_swiper__WEBPACK_IMPORTED_MODULE_10__["default"])();
 
 	// timer 
-	(0,_components_timer__WEBPACK_IMPORTED_MODULE_10__["default"])();
+	(0,_components_timer__WEBPACK_IMPORTED_MODULE_11__["default"])();
 
 	// event 
-	(0,_components_event__WEBPACK_IMPORTED_MODULE_11__["default"])();
+	(0,_components_event__WEBPACK_IMPORTED_MODULE_12__["default"])();
 
 	// event-ticket
-	(0,_components_eventTicket__WEBPACK_IMPORTED_MODULE_12__["default"])();
+	(0,_components_eventTicket__WEBPACK_IMPORTED_MODULE_13__["default"])();
 
 	// buy event tickets
-	(0,_components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_13__["default"])();
+	(0,_components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_14__["default"])();
+
+	// youtube
+	(0,_components_youtubePlayer__WEBPACK_IMPORTED_MODULE_7__["default"])();
 });
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle7.4.0.js.map
+//# sourceMappingURL=bundle7.5.0.js.map
