@@ -3175,11 +3175,11 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"color-text-more-secondary": "rgba(255, 255, 255, 0.32)",
 	"color-prime-main": "#FF6500",
 	"color-success-main": "#2E906D",
-	"color-error-main": "#F44336",
+	"color-error-main": "#FC4141",
 	"color-divider": "rgba(255, 255, 255, 0.08)",
 	"popper-viewport-padding": "16px",
 	"typography-font-family": "\"Golos\"",
-	"animation-fas": "0.2s",
+	"animation-fast": "0.2s",
 	"animation-normal": "0.35s",
 	"animation-slow": "0.5s",
 	"breakpoint-mobile": "360px",
@@ -5409,6 +5409,442 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/components/AccumGoal/addAccumGoal.ts":
+/*!**************************************************!*\
+  !*** ./src/components/AccumGoal/addAccumGoal.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var cssVariables_1 = __webpack_require__(/*! ../../js/utils/cssVariables */ "./src/js/utils/cssVariables.ts");
+var animMs = cssVariables_1["default"].animationFastMs * 0.5;
+var addAccumGoal = function () {
+    document.querySelectorAll(".accum-goal__card").forEach(function (card) {
+        var timeoutId = -1;
+        var isAnimating = false;
+        card.addEventListener("click", function () {
+            var info = card.querySelector(".accum-goal__info");
+            var award = card.querySelector(".accum-goal__award");
+            if (!(info instanceof HTMLElement))
+                return;
+            if (!(award instanceof HTMLElement))
+                return;
+            if (info.hidden && !isAnimating) {
+                isAnimating = true;
+                award.style.transform = "rotateY(75deg)";
+                award.style.transition = "transform ease-in ".concat(animMs, "ms");
+                info.style.transform = "rotateY(-75deg)";
+                info.style.transition = "transform ease-out ".concat(animMs, "ms");
+                timeoutId = window.setTimeout(function () {
+                    award.hidden = true;
+                    info.hidden = false;
+                    setTimeout(function () {
+                        info.style.transform = "rotateY(0deg)";
+                        isAnimating = false;
+                    }, 10);
+                }, animMs);
+            }
+            else {
+                isAnimating = true;
+                info.style.transform = "rotateY(75deg)";
+                info.style.transition = "transform ease-in ".concat(animMs, "ms");
+                award.style.transform = "rotateY(-75deg)";
+                award.style.transition = "transform ease-out ".concat(animMs, "ms");
+                isAnimating = false;
+                timeoutId = window.setTimeout(function () {
+                    info.hidden = true;
+                    award.hidden = false;
+                    setTimeout(function () {
+                        award.style.transform = "rotateY(0deg)";
+                        isAnimating = false;
+                    }, 10);
+                }, animMs);
+            }
+        });
+    });
+};
+exports["default"] = addAccumGoal;
+
+
+/***/ }),
+
+/***/ "./src/components/uiKit/LinearSelect/addLinearSelect.ts":
+/*!**************************************************************!*\
+  !*** ./src/components/uiKit/LinearSelect/addLinearSelect.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var setValue = function (linearSelect, value) {
+    var input = linearSelect.querySelector("input");
+    var items = linearSelect.querySelectorAll(".linear-select__item");
+    if (input) {
+        input.setAttribute("value", value);
+    }
+    if (items) {
+        items.forEach(function (item) {
+            var itemValue = item.getAttribute("data-value");
+            if (itemValue === value) {
+                item.classList.add("selected");
+            }
+            else {
+                item.classList.remove("selected");
+            }
+        });
+    }
+};
+var addLinearSelect = function () {
+    document.querySelectorAll(".linear-select").forEach(function (linearSelect) {
+        if (!(linearSelect instanceof HTMLElement)) {
+            console.error("'.linear-select' is not HTMLElement", linearSelect);
+            return;
+        }
+        var input = linearSelect.querySelector("input");
+        if (!input) {
+            console.error("No input in '.linear-select'", linearSelect);
+            return;
+        }
+        var value = input.value;
+        setValue(linearSelect, value);
+        linearSelect.addEventListener("click", function (e) {
+            if (!(e.target instanceof HTMLElement))
+                return;
+            var item = e.target.closest(".linear-select__item");
+            if (!(item instanceof HTMLElement))
+                return;
+            var itemValue = item.getAttribute("data-value");
+            if (itemValue !== null) {
+                setValue(linearSelect, itemValue);
+            }
+        });
+    });
+};
+exports["default"] = addLinearSelect;
+
+
+/***/ }),
+
+/***/ "./src/components/uiKit/ProgressBar/addProgressBar.ts":
+/*!************************************************************!*\
+  !*** ./src/components/uiKit/ProgressBar/addProgressBar.ts ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var helpers_1 = __webpack_require__(/*! ./helpers */ "./src/components/uiKit/ProgressBar/helpers.ts");
+var getCurrentPercent = function (slider) {
+    if (!slider.parentElement)
+        return 0;
+    var sliderStyles = getComputedStyle(slider);
+    var parentStyles = getComputedStyle(slider.parentElement);
+    return parseFloat(sliderStyles.left) / parseFloat(parentStyles.width) * 100;
+};
+var updateTicks = function (progressBar, min, max) {
+    var labels = progressBar.querySelectorAll(".progress-bar__label.real-position");
+    labels.forEach(function (label, index) {
+        if (!(label instanceof HTMLElement))
+            return;
+        var valueStr = label.getAttribute("data-value");
+        if (valueStr === null)
+            return;
+        var value = parseFloat(valueStr);
+        if (isNaN(value)) {
+            console.error("data-value is not a number in element ", label);
+            return;
+        }
+        ;
+        var percent = (0, helpers_1.clamp)((0, helpers_1.valueToPercent)(value, min, max), 0, 100);
+        label.style.position = "absolute";
+        label.style.bottom = "0px";
+        label.style.left = percent + "%";
+        label.style.transform = "translateX(-50%)";
+    });
+};
+var updateLineValue = function (_a, min, max) {
+    var slider = _a.slider, lineValue = _a.lineValue, input = _a.input;
+    var value = parseFloat(input.value);
+    var valuePercent = (0, helpers_1.clamp)((0, helpers_1.valueToPercent)(value, min, max), 0, 100);
+    slider.style.left = "".concat(valuePercent, "%");
+    lineValue.style.width = "".concat(valuePercent, "%");
+};
+var addProgressBar = function () {
+    document.querySelectorAll(".progress-bar.editable").forEach(function (progressBar) {
+        var min = parseFloat(progressBar.getAttribute("data-min") || "0");
+        var max = parseFloat(progressBar.getAttribute("data-max") || "100");
+        var slider = progressBar.querySelector(".progress-bar__slider");
+        var lineValue = progressBar.querySelector(".progress-bar__value");
+        var input = progressBar.querySelector("input.progress-bar__input");
+        if (!(progressBar instanceof HTMLElement)) {
+            console.error("Progress bar is not HTMLElement");
+            return;
+        }
+        ;
+        if (!(slider instanceof HTMLElement)) {
+            console.error("Progress bar has no '.progress-bar__slider'");
+            return;
+        }
+        ;
+        if (!(lineValue instanceof HTMLElement)) {
+            console.error("Progress bar has no '.progress-bar__value'");
+            return;
+        }
+        ;
+        if (!(input instanceof HTMLInputElement)) {
+            console.error("Progress bar has no 'input.progress-bar__input'");
+            return;
+        }
+        ;
+        updateLineValue({ slider: slider, lineValue: lineValue, input: input }, min, max);
+        updateTicks(progressBar, min, max);
+        var run = false;
+        var percent = getCurrentPercent(slider);
+        var update = function () {
+            if (!run)
+                return;
+            slider.style.left = "".concat(percent, "%");
+            lineValue.style.width = "".concat(percent, "%");
+            var value = Math.round(percent * (max - min) / 100 + min);
+            input.setAttribute("value", "" + value);
+            slider.setAttribute("data-tooltip-content", "" + value);
+            requestAnimationFrame(update);
+        };
+        var onPointerDown = function (event) {
+            document.documentElement.addEventListener("pointermove", onPointerMove);
+            document.documentElement.addEventListener("pointerup", onPointerUp);
+            document.documentElement.style.userSelect = "none";
+            progressBar.classList.add("changing");
+            slider.classList.add("show");
+            run = true;
+            requestAnimationFrame(update);
+        };
+        var onPointerMove = function (event) {
+            var rect = progressBar.getBoundingClientRect();
+            var progressBarX = rect.x;
+            var progressBarWidth = rect.width;
+            percent = (0, helpers_1.clamp)((event.clientX - progressBarX) / progressBarWidth * 100, 0, 100);
+        };
+        var onPointerUp = function (event) {
+            document.documentElement.removeEventListener("pointermove", onPointerMove);
+            document.documentElement.removeEventListener("pointerup", onPointerUp);
+            document.documentElement.style.userSelect = "";
+            progressBar.classList.remove("changing");
+            slider.classList.remove("show");
+            run = false;
+        };
+        slider.addEventListener("pointerdown", onPointerDown);
+    });
+};
+exports["default"] = addProgressBar;
+
+
+/***/ }),
+
+/***/ "./src/components/uiKit/ProgressBar/helpers.ts":
+/*!*****************************************************!*\
+  !*** ./src/components/uiKit/ProgressBar/helpers.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+exports.clamp = exports.valueToPercent = void 0;
+var valueToPercent = function (value, min, max) {
+    return ((value - min) / (max - min)) * 100;
+};
+exports.valueToPercent = valueToPercent;
+var clamp = function (value, min, max) {
+    if (value > max)
+        return max;
+    if (value < min)
+        return min;
+    return value;
+};
+exports.clamp = clamp;
+
+
+/***/ }),
+
+/***/ "./src/components/uiKit/Timer/addTimer.ts":
+/*!************************************************!*\
+  !*** ./src/components/uiKit/Timer/addTimer.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var getFinishDate = function (el) {
+    var str = el.getAttribute("data-timer-finish-date");
+    var finishDate = str ? new Date(str) : undefined;
+    return finishDate;
+};
+var getFormat = function (el) {
+    var str = el.getAttribute("data-timer-format");
+    return str || "hhhh:mm:ss";
+};
+var updateTimer = function (_a) {
+    var timer = _a.timer, daysContainer = _a.daysContainer, hoursContainer = _a.hoursContainer, minutesContainer = _a.minutesContainer, secondsContainer = _a.secondsContainer;
+    var finishDate = getFinishDate(timer);
+    var format = getFormat(timer);
+    if (!finishDate) {
+        return {
+            isFinished: true
+        };
+    }
+    var finish = finishDate.getTime();
+    var now = Date.now();
+    var diff = finish - now;
+    diff = diff > 0 ? diff : 0;
+    var seconds = String(Math.floor(diff / 1000) % 60).padStart(2, "0");
+    var minutes = String(Math.floor(diff / (60 * 1000)) % 60).padStart(2, "0");
+    var allhours = Math.floor(diff / (60 * 60 * 1000));
+    var hours = String(Math.floor(allhours % 24)).padStart(2, "0");
+    var days = Math.floor(diff / (60 * 60 * 1000 * 24));
+    if (daysContainer) {
+        daysContainer.textContent = "" + days;
+    }
+    if (hoursContainer) {
+        hoursContainer.textContent = "" + hours;
+    }
+    if (minutesContainer) {
+        minutesContainer.textContent = "" + minutes;
+    }
+    if (secondsContainer) {
+        secondsContainer.textContent = "" + seconds;
+    }
+    if (!daysContainer && !hoursContainer && !minutesContainer && !secondsContainer) {
+        timer.textContent = format.replace("dd", "" + days)
+            .replace("hhhh", "" + allhours)
+            .replace("hh", "" + hours)
+            .replace("mm", "" + minutes)
+            .replace("ss", "" + seconds);
+    }
+    return {
+        isFinished: diff === 0
+    };
+};
+var addTimer = function () {
+    var timers = document.querySelectorAll(".timer");
+    timers.forEach(function (timer) {
+        var finishDate = getFinishDate(timer);
+        if (!finishDate)
+            return;
+        var format = timer.getAttribute("data-timer-format");
+        var daysContainer = timer.querySelector("[data-timer-days]");
+        var hoursContainer = timer.querySelector("[data-timer-hours]");
+        var minutesContainer = timer.querySelector("[data-timer-minutes]");
+        var secondsContainer = timer.querySelector("[data-timer-seconds]");
+        var intervalId = window.setInterval(function () {
+            var isFinished = updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer }).isFinished;
+            if (isFinished) {
+                window.clearInterval(intervalId);
+            }
+        }, 1000);
+        updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer });
+    });
+};
+exports["default"] = addTimer;
+
+
+/***/ }),
+
+/***/ "./src/components/uiKit/Tooltiped/addTooltiped.ts":
+/*!********************************************************!*\
+  !*** ./src/components/uiKit/Tooltiped/addTooltiped.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var core_1 = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js");
+var addOnAttrChange_1 = __webpack_require__(/*! ../../../js/utils/addOnAttrChange */ "./src/js/utils/addOnAttrChange.ts");
+var popperModifiers_1 = __webpack_require__(/*! ../../../js/utils/popperModifiers */ "./src/js/utils/popperModifiers.ts");
+var variables_module_scss_1 = __webpack_require__(/*! ../../../css/variables.module.scss */ "./src/css/variables.module.scss");
+var popperEnable_1 = __webpack_require__(/*! ../../../js/utils/popperEnable */ "./src/js/utils/popperEnable.ts");
+var ANIMATION_NORMAL_MS = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
+var createTooltip = function (content) {
+    var tooltip = document.createElement("div");
+    tooltip.classList.add("tooltip");
+    var tooltipContent = document.createElement("div");
+    tooltipContent.classList.add("tooltip__content");
+    tooltipContent.textContent = content;
+    tooltip.appendChild(tooltipContent);
+    return tooltip;
+};
+var addTooltiped = function () {
+    document.querySelectorAll(".tooltiped").forEach(function (anchor) {
+        var initialContent = anchor.getAttribute("data-tooltip-content") || "";
+        var initialShow = anchor.classList.contains("show");
+        var placement = (anchor.getAttribute("data-placement") || "auto");
+        var tooltip = createTooltip(initialContent);
+        var tooltipContent = tooltip.querySelector(".tooltip__content");
+        if (!tooltipContent)
+            return;
+        document.body.append(tooltip);
+        var popper = (0, core_1.createPopper)(anchor, tooltip, {
+            placement: placement || "auto",
+            strategy: "absolute",
+            modifiers: [
+                {
+                    name: "flip",
+                    options: {
+                        fallbackPlacements: ['auto']
+                    }
+                },
+                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
+                    element.classList.remove("top");
+                    element.classList.remove("left");
+                    element.classList.remove("right");
+                    element.classList.remove("bottom");
+                    element.classList.add(placement);
+                }),
+            ]
+        });
+        var run = initialShow;
+        var content = initialContent;
+        var fadeOutTimeoutId = -1;
+        var update = function () {
+            if (!run)
+                return;
+            popper.update();
+            tooltipContent.textContent = content;
+            requestAnimationFrame(update);
+        };
+        var onDataTooltipContentChange = function () {
+            content = anchor.getAttribute("data-tooltip-content") || "";
+        };
+        var onClassChange = function () {
+            var show = anchor.classList.contains("show");
+            window.clearTimeout(fadeOutTimeoutId);
+            tooltip.classList.remove("fade-out");
+            if (show) {
+                run = true;
+                tooltip.classList.add("show");
+                (0, popperEnable_1.enablePopper)(popper);
+                update();
+            }
+            else {
+                run = false;
+                tooltip.classList.add("fade-out");
+                fadeOutTimeoutId = window.setTimeout(function () {
+                    tooltip.classList.remove("show");
+                    tooltip.classList.remove("fade-out");
+                }, ANIMATION_NORMAL_MS);
+                (0, popperEnable_1.disablePopper)(popper);
+            }
+        };
+        (0, addOnAttrChange_1["default"])(anchor, "class", onClassChange);
+        (0, addOnAttrChange_1["default"])(anchor, "data-tooltip-content", onDataTooltipContentChange);
+        onClassChange();
+    });
+};
+exports["default"] = addTooltiped;
+
+
+/***/ }),
+
 /***/ "./src/js/components/buyEventTicketModals.ts":
 /*!***************************************************!*\
   !*** ./src/js/components/buyEventTicketModals.ts ***!
@@ -5478,62 +5914,131 @@ exports["default"] = addBuyEventTicketModals;
 /*!*******************************************!*\
   !*** ./src/js/components/dragToScroll.ts ***!
   \*******************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
+var isTouchEnabled_1 = __webpack_require__(/*! ../utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.ts");
 var addDragToScroll = function () {
+    var stopCoef = 0.95;
+    if ((0, isTouchEnabled_1["default"])())
+        return;
     document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
         if (!(element instanceof HTMLElement))
             return;
-        var pos = { top: 0, left: 0, x: 0, y: 0 };
-        var mousePosBefore = { x: 0, y: 0 };
+        var isCursorDisabled = element.dataset.cursorDisabled !== undefined;
+        // for grab
+        var startPos = {
+            top: 0,
+            left: 0,
+            x: 0,
+            y: 0
+        };
+        var pos = {
+            top: 0,
+            left: 0,
+            x: 0,
+            y: 0
+        };
+        var prevPos = __assign({}, pos);
+        var isGrabbed = false;
+        // for intertia
+        var transform = { x: 0, y: 0 };
         var onMouseDown = function (e) {
-            pos = {
-                // The current scroll
+            startPos = {
                 left: element.scrollLeft,
                 top: element.scrollTop,
-                // Get the current mouse position
                 x: e.clientX,
                 y: e.clientY
             };
-            mousePosBefore = {
-                x: e.clientX,
-                y: e.clientY
+            pos = __assign({}, startPos);
+            prevPos = __assign({}, pos);
+            prevPos;
+            isGrabbed = true;
+            transform = {
+                x: 0,
+                y: 0
             };
-            element.style.cursor = 'grabbing';
-            element.style.userSelect = 'none';
-            element.querySelectorAll("img").forEach(function (img) { return img.draggable = false; });
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
+            if (!isCursorDisabled)
+                element.style.cursor = "grabbing";
+            element.style.userSelect = "none";
+            element
+                .querySelectorAll("img")
+                .forEach(function (img) { return (img.draggable = false); });
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+            requestAnimationFrame(move);
         };
         var onMouseMove = function (e) {
-            // How far the mouse has been moved
-            var dx = e.clientX - pos.x;
-            var dy = e.clientY - pos.y;
-            // Scroll the element
-            element.scrollTop = pos.top - dy;
-            element.scrollLeft = pos.left - dx;
+            var dx = e.clientX - startPos.x;
+            var dy = e.clientY - startPos.y;
+            pos.left = startPos.left - dx;
+            pos.top = startPos.top - dy;
+            pos.x = e.clientX;
+            pos.y = e.clientY;
         };
         var onMouseUp = function (e) {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-            element.style.cursor = 'grab';
-            element.style.removeProperty('user-select');
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+            isGrabbed = false;
+            if (!isCursorDisabled)
+                element.style.cursor = "grab";
+            element.style.removeProperty("user-select");
+            requestAnimationFrame(moveByInertia);
+        };
+        var move = function () {
+            if (!isGrabbed)
+                return;
+            transform = {
+                x: prevPos.left - pos.left,
+                y: prevPos.top - pos.top
+            };
+            element.scrollTop = pos.top;
+            element.scrollLeft = pos.left;
+            prevPos = __assign({}, pos);
+            console.log("move");
+            requestAnimationFrame(move);
+        };
+        var moveByInertia = function () {
+            if (isGrabbed)
+                return;
+            if (Math.pow(transform.x, 2) + Math.pow(transform.y, 2) <
+                0.3)
+                return;
+            transform.x *= stopCoef;
+            transform.y *= stopCoef;
+            element.scrollLeft -= transform.x;
+            element.scrollTop -= transform.y;
+            requestAnimationFrame(moveByInertia);
         };
         var preventClickIfMove = function (e) {
             var diff = {
-                x: mousePosBefore.x - e.clientX,
-                y: mousePosBefore.y - e.clientY
+                x: startPos.x - e.clientX,
+                y: startPos.y - e.clientY
             };
             var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+            console.log(diffLength);
             if (diffLength > 4) {
                 e.stopPropagation();
             }
         };
-        element.style.cursor = 'grab';
+        if (!isCursorDisabled)
+            element.style.cursor = "grab";
         element.addEventListener("mousedown", onMouseDown);
-        element.addEventListener("click", preventClickIfMove, { capture: true });
+        element.addEventListener("click", preventClickIfMove, {
+            capture: true
+        });
     });
 };
 exports["default"] = addDragToScroll;
@@ -5704,46 +6209,6 @@ exports["default"] = addSwiper;
 
 /***/ }),
 
-/***/ "./src/js/components/timer.ts":
-/*!************************************!*\
-  !*** ./src/js/components/timer.ts ***!
-  \************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-var getFinishDate = function (el) {
-    var str = el.getAttribute("data-timer-finish-date");
-    var finishDate = str ? new Date(str) : undefined;
-    return finishDate;
-};
-var addTimer = function () {
-    var timers = document.querySelectorAll(".timer");
-    timers.forEach(function (timer) {
-        var finishDate = getFinishDate(timer);
-        if (!finishDate)
-            return;
-        var updateTimer = function () {
-            var finishDate = getFinishDate(timer);
-            if (!finishDate)
-                return;
-            var finish = finishDate.getTime();
-            var now = Date.now();
-            var diff = finish - now;
-            var sec = String(Math.floor(diff / 1000) % 60).padStart(2, "0");
-            var minutes = String(Math.floor(diff / (60 * 1000)) % 60).padStart(2, "0");
-            var hours = Math.floor(diff / (60 * 60 * 1000));
-            timer.textContent = "".concat(hours, ":").concat(minutes, ":").concat(sec);
-        };
-        setInterval(updateTimer, 1000);
-        updateTimer();
-    });
-};
-exports["default"] = addTimer;
-
-
-/***/ }),
-
 /***/ "./src/js/components/videoPlayer.ts":
 /*!******************************************!*\
   !*** ./src/js/components/videoPlayer.ts ***!
@@ -5898,6 +6363,92 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
+/***/ "./src/js/utils/cssVariables.ts":
+/*!**************************************!*\
+  !*** ./src/js/utils/cssVariables.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+exports.__esModule = true;
+var variables_module_scss_1 = __webpack_require__(/*! ../../css/variables.module.scss */ "./src/css/variables.module.scss");
+var animationFastMs = parseFloat(variables_module_scss_1["default"]["animation-fast"]) * 1000;
+var animationNormalMs = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
+var animationSlowMs = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
+exports["default"] = {
+    animationFastMs: animationFastMs,
+    animationNormalMs: animationNormalMs,
+    animationSlowMs: animationSlowMs
+};
+
+
+/***/ }),
+
+/***/ "./src/js/utils/isTouchEnabled.ts":
+/*!****************************************!*\
+  !*** ./src/js/utils/isTouchEnabled.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+exports.__esModule = true;
+var isTouchEnabled = function () {
+    return ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        // @ts-expect-error
+        (navigator.msMaxTouchPoints > 0);
+};
+exports["default"] = isTouchEnabled;
+
+
+/***/ }),
+
+/***/ "./src/js/utils/popperEnable.ts":
+/*!**************************************!*\
+  !*** ./src/js/utils/popperEnable.ts ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+exports.__esModule = true;
+exports.disablePopper = exports.enablePopper = void 0;
+var enablePopper = function (popper) {
+    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
+            { name: 'eventListeners', enabled: true },
+        ], false) })); });
+    popper.update();
+};
+exports.enablePopper = enablePopper;
+var disablePopper = function (popper) {
+    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
+            { name: 'eventListeners', enabled: false },
+        ], false) })); });
+};
+exports.disablePopper = disablePopper;
+
+
+/***/ }),
+
 /***/ "./src/js/utils/popperModifiers.ts":
 /*!*****************************************!*\
   !*** ./src/js/utils/popperModifiers.ts ***!
@@ -6033,27 +6584,6 @@ function copyToClipboard(textToCopy) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (copyToClipboard);
-
-/***/ }),
-
-/***/ "./src/js/utils/isTouchEnabled.js":
-/*!****************************************!*\
-  !*** ./src/js/utils/isTouchEnabled.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-const isTouchEnabled = () => {
-	return ( 'ontouchstart' in window ) ||
-		( navigator.maxTouchPoints > 0 ) ||
-		( navigator.msMaxTouchPoints > 0 );
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isTouchEnabled);
-
 
 /***/ }),
 
@@ -16664,7 +17194,7 @@ function debounce (delay, callback, options) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -16728,21 +17258,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
 /* harmony import */ var _utils_popperModifiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/popperModifiers */ "./src/js/utils/popperModifiers.ts");
-/* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
-/* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
-/* harmony import */ var _utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.js");
-/* harmony import */ var _utils_parsePx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/parsePx */ "./src/js/utils/parsePx.js");
-/* harmony import */ var _components_videoPlayer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/videoPlayer */ "./src/js/components/videoPlayer.ts");
-/* harmony import */ var _components_youtubePlayer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/youtubePlayer */ "./src/js/components/youtubePlayer.ts");
-/* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/dragToScroll */ "./src/js/components/dragToScroll.ts");
-/* harmony import */ var _components_mediaViewer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/mediaViewer */ "./src/js/components/mediaViewer.ts");
-/* harmony import */ var _components_swiper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/swiper */ "./src/js/components/swiper.ts");
-/* harmony import */ var _components_timer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/timer */ "./src/js/components/timer.ts");
+/* harmony import */ var _utils_popperEnable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/popperEnable */ "./src/js/utils/popperEnable.ts");
+/* harmony import */ var _utils_popperEnable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_popperEnable__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/copyToClipboard */ "./src/js/utils/copyToClipboard.js");
+/* harmony import */ var scrollbooster__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! scrollbooster */ "./node_modules/scrollbooster/src/index.js");
+/* harmony import */ var _utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/isTouchEnabled */ "./src/js/utils/isTouchEnabled.ts");
+/* harmony import */ var _utils_parsePx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils/parsePx */ "./src/js/utils/parsePx.js");
+/* harmony import */ var _components_videoPlayer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/videoPlayer */ "./src/js/components/videoPlayer.ts");
+/* harmony import */ var _components_youtubePlayer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/youtubePlayer */ "./src/js/components/youtubePlayer.ts");
+/* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/dragToScroll */ "./src/js/components/dragToScroll.ts");
+/* harmony import */ var _components_dragToScroll__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_components_dragToScroll__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _components_mediaViewer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/mediaViewer */ "./src/js/components/mediaViewer.ts");
+/* harmony import */ var _components_swiper__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/swiper */ "./src/js/components/swiper.ts");
 /* harmony import */ var _components_event__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/event */ "./src/js/components/event.ts");
 /* harmony import */ var _components_eventTicket__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/eventTicket */ "./src/js/components/eventTicket.ts");
 /* harmony import */ var _components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/buyEventTicketModals */ "./src/js/components/buyEventTicketModals.ts");
 /* harmony import */ var _css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../css/variables.module.scss */ "./src/css/variables.module.scss");
 /* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! throttle-debounce */ "./node_modules/throttle-debounce/esm/index.js");
+/* harmony import */ var _components_uiKit_ProgressBar_addProgressBar__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../components/uiKit/ProgressBar/addProgressBar */ "./src/components/uiKit/ProgressBar/addProgressBar.ts");
+/* harmony import */ var _components_uiKit_Tooltiped_addTooltiped__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../components/uiKit/Tooltiped/addTooltiped */ "./src/components/uiKit/Tooltiped/addTooltiped.ts");
+/* harmony import */ var _components_uiKit_Timer_addTimer__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../components/uiKit/Timer/addTimer */ "./src/components/uiKit/Timer/addTimer.ts");
+/* harmony import */ var _components_uiKit_LinearSelect_addLinearSelect__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../components/uiKit/LinearSelect/addLinearSelect */ "./src/components/uiKit/LinearSelect/addLinearSelect.ts");
+/* harmony import */ var _components_AccumGoal_addAccumGoal__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../components/AccumGoal/addAccumGoal */ "./src/components/AccumGoal/addAccumGoal.ts");
+
 
 
 
@@ -16764,10 +17302,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const ANIMATION_SLOW_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["animation-slow"]) * 1000;
 const ANIMATION_NORMAL_MS = parseFloat(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["animation-normal"]) * 1000;
-const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_5__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["popper-viewport-padding"]);
+const POPPER_VIEWPORT_PADDING = (0,_utils_parsePx__WEBPACK_IMPORTED_MODULE_6__["default"])(_css_variables_module_scss__WEBPACK_IMPORTED_MODULE_15__["default"]["popper-viewport-padding"]);
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
@@ -17074,7 +17611,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 		let autoHidingTimeout;
 
 		jquery__WEBPACK_IMPORTED_MODULE_0___default()(copyText).click(() => {
-			(0,_utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_2__["default"])(value).then(() => {
+			(0,_utils_copyToClipboard__WEBPACK_IMPORTED_MODULE_3__["default"])(value).then(() => {
 				showTooltip();
 
 				clearTimeout(autoHidingTimeout);
@@ -17308,16 +17845,18 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 				document.body.appendChild(tooltip);
 			}
 
-			jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltip).addClass("show").removeClass("fade-out-slow");
+			jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltip).addClass("show").removeClass("fade-out");
 			clearTimeout(disappearTimeoutId);
+			(0,_utils_popperEnable__WEBPACK_IMPORTED_MODULE_2__.enablePopper)(popper);
 			popper.update();
 		});
 
 		trigger.addEventListener("mouseleave", () => {
-			jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltip).addClass("fade-out-slow");
+			jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltip).addClass("fade-out");
 
 			disappearTimeoutId = setTimeout(() => {
 				jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltip).removeClass("show");
+				(0,_utils_popperEnable__WEBPACK_IMPORTED_MODULE_2__.disablePopper)(popper);
 			}, ANIMATION_SLOW_MS)
 		});
 	})
@@ -17509,7 +18048,6 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 		if (className && targets) {
 			elem.addEventListener("click", (e) => {
-				console.log(targets);
 				targets.forEach(target => {
 					target.classList.toggle(className);
 				})
@@ -17522,12 +18060,12 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 
 	window.addEventListener('load', () => {
 
-		if ((0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__["default"])()) return;
+		if ((0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__["default"])()) return;
 
 		document.querySelectorAll("[data-drag-scroll]").forEach(elem => {
 			const content = elem.querySelector("[data-drag-scroll-content]");
 
-			new scrollbooster__WEBPACK_IMPORTED_MODULE_3__["default"]({
+			new scrollbooster__WEBPACK_IMPORTED_MODULE_4__["default"]({
 				viewport: elem,
 				content: content,
 				scrollMode: 'native',
@@ -17572,21 +18110,18 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 	})
 
 	// video player
-	;(0,_components_videoPlayer__WEBPACK_IMPORTED_MODULE_6__["default"])();
+	;(0,_components_videoPlayer__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
 	// drag to scroll
-	if (!(0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_4__["default"])()) {
-		(0,_components_dragToScroll__WEBPACK_IMPORTED_MODULE_8__["default"])();
+	if (!(0,_utils_isTouchEnabled__WEBPACK_IMPORTED_MODULE_5__["default"])()) {
+		_components_dragToScroll__WEBPACK_IMPORTED_MODULE_9___default()();
 	}
 
 	// media viewer
-	(0,_components_mediaViewer__WEBPACK_IMPORTED_MODULE_9__["default"])();
+	(0,_components_mediaViewer__WEBPACK_IMPORTED_MODULE_10__["default"])();
 
 	// swiper
-	(0,_components_swiper__WEBPACK_IMPORTED_MODULE_10__["default"])();
-
-	// timer 
-	(0,_components_timer__WEBPACK_IMPORTED_MODULE_11__["default"])();
+	(0,_components_swiper__WEBPACK_IMPORTED_MODULE_11__["default"])();
 
 	// event 
 	(0,_components_event__WEBPACK_IMPORTED_MODULE_12__["default"])();
@@ -17598,9 +18133,22 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
 	(0,_components_buyEventTicketModals__WEBPACK_IMPORTED_MODULE_14__["default"])();
 
 	// youtube
-	(0,_components_youtubePlayer__WEBPACK_IMPORTED_MODULE_7__["default"])();
+	(0,_components_youtubePlayer__WEBPACK_IMPORTED_MODULE_8__["default"])();
 });
 
+
+
+
+
+
+
+window.addEventListener("load", () => {
+	(0,_components_uiKit_ProgressBar_addProgressBar__WEBPACK_IMPORTED_MODULE_18__["default"])();
+	(0,_components_uiKit_Tooltiped_addTooltiped__WEBPACK_IMPORTED_MODULE_19__["default"])();
+	(0,_components_uiKit_Timer_addTimer__WEBPACK_IMPORTED_MODULE_20__["default"])();
+	(0,_components_uiKit_LinearSelect_addLinearSelect__WEBPACK_IMPORTED_MODULE_21__["default"])();
+	(0,_components_AccumGoal_addAccumGoal__WEBPACK_IMPORTED_MODULE_22__["default"])();
+})
 })();
 
 /******/ })()
