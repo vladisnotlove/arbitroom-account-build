@@ -1,0 +1,438 @@
+.card-with-timer .card__descr {
+  justify-content: center;
+}
+.card-with-timer .card__descr > * {
+  width: 100%;
+}
+.card-with-timer .timer__unit {
+  flex-grow: 1;
+}
+
+:export {
+  color-background: #141321;
+  color-background-lower1: #0D0C17;
+  color-background-upper1: rgba(255, 198, 255, 0.12);
+  color-text: rgba(255, 255, 255, 0.92);
+  color-text-secondary: rgba(255, 255, 255, 0.64);
+  color-text-more-secondary: rgba(255, 255, 255, 0.32);
+  color-prime-main: #FF6500;
+  color-success-main: #2E906D;
+  color-error-main: #FC4141;
+  color-divider: rgba(255, 255, 255, 0.08);
+  popper-viewport-padding: 16px;
+  typography-font-family: "Golos";
+  animation-fast: 0.2s;
+  animation-normal: 0.35s;
+  animation-slow: 0.5s;
+  breakpoint-mobile: 360px;
+  breakpoint-mobile-big: 480px;
+  breakpoint-table-small: 860px;
+  breakpoint-table: 1100px;
+  breakpoint-laptop-small: 1280px;
+  breakpoint-laptop: 1440px;
+}
+
+.enigma-awards {
+  position: relative;
+  overflow: hidden;
+  background: #0A090F;
+}
+.enigma-awards > * {
+  position: relative;
+  z-index: 2;
+}
+
+.enigma-awards__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.enigma-award-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 200px;
+  border-radius: 1rem;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  background: rgba(21, 15, 58, 0.12);
+}
+.enigma-award-card.highlighted {
+  box-shadow: 0px 0px 27px rgba(255, 35, 164, 0.45);
+}
+.enigma-award-card.highlighted::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  background: linear-gradient(143.45deg, #20FFFA -30.19%, #FF20FF 46.69%, #FF741A 77.04%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: 2;
+}
+
+.enigma-award-card__background {
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.enigma-award-card__header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.enigma-award-card__body {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  z-index: 2;
+}
+
+.enigma-award-card__img {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.enigma-award-card__footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.enigma-award-card__question-mark {
+  font-family: "Golos";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 92px;
+  line-height: 131px;
+  color: #C28FE7;
+}
+
+.enigma-awards__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.enigma-awards__background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 1226px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.enigma-awards__background-glow1 {
+  position: absolute;
+  width: 545px;
+  height: 426px;
+  left: -209px;
+  top: min(398px, 60%);
+  background: radial-gradient(136.3% 147.46% at 22.04% -55.08%, rgba(50, 255, 32, 0.36) 0%, rgba(130, 32, 255, 0.36) 71.7%, rgba(26, 255, 145, 0.36) 100%);
+  filter: blur(84.2879px);
+  z-index: 2;
+}
+
+.enigma-awards__background-glow2 {
+  position: absolute;
+  width: min(441px, 40%);
+  height: 441px;
+  right: -68px;
+  top: -258px;
+  background: radial-gradient(61.38% 21.33% at 62.13% 31.74%, rgba(160, 50, 213, 0.34) 0%, rgba(238, 40, 206, 0.34) 100%);
+  filter: blur(125.048px);
+  z-index: 2;
+}
+
+.enigma-awards__background-glow3 {
+  position: absolute;
+  width: 269.67px;
+  height: 255.8px;
+  left: 449.59px;
+  top: 95.92px;
+  background: #1A0E2C;
+  filter: blur(36.6707px);
+}
+
+.enigma-awards__expand-collapse {
+  display: none;
+  grid-column: 1/-1;
+}
+.enigma-awards__expand-collapse > .collapse-text {
+  display: none;
+}
+
+@media (max-width: 1440px) {
+  .enigma-awards__content {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+@media (max-width: 580px) {
+  .enigma-awards__content {
+    gap: 0.5rem;
+  }
+  .enigma-award-card {
+    aspect-ratio: 264/208;
+    min-height: 0;
+  }
+  .enigma-awards__background-glow2 {
+    display: none;
+  }
+  .enigma-awards__background-glow3 {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .enigma-awards.expanded .enigma-award-card {
+    display: unset;
+  }
+  .enigma-awards.expanded .enigma-awards__expand-collapse > .collapse-text {
+    display: unset;
+  }
+  .enigma-awards.expanded .enigma-awards__expand-collapse > .expand-text {
+    display: none;
+  }
+  .enigma-awards.expanded .enigma-awards__collapse {
+    display: unset;
+  }
+  .enigma-award-card {
+    display: none;
+  }
+  .enigma-award-card:nth-child(1) {
+    display: unset;
+  }
+  .enigma-award-card:nth-child(2) {
+    display: unset;
+  }
+  .enigma-awards__expand-collapse {
+    display: unset;
+  }
+}
+:export {
+  color-background: #141321;
+  color-background-lower1: #0D0C17;
+  color-background-upper1: rgba(255, 198, 255, 0.12);
+  color-text: rgba(255, 255, 255, 0.92);
+  color-text-secondary: rgba(255, 255, 255, 0.64);
+  color-text-more-secondary: rgba(255, 255, 255, 0.32);
+  color-prime-main: #FF6500;
+  color-success-main: #2E906D;
+  color-error-main: #FC4141;
+  color-divider: rgba(255, 255, 255, 0.08);
+  popper-viewport-padding: 16px;
+  typography-font-family: "Golos";
+  animation-fast: 0.2s;
+  animation-normal: 0.35s;
+  animation-slow: 0.5s;
+  breakpoint-mobile: 360px;
+  breakpoint-mobile-big: 480px;
+  breakpoint-table-small: 860px;
+  breakpoint-table: 1100px;
+  breakpoint-laptop-small: 1280px;
+  breakpoint-laptop: 1440px;
+}
+
+.enigma-tickets {
+  overflow: hidden;
+}
+
+.enigma-tickets__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.enigma-tickets__record {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 2.25rem;
+  row-gap: 0.75rem;
+}
+
+.enigma-tickets__record-body {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  width: 300px;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.enigma-tickets__text-block {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.enigma-tickets__text-block-value {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.enigma-tickets__text-block-label {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.enigma-tickets__text {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  min-width: 0;
+}
+
+.enigma-ticket {
+  position: relative;
+  width: fit-content;
+  filter: drop-shadow(0px 0px 24px rgba(255, 101, 0, 0.24)) drop-shadow(0px 0px 24px rgba(255, 101, 0, 0.24));
+}
+
+.enigma-ticket__img {
+  user-select: none;
+}
+
+.enigma-ticket__id {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  writing-mode: vertical-lr;
+  transform: translateY(-50%) scale(-1);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+}
+
+.enigma-ticket__no-id {
+  position: absolute;
+  right: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Golos";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28.3333px;
+  line-height: 42px;
+  /* identical to box height, or 150% */
+  text-align: center;
+  letter-spacing: 0.708333px;
+  color: #FEEC97;
+  user-select: none;
+}
+
+.enigma-tickets__expand-collapse {
+  display: none;
+}
+.enigma-tickets__expand-collapse > .collapse-text {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .enigma-tickets {
+    max-height: none;
+  }
+  .enigma-tickets.expanded .enigma-tickets__record {
+    display: flex;
+  }
+  .enigma-tickets.expanded .enigma-tickets__expand-collapse > .expand-text {
+    display: none;
+  }
+  .enigma-tickets.expanded .enigma-tickets__expand-collapse > .collapse-text {
+    display: unset;
+  }
+  .enigma-tickets__record {
+    display: none;
+  }
+  .enigma-tickets__record:nth-child(1) {
+    display: flex;
+  }
+  .enigma-tickets__record:nth-child(2) {
+    display: flex;
+  }
+  .enigma-tickets__record:nth-child(3) {
+    display: flex;
+  }
+  .enigma-tickets__record:nth-child(4) {
+    display: flex;
+  }
+  .enigma-tickets__expand-collapse {
+    display: unset;
+  }
+}
+.tab__enigma {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto 476px;
+  grid-template-areas: "c c c c c c c c c c c c" "a a a a a a a a a a a a" "t t t t t t t i i i i i" "o o o o o o o o o o o o";
+  gap: 1rem;
+}
+
+.tab__enigma-cards {
+  grid-area: c;
+}
+
+.tab__enigma-awards {
+  grid-area: a;
+}
+
+.tab__enigma-tickets {
+  grid-area: t;
+}
+
+.tab__enigma-terms {
+  grid-area: i;
+}
+
+.tab__enigma-operations {
+  grid-area: o;
+}
+
+@media (max-width: 760px) {
+  .tab__enigma {
+    display: flex;
+    flex-direction: column;
+  }
+  .tab__enigma-terms {
+    max-height: 400px;
+  }
+}
