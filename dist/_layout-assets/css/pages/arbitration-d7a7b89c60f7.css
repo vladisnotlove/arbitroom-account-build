@@ -1,0 +1,72 @@
+.arbitr-opports__filters {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+  row-gap: 0.75rem;
+}
+.arbitr-opports__filters > .multi-select {
+  min-width: 0;
+  max-width: 272px;
+}
+.arbitr-opports__filters > .input {
+  max-width: 272px;
+}
+.arbitr-opports__filters > .toggle-button-group {
+  min-width: 0;
+  width: fit-content;
+}
+
+.arbitr-opports__table {
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+.arbitr-opports__table .table__cell {
+  vertical-align: middle;
+}
+
+.arbitr-opports__table-label {
+  display: flex;
+  flex-direction: column;
+}
+.arbitr-opports__table-label > *:first-child {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+  margin-bottom: 0.25rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+.arbitr-opports__table-label > *:nth-child(2) {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(255, 255, 255, 0.64);
+}
+.arbitr-opports__table-label > *:nth-child(3) {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.arbitr-opports__table-value {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+}
+.arbitr-opports__table-value.positive {
+  color: #2E906D;
+}
+.arbitr-opports__table-value.negative {
+  color: #FC4141;
+}
+
+.tab__arbitr {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

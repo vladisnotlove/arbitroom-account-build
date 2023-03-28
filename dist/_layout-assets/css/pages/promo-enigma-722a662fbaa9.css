@@ -8,30 +8,6 @@
   flex-grow: 1;
 }
 
-:export {
-  color-background: #141321;
-  color-background-lower1: #0D0C17;
-  color-background-upper1: rgba(255, 198, 255, 0.12);
-  color-text: rgba(255, 255, 255, 0.92);
-  color-text-secondary: rgba(255, 255, 255, 0.64);
-  color-text-more-secondary: rgba(255, 255, 255, 0.32);
-  color-prime-main: #FF6500;
-  color-success-main: #2E906D;
-  color-error-main: #FC4141;
-  color-divider: rgba(255, 255, 255, 0.08);
-  popper-viewport-padding: 16px;
-  typography-font-family: "Golos";
-  animation-fast: 0.2s;
-  animation-normal: 0.35s;
-  animation-slow: 0.5s;
-  breakpoint-mobile: 360px;
-  breakpoint-mobile-big: 480px;
-  breakpoint-table-small: 860px;
-  breakpoint-table: 1100px;
-  breakpoint-laptop-small: 1280px;
-  breakpoint-laptop: 1440px;
-}
-
 .enigma-awards {
   position: relative;
   overflow: hidden;
@@ -244,30 +220,6 @@
     display: unset;
   }
 }
-:export {
-  color-background: #141321;
-  color-background-lower1: #0D0C17;
-  color-background-upper1: rgba(255, 198, 255, 0.12);
-  color-text: rgba(255, 255, 255, 0.92);
-  color-text-secondary: rgba(255, 255, 255, 0.64);
-  color-text-more-secondary: rgba(255, 255, 255, 0.32);
-  color-prime-main: #FF6500;
-  color-success-main: #2E906D;
-  color-error-main: #FC4141;
-  color-divider: rgba(255, 255, 255, 0.08);
-  popper-viewport-padding: 16px;
-  typography-font-family: "Golos";
-  animation-fast: 0.2s;
-  animation-normal: 0.35s;
-  animation-slow: 0.5s;
-  breakpoint-mobile: 360px;
-  breakpoint-mobile-big: 480px;
-  breakpoint-table-small: 860px;
-  breakpoint-table: 1100px;
-  breakpoint-laptop-small: 1280px;
-  breakpoint-laptop: 1440px;
-}
-
 .enigma-tickets {
   overflow: hidden;
 }
