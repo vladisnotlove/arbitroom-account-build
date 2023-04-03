@@ -4051,6 +4051,7 @@ var addInputUrlSync = function () {
         var url = new URL(window.location.href);
         url.searchParams.set(name, value);
         if (window.location.href !== url.href) {
+            window.localStorage.setItem("page-scroll-top", "" + document.documentElement.scrollTop);
             window.location.replace(url.href);
         }
     };
@@ -4060,6 +4061,8 @@ var addInputUrlSync = function () {
                 return;
             updateUrl(e.currentTarget);
         });
+        if (element instanceof HTMLInputElement)
+            updateValue(element);
     });
     window.addEventListener("locationchange", function (e) {
         elements.forEach(function (element) {
@@ -4067,10 +4070,10 @@ var addInputUrlSync = function () {
                 updateValue(element);
         });
     });
-    elements.forEach(function (element) {
-        if (element instanceof HTMLInputElement)
-            updateValue(element);
-    });
+    var pageScrollTop = parseFloat(window.localStorage.getItem("page-scroll-top") || "0");
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo({ top: pageScrollTop });
+    document.documentElement.style.scrollBehavior = "";
 };
 exports.Z = addInputUrlSync;
 
@@ -4578,9 +4581,10 @@ var addTimer = function () {
     var timers = document.querySelectorAll(".timer");
     timers.forEach(function (timer) {
         var finishDate = getFinishDate(timer);
-        if (!finishDate)
+        if (!finishDate) {
+            console.error("timer has no finish date", timer);
             return;
-        var format = timer.getAttribute("data-timer-format");
+        }
         var daysContainer = timer.querySelector("[data-timer-days]");
         var hoursContainer = timer.querySelector("[data-timer-hours]");
         var minutesContainer = timer.querySelector("[data-timer-minutes]");
