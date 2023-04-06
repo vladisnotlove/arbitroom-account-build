@@ -3080,6 +3080,7 @@ p {
 
 .side-menu__body {
   height: 100%;
+  padding-bottom: 6rem;
 }
 
 .side-menu__link {
