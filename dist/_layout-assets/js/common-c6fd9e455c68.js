@@ -4281,142 +4281,6 @@ exports["default"] = addMultiSelect;
 
 /***/ }),
 
-/***/ 813:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-var __webpack_unused_export__;
-
-__webpack_unused_export__ = true;
-var helpers_1 = __webpack_require__(1033);
-var getCurrentPercent = function (slider) {
-    if (!slider.parentElement)
-        return 0;
-    var sliderStyles = getComputedStyle(slider);
-    var parentStyles = getComputedStyle(slider.parentElement);
-    return parseFloat(sliderStyles.left) / parseFloat(parentStyles.width) * 100;
-};
-var updateTicks = function (progressBar, min, max) {
-    var labels = progressBar.querySelectorAll(".progress-bar__label.real-position");
-    labels.forEach(function (label, index) {
-        if (!(label instanceof HTMLElement))
-            return;
-        var valueStr = label.getAttribute("data-value");
-        if (valueStr === null)
-            return;
-        var value = parseFloat(valueStr);
-        if (isNaN(value)) {
-            console.error("data-value is not a number in element ", label);
-            return;
-        }
-        ;
-        var percent = (0, helpers_1.clamp)((0, helpers_1.valueToPercent)(value, min, max), 0, 100);
-        label.style.position = "absolute";
-        label.style.bottom = "0px";
-        label.style.left = percent + "%";
-        label.style.transform = "translateX(-50%)";
-    });
-};
-var updateLineValue = function (_a, min, max) {
-    var slider = _a.slider, lineValue = _a.lineValue, input = _a.input;
-    var value = parseFloat(input.value);
-    var valuePercent = (0, helpers_1.clamp)((0, helpers_1.valueToPercent)(value, min, max), 0, 100);
-    slider.style.left = "".concat(valuePercent, "%");
-    lineValue.style.width = "".concat(valuePercent, "%");
-};
-var addProgressBar = function () {
-    document.querySelectorAll(".progress-bar.editable").forEach(function (progressBar) {
-        var min = parseFloat(progressBar.getAttribute("data-min") || "0");
-        var max = parseFloat(progressBar.getAttribute("data-max") || "100");
-        var slider = progressBar.querySelector(".progress-bar__slider");
-        var lineValue = progressBar.querySelector(".progress-bar__value");
-        var input = progressBar.querySelector("input.progress-bar__input");
-        if (!(progressBar instanceof HTMLElement)) {
-            console.error("Progress bar is not HTMLElement");
-            return;
-        }
-        ;
-        if (!(slider instanceof HTMLElement)) {
-            console.error("Progress bar has no '.progress-bar__slider'");
-            return;
-        }
-        ;
-        if (!(lineValue instanceof HTMLElement)) {
-            console.error("Progress bar has no '.progress-bar__value'");
-            return;
-        }
-        ;
-        if (!(input instanceof HTMLInputElement)) {
-            console.error("Progress bar has no 'input.progress-bar__input'");
-            return;
-        }
-        ;
-        updateLineValue({ slider: slider, lineValue: lineValue, input: input }, min, max);
-        updateTicks(progressBar, min, max);
-        var run = false;
-        var percent = getCurrentPercent(slider);
-        var update = function () {
-            if (!run)
-                return;
-            slider.style.left = "".concat(percent, "%");
-            lineValue.style.width = "".concat(percent, "%");
-            var value = Math.round(percent * (max - min) / 100 + min);
-            input.setAttribute("value", "" + value);
-            slider.setAttribute("data-tooltip-content", "" + value);
-            requestAnimationFrame(update);
-        };
-        var onPointerDown = function (event) {
-            document.documentElement.addEventListener("pointermove", onPointerMove);
-            document.documentElement.addEventListener("pointerup", onPointerUp);
-            document.documentElement.style.userSelect = "none";
-            progressBar.classList.add("changing");
-            slider.classList.add("show");
-            run = true;
-            requestAnimationFrame(update);
-        };
-        var onPointerMove = function (event) {
-            var rect = progressBar.getBoundingClientRect();
-            var progressBarX = rect.x;
-            var progressBarWidth = rect.width;
-            percent = (0, helpers_1.clamp)((event.clientX - progressBarX) / progressBarWidth * 100, 0, 100);
-        };
-        var onPointerUp = function (event) {
-            document.documentElement.removeEventListener("pointermove", onPointerMove);
-            document.documentElement.removeEventListener("pointerup", onPointerUp);
-            document.documentElement.style.userSelect = "";
-            progressBar.classList.remove("changing");
-            slider.classList.remove("show");
-            run = false;
-        };
-        slider.addEventListener("pointerdown", onPointerDown);
-    });
-};
-exports.Z = addProgressBar;
-
-
-/***/ }),
-
-/***/ 1033:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-exports.clamp = exports.valueToPercent = void 0;
-var valueToPercent = function (value, min, max) {
-    return ((value - min) / (max - min)) * 100;
-};
-exports.valueToPercent = valueToPercent;
-var clamp = function (value, min, max) {
-    if (value > max)
-        return max;
-    if (value < min)
-        return min;
-    return value;
-};
-exports.clamp = clamp;
-
-
-/***/ }),
-
 /***/ 2548:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -15436,8 +15300,6 @@ function debounce (delay, callback, options) {
 
 //# sourceMappingURL=index.js.map
 
-// EXTERNAL MODULE: ./src/components/@uiKit/ProgressBar/addProgressBar.ts
-var addProgressBar = __webpack_require__(813);
 // EXTERNAL MODULE: ./src/components/@uiKit/Tooltiped/addTooltiped.ts
 var addTooltiped = __webpack_require__(8393);
 // EXTERNAL MODULE: ./src/components/@uiKit/Timer/addTimer.ts
@@ -16222,9 +16084,7 @@ external_jQuery_default()(document).ready(function () {
 
 
 
-
 window.addEventListener("load", () => {
-	(0,addProgressBar/* default */.Z)();
 	(0,addTooltiped/* default */.Z)();
 	(0,addTimer/* default */.Z)();
 	(0,addLinearSelect/* default */.Z)();
