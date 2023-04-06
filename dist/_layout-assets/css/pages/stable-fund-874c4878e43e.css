@@ -49,6 +49,9 @@
 .stable-fund-distr__rate.negative {
   color: #FC4141;
 }
+.stable-fund-distr__rate.negative > svg {
+  transform: rotate(180deg);
+}
 
 .stable-fund-distr__absolute {
   display: flex;

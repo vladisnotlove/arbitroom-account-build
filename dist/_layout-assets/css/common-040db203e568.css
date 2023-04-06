@@ -3080,6 +3080,7 @@ p {
 
 .side-menu__body {
   height: 100%;
+  padding-bottom: 6rem;
 }
 
 .side-menu__link {
@@ -3106,6 +3107,33 @@ p {
   transition: fill 0.2s;
 }
 
+.side-menu__action-container {
+  margin-top: 2.25rem;
+  padding: 0 1.5rem;
+}
+
+.side-menu__action {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 2rem;
+  background: rgba(255, 101, 0, 0.08);
+  color: #FF6500 !important;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: background 0.35s;
+}
+.side-menu__action:hover {
+  background: rgba(255, 101, 0, 0.12);
+  transition: background 0.2s;
+}
+
 .side-menu__profile-container {
   padding: 0 1.5rem;
   margin-top: 1.5rem;
@@ -3117,6 +3145,10 @@ p {
 
 .side-menu__language {
   display: none;
+}
+
+.side-menu__tabs {
+  margin-top: 1.5rem;
 }
 
 @media screen and (max-width: 1280px) {
@@ -3323,7 +3355,7 @@ p {
 }
 
 .tab_active {
-  color: #FF6500;
+  color: #FF6500 !important;
   position: relative;
 }
 .tab_active svg {
@@ -3336,10 +3368,6 @@ p {
   width: 0.125rem;
   height: 100%;
   background: #FF6500;
-}
-
-.tab_to_main {
-  margin: 1.5rem 0;
 }
 
 .tab__content {
