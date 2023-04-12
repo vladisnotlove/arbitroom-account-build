@@ -5453,476 +5453,152 @@ html.media-viewer-open {
 
 .tab__promo {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-areas: "ca ca ca ca ca ca ca ca ca ca ca ca" "l l l l l l l co co co co co" "p p p p p p p p p p p p" "q q q q q q q q q q q q" "h h h h h h h h h h h h";
   grid-gap: 1rem;
   padding-top: 1rem;
 }
 
-.tab__promo-cards {
-  grid-area: ca;
-}
-
-.tab__promo-leaders {
-  grid-area: l;
-  overflow: hidden;
-}
-
-.tab__promo-conditions {
-  grid-area: co;
-  height: 100px;
-  min-height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
-}
-.tab__promo-conditions > * {
-  min-width: 0;
-  min-height: 0;
-}
-
-.tab__promo-predictions {
-  grid-area: p;
-}
-
-.tab__promo-quests {
-  grid-area: q;
-}
-
-.tab__promo-history {
-  grid-area: h;
-}
-
-.promo-leaders {
-  background: rgba(255, 198, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
+.promo-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "p b b";
+  grid-gap: 0.5rem;
+  min-height: 16rem;
   border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(255, 198, 255, 0.12);
 }
 
-.promo-leaders__switch {
-  padding: 0 1.5rem;
-  margin-top: -0.5rem;
-  margin-bottom: 1.25rem;
+.promo-card__poster {
+  grid-area: p;
+  max-height: 16rem;
+  max-width: 100%;
+}
+.promo-card__poster img {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  object-fit: cover;
+  background: rgba(255, 209, 178, 0.1215686275);
 }
 
-.promo-leaders__select-wrapper {
-  display: none;
+.promo-card__body {
+  grid-area: b;
+  padding: 1.5rem;
 }
 
-.predictions__title {
-  font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  margin-bottom: 0.375rem;
-  margin-top: 1rem;
-}
-
-.predictions__subtitle {
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  color: rgba(255, 255, 255, 0.64);
+.promo-card__meta {
+  display: flex;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.predictions__body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.prediction {
-  flex-basis: 0;
-  flex-grow: 1;
-  display: flex;
-  gap: 1rem;
-  background: rgba(255, 198, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
-  border-radius: 1rem;
-  padding: 1.25rem;
-}
-
-.prediction__main {
-  min-width: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-right: 1rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.32);
-}
-
-.prediction__title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.prediction__platform {
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 2.25rem;
-}
-
-.prediction__platform-currency {
-  font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.prediction__value {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 2.25rem;
-}
-
-.prediction__trend {
-  display: flex;
-  gap: 0.375rem;
-  font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.prediction__trend-time {
-  color: rgba(255, 255, 255, 0.64);
-}
-
-.prediction__btns {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.prediction__fall-btn,
-.prediction__grow-btn {
-  flex-grow: 1;
-  flex-basis: 0;
-  padding: 0.5rem 0.75rem !important;
-}
-
-.prediction__details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.prediction__detail {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  row-gap: 0.25rem;
-  column-gap: 0.5rem;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
-}
-
-.prediction__detail-label {
-  color: rgba(255, 255, 255, 0.32);
-}
-
-.prediction__timer {
+.promo-card__status {
+  display: inline-block;
   padding: 0.25rem 0.5rem;
-  background: rgba(255, 198, 255, 0.12);
-  border-radius: 0.5rem;
-}
-
-.prediction-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.prediction-form__description {
+  border-radius: 1.5rem;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.25rem;
   letter-spacing: 0.15px;
 }
-
-.prediction-form__tickets {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.prediction-form__tickets-label {
-  display: flex;
-  gap: 0.5rem;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
-}
-.prediction-form__tickets-label svg {
-  width: 1rem;
-  height: 1rem;
-  fill: #FF6500;
-}
-
-.prediction-form__tickets-amount {
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
-  color: #FF6500;
-}
-
-.prediction-form__fields {
-  margin-bottom: 0.5rem;
-}
-
-.prediction-form__details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.prediction-form__detail {
-  display: flex;
-  gap: 0.25rem;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
-}
-
-.prediction-form__detail-label {
-  color: rgba(255, 255, 255, 0.64);
-}
-
-.prediction-form__detail-value {
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.quests {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: rgba(255, 198, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
-  border-radius: 1rem;
-}
-
-.quests__header {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: "t ." "s p";
-  column-gap: 2.25rem;
-  row-gap: 0.375rem;
-}
-
-.quests__title {
-  grid-area: t;
-  font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 2.25rem;
-}
-
-.quests__subtitle {
-  grid-area: s;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
-  color: rgba(255, 255, 255, 0.64);
-}
-
-.quests__progress {
-  grid-area: p;
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-}
-
-.quests__progress-label {
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  color: rgba(255, 255, 255, 0.64);
-}
-
-.quests__progress-line {
-  position: relative;
-  width: 76px;
-  height: 0.375rem;
-  background: rgba(255, 198, 255, 0.12);
-  border-radius: 1rem;
-}
-
-.quests__progress-value {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
+.promo-card__status.active {
   background: #FF6500;
-  border-radius: 1rem;
+  color: #FFF;
+}
+.promo-card__status.finished {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.64);
 }
 
-.quests__progress-icon {
-  width: 1rem;
-  height: 1rem;
-  fill: #FF6500;
+.promo-card__date {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1.5rem;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+  background: rgba(255, 209, 178, 0.1215686275);
+  color: rgba(255, 255, 255, 0.64);
 }
 
-.quests__body {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.quest {
-  flex-basis: 0;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  background: rgba(255, 198, 255, 0.12);
-  padding: 1rem;
-  border-radius: 0.75rem;
-}
-
-.quest__title {
+.promo-card__title {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 1rem;
   font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
-.quest__content {
+.promo-card__content {
+  margin-bottom: 1.5rem;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.25rem;
   letter-spacing: 0.15px;
   color: rgba(255, 255, 255, 0.64);
-  margin-bottom: 0.5rem;
 }
 
-.quest__footer {
-  display: flex;
-  align-items: flex-end;
-  flex-grow: 1;
+.promo-card__content-more {
+  height: 0;
+  overflow: hidden;
+}
+.promo-card__content-more:before {
+  display: block;
+  height: 1rem;
+  content: "";
 }
 
-.finish-quest-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.promo-card__expand-btn {
+  margin-bottom: -0.5rem;
+}
+.promo-card__expand-btn:not(.active) {
+  display: none;
 }
 
-.finish-quest-form__description {
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  letter-spacing: 0.15px;
+.promo-card__collapse-btn {
+  margin-bottom: -0.5rem;
+}
+.promo-card__collapse-btn:not(.active) {
+  display: none;
 }
 
-@media screen and (max-width: 1100px) {
-  .prediction {
-    flex-direction: column;
+@media screen and (max-width: 700px) {
+  .promo-card {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas: "p p p p p b b b b b b b";
   }
-  .prediction__main {
-    border-right: none;
-    padding-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.32);
-    padding-bottom: 1rem;
-  }
-}
-@media screen and (max-width: 800px) {
-  .tab__promo {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .tab__promo-conditions {
-    height: fit-content;
-    max-height: 900px;
-  }
-  .predictions__body {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .prediction {
-    flex-direction: row;
-  }
-  .prediction__main {
-    flex-grow: 1;
-    border-bottom: none;
-    padding-bottom: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.32);
-    padding-right: 1rem;
-  }
-  .quests__body {
-    flex-direction: column;
+  .promo-card__poster {
+    aspect-ratio: 1;
+    max-height: none;
   }
 }
 @media screen and (max-width: 600px) {
-  .prediction {
-    flex-direction: column;
+  .tab__promo {
+    padding-top: 0.5rem;
   }
-  .prediction__main {
-    border-right: none;
-    padding-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.32);
-    padding-bottom: 1rem;
-  }
-  .quests__header {
+  .promo-card {
     display: flex;
     flex-direction: column;
   }
-  .quests__progress {
-    margin-top: 0.625rem;
-  }
-  .quests__progress-line {
-    flex-grow: 1;
+  .promo-card__poster {
+    aspect-ratio: 16/9;
+    max-height: none;
   }
 }
 @media screen and (max-width: 480px) {
-  .promo-leaders {
-    background: transparent;
-    color: rgba(255, 255, 255, 0.92);
-    border-radius: 0;
+  .tab__promo {
+    padding-top: 0.5rem;
   }
-  .promo-leaders__title {
-    padding: 0.5rem 0 0 0;
+  .promo-card {
+    display: flex;
+    flex-direction: column;
   }
-  .promo-leaders__subtitle {
-    padding: 0.375rem 0 1rem 0;
-    margin: 0 !important;
-  }
-  .promo-leaders__switch {
-    margin: 0 0 1rem 0;
-    background: rgba(255, 198, 255, 0.12);
-    color: rgba(255, 255, 255, 0.92);
-    border-radius: 1rem;
-    padding: 0;
-  }
-  .promo-leaders__toggle-button-group-wrapper {
-    display: none;
-  }
-  .promo-leaders__select-wrapper {
-    display: block;
-  }
-  .promo-leaders__select-wrapper .select__trigger {
-    padding: 0.875rem;
-    border: none;
-  }
-  .promo-leaders__table {
-    background: rgba(255, 198, 255, 0.12);
-    color: rgba(255, 255, 255, 0.92);
-    border-radius: 1rem;
+  .promo-card__poster {
+    aspect-ratio: 4/3;
+    max-height: none;
   }
 }
 .tab__operations {
