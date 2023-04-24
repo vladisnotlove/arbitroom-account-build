@@ -3374,6 +3374,60 @@ p {
   display: block;
 }
 
+.tab-group {
+  user-select: none;
+}
+.tab-group.expanded .tab-group__expand {
+  transform: rotate(-90deg);
+}
+.tab-group.expanded .tab-group__tabs {
+  display: block;
+}
+
+.tab-group__label {
+  display: flex;
+  padding: 0.875rem 1.5rem;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgba(255, 255, 255, 0.64);
+  transition: color 0.35s, background 0.35s;
+  cursor: pointer;
+}
+.tab-group__label > .svg-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 1rem;
+  fill: rgba(255, 255, 255, 0.32);
+  transition: fill 0.35s;
+}
+.tab-group__label:hover {
+  color: #FF6500;
+  background: rgba(255, 255, 255, 0.06);
+  transition: color 0.2s, background 0.2s;
+}
+.tab-group__label:hover > .svg-icon {
+  fill: #FF6500;
+  transition: fill 0.2s;
+}
+
+.tab-group__name {
+  flex-grow: 1;
+}
+
+.tab-group__expand {
+  transition: transform 0.2s;
+}
+
+.tab-group__tabs {
+  display: none;
+}
+.tab-group__tabs > .tab {
+  padding-left: 2.75rem;
+}
+
 .header {
   min-width: 0;
   width: 100%;
@@ -4492,4 +4546,12 @@ html.media-viewer-open {
   bottom: 0;
   background: transparent;
   z-index: 799;
+}
+
+.newness-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #FF6500;
 }

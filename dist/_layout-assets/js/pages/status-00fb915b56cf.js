@@ -2570,443 +2570,7 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 2397:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-exports.__esModule = true;
-var constants_1 = __webpack_require__(5111);
-var addInputUrlSync = function () {
-    var elements = document.querySelectorAll(".input-url-sync:not([data-url-sync-disabled])");
-    var updateValue = function (input) {
-        var url = new URL(window.location.href);
-        var paramValues = url.searchParams.getAll(input.name);
-        var value = paramValues.join(constants_1.INPUT_VALUE_SEP);
-        if (input.value !== value) {
-            input.setAttribute("value", value);
-            input.dispatchEvent(new Event('change'));
-        }
-    };
-    var updateUrl = function (input) {
-        var name = input.name;
-        var value = input.value;
-        var url = new URL(window.location.href);
-        url.searchParams.set(name, value);
-        if (window.location.href !== url.href) {
-            window.localStorage.setItem("page-scroll-top", "" + document.documentElement.scrollTop);
-            window.location.replace(url.href);
-        }
-    };
-    elements.forEach(function (element) {
-        element.addEventListener("change", function (e) {
-            if (!(e.currentTarget instanceof HTMLInputElement))
-                return;
-            updateUrl(e.currentTarget);
-        });
-        if (element instanceof HTMLInputElement)
-            updateValue(element);
-    });
-    window.addEventListener("locationchange", function (e) {
-        elements.forEach(function (element) {
-            if (element instanceof HTMLInputElement)
-                updateValue(element);
-        });
-    });
-    var pageScrollTop = parseFloat(window.localStorage.getItem("page-scroll-top") || "0");
-    document.documentElement.style.scrollBehavior = "auto";
-    window.scrollTo({ top: pageScrollTop });
-    document.documentElement.style.scrollBehavior = "";
-};
-exports["default"] = addInputUrlSync;
-
-
-/***/ }),
-
-/***/ 4819:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-var setValue = function (linearSelect, value) {
-    var input = linearSelect.querySelector("input");
-    var items = linearSelect.querySelectorAll(".linear-select__item");
-    if (input) {
-        input.setAttribute("value", value);
-    }
-    if (items) {
-        items.forEach(function (item) {
-            var itemValue = item.getAttribute("data-value");
-            if (itemValue === value) {
-                item.classList.add("selected");
-            }
-            else {
-                item.classList.remove("selected");
-            }
-        });
-    }
-};
-var addLinearSelect = function () {
-    document.querySelectorAll(".linear-select").forEach(function (linearSelect) {
-        if (!(linearSelect instanceof HTMLElement)) {
-            console.error("'.linear-select' is not HTMLElement", linearSelect);
-            return;
-        }
-        var input = linearSelect.querySelector("input");
-        if (!input) {
-            console.error("No input in '.linear-select'", linearSelect);
-            return;
-        }
-        var value = input.value;
-        setValue(linearSelect, value);
-        linearSelect.addEventListener("click", function (e) {
-            if (!(e.target instanceof HTMLElement))
-                return;
-            var item = e.target.closest(".linear-select__item");
-            if (!(item instanceof HTMLElement))
-                return;
-            var itemValue = item.getAttribute("data-value");
-            if (itemValue !== null) {
-                setValue(linearSelect, itemValue);
-            }
-        });
-    });
-};
-exports["default"] = addLinearSelect;
-
-
-/***/ }),
-
-/***/ 4287:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var popperEnable_1 = __webpack_require__(444);
-var popperModifiers_1 = __webpack_require__(1607);
-var constants_1 = __webpack_require__(5111);
-var addMultiSelect = function () {
-    document.querySelectorAll(".multi-select").forEach(function (select) {
-        var input = select.querySelector("input.multi-select__input");
-        var trigger = select.querySelector(".multi-select__trigger");
-        var triggerValue = select.querySelector(".multi-select__trigger-value");
-        var menu = select.querySelector(".multi-select__menu");
-        var menuItems = select.querySelectorAll(".multi-select__menu-item");
-        if (!(input instanceof HTMLInputElement)) {
-            console.error("'.multi-select' has no input", input);
-            return;
-        }
-        if (!(trigger instanceof HTMLElement)) {
-            console.error("'.multi-select' has no trigger", trigger);
-            return;
-        }
-        if (!(triggerValue instanceof HTMLElement)) {
-            console.error("'.multi-select' has no triggerValue", triggerValue);
-            return;
-        }
-        if (!(menu instanceof HTMLElement)) {
-            console.error("'.multi-select' has no menu", menu);
-            return;
-        }
-        var popper = (0, core_1.createPopper)(trigger, menu, {
-            strategy: "fixed",
-            modifiers: [
-                popperModifiers_1.sameWidth
-            ]
-        });
-        var isMenuOpen = function () {
-            return select.classList.contains("open");
-        };
-        var openMenu = function () {
-            select.classList.add("open");
-            menu.classList.add("open");
-            (0, popperEnable_1.enablePopper)(popper);
-            popper.update();
-        };
-        var closeMenu = function () {
-            select.classList.remove("open");
-            menu.classList.remove("open");
-            (0, popperEnable_1.disablePopper)(popper);
-        };
-        var updateSelected = function () {
-            var displayValue = "";
-            var values = input.value.split(constants_1.INPUT_VALUE_SEP);
-            menuItems.forEach(function (menuItem) {
-                var _a;
-                var itemValue = menuItem.getAttribute("data-value");
-                var itemInput = menuItem.querySelector("input");
-                if (!itemInput)
-                    return;
-                if (itemValue && values.includes(itemValue)) {
-                    menuItem.classList.add("selected");
-                    itemInput.checked = true;
-                    if (displayValue)
-                        displayValue += ", ";
-                    displayValue += ((_a = menuItem.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || "";
-                }
-                else {
-                    itemInput.checked = false;
-                    menuItem.classList.remove("selected");
-                }
-            });
-            if (triggerValue instanceof HTMLInputElement) {
-                triggerValue.value = displayValue;
-            }
-            else {
-                triggerValue.textContent = displayValue;
-            }
-        };
-        var addValue = function (value) {
-            var values = input.value ? input.value.split(constants_1.INPUT_VALUE_SEP) : [];
-            if (values.includes(value))
-                return;
-            var newValues = __spreadArray(__spreadArray([], values, true), [value], false);
-            input.setAttribute("value", newValues.join(constants_1.INPUT_VALUE_SEP));
-            input.dispatchEvent(new Event('change'));
-        };
-        var removeValue = function (value) {
-            var values = input.value ? input.value.split(constants_1.INPUT_VALUE_SEP) : [];
-            if (!values.includes(value))
-                return;
-            var newValues = values.filter(function (item) { return item !== value; });
-            input.setAttribute("value", newValues.join(constants_1.INPUT_VALUE_SEP));
-            input.dispatchEvent(new Event('change'));
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".multi-select__menu"))
-                return;
-            closeMenu();
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        trigger.addEventListener("click", function (e) {
-            if (!isMenuOpen()) {
-                openMenu();
-                e.stopPropagation(); // to prevent triggering of document click 
-                document.documentElement.addEventListener("click", onClickOutside);
-            }
-        });
-        menuItems.forEach(function (menuItem) {
-            var _a;
-            var value = menuItem.getAttribute("data-value");
-            if (!value)
-                return;
-            (_a = menuItem.querySelector("input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
-                if (e.currentTarget instanceof HTMLInputElement && e.currentTarget.checked) {
-                    addValue(value);
-                }
-                else {
-                    removeValue(value);
-                }
-                closeMenu();
-            });
-        });
-        input.addEventListener("change", function () {
-            setTimeout(function () {
-                updateSelected();
-            }, 10);
-        });
-        updateSelected();
-    });
-};
-exports["default"] = addMultiSelect;
-
-
-/***/ }),
-
-/***/ 2548:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var popperEnable_1 = __webpack_require__(444);
-var popperModifiers_1 = __webpack_require__(1607);
-var addSelect = function () {
-    document.querySelectorAll(".select").forEach(function (select) {
-        var input = select.querySelector("input");
-        var trigger = select.querySelector(".select__trigger");
-        var triggerValue = select.querySelector(".select__trigger-value");
-        var menu = select.querySelector(".select__menu");
-        var menuItems = select.querySelectorAll(".select__menu-item");
-        if (!input) {
-            console.error("'.select' has no input", input);
-            return;
-        }
-        if (!(trigger instanceof HTMLElement)) {
-            console.error("'.select' has no trigger", trigger);
-            return;
-        }
-        if (!(triggerValue instanceof HTMLElement)) {
-            console.error("'.select' has no triggerValue", triggerValue);
-            return;
-        }
-        if (!(menu instanceof HTMLElement)) {
-            console.error("'.select' has no menu", menu);
-            return;
-        }
-        var popper = (0, core_1.createPopper)(trigger, menu, {
-            strategy: "fixed",
-            modifiers: [
-                popperModifiers_1.sameWidth
-            ]
-        });
-        var isMenuOpen = function () {
-            return select.classList.contains("open");
-        };
-        var openMenu = function () {
-            select.classList.add("open");
-            menu.classList.add("open");
-            (0, popperEnable_1.enablePopper)(popper);
-            popper.update();
-        };
-        var closeMenu = function () {
-            select.classList.remove("open");
-            menu.classList.remove("open");
-            (0, popperEnable_1.disablePopper)(popper);
-        };
-        var updateSelected = function () {
-            var displayValue = "";
-            var value = input.value;
-            menuItems.forEach(function (menuItem) {
-                if (menuItem.getAttribute("data-value") === value) {
-                    menuItem.classList.add("selected");
-                    displayValue = menuItem.textContent || "";
-                }
-                else {
-                    menuItem.classList.remove("selected");
-                }
-            });
-            triggerValue.textContent = displayValue;
-        };
-        var setValue = function (value) {
-            input.value = value || "";
-            input.dispatchEvent(new Event('change'));
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".select__menu"))
-                return;
-            closeMenu();
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        trigger.addEventListener("click", function (e) {
-            if (!isMenuOpen()) {
-                openMenu();
-                e.stopPropagation(); // to prevent triggering of document click 
-                document.documentElement.addEventListener("click", onClickOutside);
-            }
-        });
-        menu.addEventListener("click", function (e) {
-            if (!(e.target instanceof Element))
-                return;
-            var menuItem = e.target.closest(".select__menu-item");
-            if (!(menuItem instanceof HTMLElement))
-                return;
-            var value = menuItem.dataset.value;
-            setValue(value || "");
-            closeMenu();
-        });
-        input.addEventListener("change", function () {
-            updateSelected();
-        });
-        updateSelected();
-    });
-};
-exports["default"] = addSelect;
-
-
-/***/ }),
-
-/***/ 5856:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-var getFinishDate = function (el) {
-    var str = el.getAttribute("data-timer-finish-date");
-    var finishDate = str ? new Date(str) : undefined;
-    return finishDate;
-};
-var getFormat = function (el) {
-    var str = el.getAttribute("data-timer-format");
-    return str || "hhhh:mm:ss";
-};
-var updateTimer = function (_a) {
-    var timer = _a.timer, daysContainer = _a.daysContainer, hoursContainer = _a.hoursContainer, minutesContainer = _a.minutesContainer, secondsContainer = _a.secondsContainer;
-    var finishDate = getFinishDate(timer);
-    var format = getFormat(timer);
-    if (!finishDate) {
-        return {
-            isFinished: true
-        };
-    }
-    var finish = finishDate.getTime();
-    var now = Date.now();
-    var diff = finish - now;
-    diff = diff > 0 ? diff : 0;
-    var seconds = String(Math.floor(diff / 1000) % 60).padStart(2, "0");
-    var minutes = String(Math.floor(diff / (60 * 1000)) % 60).padStart(2, "0");
-    var allhours = Math.floor(diff / (60 * 60 * 1000));
-    var hours = String(Math.floor(allhours % 24)).padStart(2, "0");
-    var days = Math.floor(diff / (60 * 60 * 1000 * 24));
-    if (daysContainer) {
-        daysContainer.textContent = "" + days;
-    }
-    if (hoursContainer) {
-        hoursContainer.textContent = "" + hours;
-    }
-    if (minutesContainer) {
-        minutesContainer.textContent = "" + minutes;
-    }
-    if (secondsContainer) {
-        secondsContainer.textContent = "" + seconds;
-    }
-    if (!daysContainer && !hoursContainer && !minutesContainer && !secondsContainer) {
-        timer.textContent = format.replace("dd", "" + days)
-            .replace("hhhh", "" + allhours)
-            .replace("hh", "" + hours)
-            .replace("mm", "" + minutes)
-            .replace("ss", "" + seconds);
-    }
-    return {
-        isFinished: diff === 0
-    };
-};
-var addTimer = function () {
-    var timers = document.querySelectorAll(".timer");
-    timers.forEach(function (timer) {
-        var finishDate = getFinishDate(timer);
-        if (!finishDate) {
-            console.error("timer has no finish date", timer);
-            return;
-        }
-        var daysContainer = timer.querySelector("[data-timer-days]");
-        var hoursContainer = timer.querySelector("[data-timer-hours]");
-        var minutesContainer = timer.querySelector("[data-timer-minutes]");
-        var secondsContainer = timer.querySelector("[data-timer-seconds]");
-        var intervalId = window.setInterval(function () {
-            var isFinished = updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer }).isFinished;
-            if (isFinished) {
-                window.clearInterval(intervalId);
-            }
-        }, 1000);
-        updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer });
-    });
-};
-exports["default"] = addTimer;
-
-
-/***/ }),
-
-/***/ 8393:
+/***/ 3722:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3014,94 +2578,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
-var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var popperEnable_1 = __webpack_require__(444);
 var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
-var createTooltip = function (content) {
-    var tooltip = document.createElement("div");
-    tooltip.classList.add("tooltip");
-    var tooltipContent = document.createElement("div");
-    tooltipContent.classList.add("tooltip__content");
-    tooltipContent.textContent = content;
-    tooltip.appendChild(tooltipContent);
-    return tooltip;
-};
-var addTooltiped = function () {
-    document.querySelectorAll(".tooltiped").forEach(function (anchor) {
-        var initialContent = anchor.getAttribute("data-tooltip-content") || "";
-        var initialShow = anchor.classList.contains("show");
-        var placement = (anchor.getAttribute("data-placement") || "auto");
-        var tooltip = createTooltip(initialContent);
-        var tooltipContent = tooltip.querySelector(".tooltip__content");
-        if (!tooltipContent)
-            return;
-        document.body.append(tooltip);
-        var popper = (0, core_1.createPopper)(anchor, tooltip, {
-            placement: placement || "auto",
-            strategy: "absolute",
-            modifiers: [
-                {
-                    name: "flip",
-                    options: {
-                        fallbackPlacements: ['auto']
-                    }
-                },
-                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                    element.classList.remove("top");
-                    element.classList.remove("left");
-                    element.classList.remove("right");
-                    element.classList.remove("bottom");
-                    element.classList.add(placement);
-                }),
-            ]
-        });
-        var run = initialShow;
-        var content = initialContent;
-        var fadeOutTimeoutId = -1;
-        var update = function () {
-            if (!run)
-                return;
-            popper.update();
-            tooltipContent.textContent = content;
-            requestAnimationFrame(update);
-        };
-        var onDataTooltipContentChange = function () {
-            content = anchor.getAttribute("data-tooltip-content") || "";
-        };
-        var onClassChange = function () {
-            var show = anchor.classList.contains("show");
-            window.clearTimeout(fadeOutTimeoutId);
-            tooltip.classList.remove("fade-out");
-            if (show) {
-                run = true;
-                tooltip.classList.add("show");
-                (0, popperEnable_1.enablePopper)(popper);
-                update();
-            }
-            else {
-                run = false;
-                tooltip.classList.add("fade-out");
-                fadeOutTimeoutId = window.setTimeout(function () {
-                    tooltip.classList.remove("show");
-                    tooltip.classList.remove("fade-out");
-                }, ANIMATION_NORMAL_MS);
-                (0, popperEnable_1.disablePopper)(popper);
-            }
-        };
-        (0, addOnAttrChange_1["default"])(anchor, "class", onClassChange);
-        (0, addOnAttrChange_1["default"])(anchor, "data-tooltip-content", onDataTooltipContentChange);
-        onClassChange();
+var addSideMenu = function () {
+    var hidingTimeoutId = -1;
+    // side-menu
+    var openMenu = function () {
+        clearTimeout(hidingTimeoutId);
+        var sideMenu = document.getElementById("sideMenu");
+        var sideMenuBody = sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.querySelector(".side-menu__body");
+        var burger = document.querySelector("#header .header__burger-btn");
+        if (sideMenu && burger && sideMenuBody) {
+            sideMenuBody.scrollTop = 0;
+            sideMenu.classList.add("open");
+            burger.classList.add("open");
+            document.documentElement.classList.add("modal-open");
+        }
+    };
+    var closeMenu = function () {
+        var sideMenu = document.getElementById("sideMenu");
+        var burger = document.querySelector("#header .header__burger-btn");
+        if (sideMenu && burger) {
+            sideMenu.classList.remove("open");
+            burger.classList.remove("open");
+            sideMenu.classList.add("hiding");
+            clearTimeout(hidingTimeoutId);
+            hidingTimeoutId = window.setTimeout(function () {
+                sideMenu.classList.remove("hiding");
+            }, ANIMATION_NORMAL_MS);
+            document.documentElement.classList.remove("modal-open");
+        }
+    };
+    var toggleMenu = function () {
+        var sideMenu = document.getElementById("sideMenu");
+        if (sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.classList.contains("open")) {
+            closeMenu();
+        }
+        else {
+            openMenu();
+        }
+    };
+    var overlay = document.querySelector("#sideMenu .side-menu__overlay");
+    var burger = document.querySelector("#header .header__burger-btn");
+    if (overlay)
+        overlay.addEventListener("click", closeMenu);
+    if (burger)
+        burger.addEventListener("click", toggleMenu);
+    // tab-group
+    document.querySelectorAll(".tab-group").forEach(function (tabGroup) {
+        var label = tabGroup.querySelector(".tab-group__label");
+        if (label)
+            label.addEventListener("click", function () {
+                tabGroup.classList.toggle("expanded");
+            });
     });
 };
-exports["default"] = addTooltiped;
+exports["default"] = addSideMenu;
 
 
 /***/ }),
 
-/***/ 1219:
+/***/ 2534:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3109,88 +2646,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var animMs = cssVariables_1["default"].animationFastMs * 0.5;
-var addAccumGoal = function () {
-    document.querySelectorAll(".accum-goal__card").forEach(function (card) {
-        var timeoutId = -1;
-        var isAnimating = false;
-        card.addEventListener("click", function () {
-            var info = card.querySelector(".accum-goal__info");
-            var award = card.querySelector(".accum-goal__award");
-            if (!(info instanceof HTMLElement))
-                return;
-            if (!(award instanceof HTMLElement))
-                return;
-            if (info.hidden && !isAnimating) {
-                isAnimating = true;
-                award.style.transform = "rotateY(75deg)";
-                award.style.transition = "transform ease-in ".concat(animMs, "ms");
-                info.style.transform = "rotateY(-75deg)";
-                info.style.transition = "transform ease-out ".concat(animMs, "ms");
-                timeoutId = window.setTimeout(function () {
-                    award.hidden = true;
-                    info.hidden = false;
-                    setTimeout(function () {
-                        info.style.transform = "rotateY(0deg)";
-                        isAnimating = false;
-                    }, 10);
-                }, animMs);
-            }
-            else {
-                isAnimating = true;
-                info.style.transform = "rotateY(75deg)";
-                info.style.transition = "transform ease-in ".concat(animMs, "ms");
-                award.style.transform = "rotateY(-75deg)";
-                award.style.transition = "transform ease-out ".concat(animMs, "ms");
-                isAnimating = false;
-                timeoutId = window.setTimeout(function () {
-                    info.hidden = true;
-                    award.hidden = false;
-                    setTimeout(function () {
-                        award.style.transform = "rotateY(0deg)";
-                        isAnimating = false;
-                    }, 10);
-                }, animMs);
-            }
-        });
-    });
-};
-exports["default"] = addAccumGoal;
-
-
-/***/ }),
-
-/***/ 5582:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
 // common
 var addPopper_1 = __importDefault(__webpack_require__(2744));
 var addInput_1 = __importDefault(__webpack_require__(3846));
 var addModal_1 = __importDefault(__webpack_require__(1949));
 var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
-var addSideMenu_1 = __importDefault(__webpack_require__(9812));
+var addSideMenu_1 = __importDefault(__webpack_require__(3722));
 var addHeader_1 = __importDefault(__webpack_require__(8112));
 var addToggleClass_1 = __importDefault(__webpack_require__(2971));
 var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
 var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
 var addMediaViewer_1 = __importDefault(__webpack_require__(840));
-var addTooltiped_1 = __importDefault(__webpack_require__(8393));
-var addTimer_1 = __importDefault(__webpack_require__(5856));
-var addLinearSelect_1 = __importDefault(__webpack_require__(4819));
-var addSelect_1 = __importDefault(__webpack_require__(2548));
-var addMultiSelect_1 = __importDefault(__webpack_require__(4287));
-var addInputUrlSync_1 = __importDefault(__webpack_require__(2397));
 // special
-var addAccumGoal_1 = __importDefault(__webpack_require__(1219));
-$(document).ready(function () {
+window.addEventListener("load", function () {
     // popper
     (0, addPopper_1["default"])();
     // input
@@ -3207,165 +2675,11 @@ $(document).ready(function () {
     (0, addToggleClass_1["default"])();
     // video player
     (0, addVideoPlayer_1["default"])();
-    // drag to scroll
-    if (!(0, isTouchEnabled_1["default"])()) {
-        (0, addDragToScroll_1["default"])();
-    }
     // media viewer
     (0, addMediaViewer_1["default"])();
     // youtube
     (0, addYoutubePlayer_1["default"])();
-    // tooltiped
-    (0, addTooltiped_1["default"])();
-    // timer
-    (0, addTimer_1["default"])();
-    // linear select
-    (0, addLinearSelect_1["default"])();
-    // select
-    (0, addSelect_1["default"])();
-    // multi select
-    (0, addMultiSelect_1["default"])();
-    // input url sync
-    (0, addInputUrlSync_1["default"])();
-    // accum goal
-    (0, addAccumGoal_1["default"])();
 });
-
-
-/***/ }),
-
-/***/ 1912:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
-var addDragToScroll = function () {
-    var stopCoef = 0.95;
-    if ((0, isTouchEnabled_1["default"])())
-        return;
-    document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
-        if (!(element instanceof HTMLElement))
-            return;
-        var isCursorDisabled = element.dataset.cursorDisabled !== undefined;
-        // for grab
-        var startPos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0
-        };
-        var pos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0
-        };
-        var prevPos = __assign({}, pos);
-        var isGrabbed = false;
-        // for intertia
-        var transform = { x: 0, y: 0 };
-        var onMouseDown = function (e) {
-            startPos = {
-                left: element.scrollLeft,
-                top: element.scrollTop,
-                x: e.clientX,
-                y: e.clientY
-            };
-            pos = __assign({}, startPos);
-            prevPos = __assign({}, pos);
-            prevPos;
-            isGrabbed = true;
-            transform = {
-                x: 0,
-                y: 0
-            };
-            if (!isCursorDisabled)
-                element.style.cursor = "grabbing";
-            element.style.userSelect = "none";
-            element
-                .querySelectorAll("img")
-                .forEach(function (img) { return (img.draggable = false); });
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-            requestAnimationFrame(move);
-        };
-        var onMouseMove = function (e) {
-            var dx = e.clientX - startPos.x;
-            var dy = e.clientY - startPos.y;
-            pos.left = startPos.left - dx;
-            pos.top = startPos.top - dy;
-            pos.x = e.clientX;
-            pos.y = e.clientY;
-        };
-        var onMouseUp = function (e) {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-            isGrabbed = false;
-            if (!isCursorDisabled)
-                element.style.cursor = "grab";
-            element.style.removeProperty("user-select");
-            requestAnimationFrame(moveByInertia);
-        };
-        var move = function () {
-            if (!isGrabbed)
-                return;
-            transform = {
-                x: prevPos.left - pos.left,
-                y: prevPos.top - pos.top
-            };
-            element.scrollTop = pos.top;
-            element.scrollLeft = pos.left;
-            prevPos = __assign({}, pos);
-            console.log("move");
-            requestAnimationFrame(move);
-        };
-        var moveByInertia = function () {
-            if (isGrabbed)
-                return;
-            if (Math.pow(transform.x, 2) + Math.pow(transform.y, 2) <
-                0.3)
-                return;
-            transform.x *= stopCoef;
-            transform.y *= stopCoef;
-            element.scrollLeft -= transform.x;
-            element.scrollTop -= transform.y;
-            requestAnimationFrame(moveByInertia);
-        };
-        var preventClickIfMove = function (e) {
-            var diff = {
-                x: startPos.x - e.clientX,
-                y: startPos.y - e.clientY
-            };
-            var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-            console.log(diffLength);
-            if (diffLength > 4) {
-                e.stopPropagation();
-            }
-        };
-        if (!isCursorDisabled)
-            element.style.cursor = "grab";
-        element.addEventListener("mousedown", onMouseDown);
-        element.addEventListener("click", preventClickIfMove, {
-            capture: true
-        });
-    });
-};
-exports["default"] = addDragToScroll;
 
 
 /***/ }),
@@ -3661,50 +2975,6 @@ exports["default"] = addPopper;
 
 /***/ }),
 
-/***/ 9812:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
-var addSideMenu = function () {
-    var hidingTimeoutId = -1;
-    var openMenu = function () {
-        clearTimeout(hidingTimeoutId);
-        $("#sideMenu").addClass("open").find(".side-menu__body").scrollTop(0);
-        $("#header .header__burger-btn").addClass("open");
-        $(document.documentElement).addClass("modal-open");
-    };
-    var closeMenu = function () {
-        $("#sideMenu").removeClass("open").addClass("hiding");
-        $("#header .header__burger-btn").removeClass("open");
-        clearTimeout(hidingTimeoutId);
-        hidingTimeoutId = window.setTimeout(function () {
-            $("#sideMenu").removeClass("hiding");
-        }, ANIMATION_NORMAL_MS);
-        $(document.documentElement).removeClass("modal-open");
-    };
-    var toggleMenu = function () {
-        if ($("#sideMenu").hasClass("open")) {
-            closeMenu();
-        }
-        else {
-            openMenu();
-        }
-    };
-    $('#sideMenu .side-menu__overlay').click(closeMenu);
-    $("#sideMenu .tab").click(closeMenu);
-    $("#header .header__burger-btn").click(toggleMenu);
-};
-exports["default"] = addSideMenu;
-
-
-/***/ }),
-
 /***/ 2971:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -3940,17 +3210,6 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 5111:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-exports.INPUT_VALUE_SEP = void 0;
-exports.INPUT_VALUE_SEP = ",";
-
-
-/***/ }),
-
 /***/ 9418:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -3992,28 +3251,14 @@ var animationFastMs = parseFloat(variables_module_scss_1["default"]["animation-f
 var animationNormalMs = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
 var animationSlowMs = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
 var popperViewportPadding = (0, parsePx_1["default"])(variables_module_scss_1["default"]["popper-viewport-padding"]);
+var breakpointMobileBig = variables_module_scss_1["default"]["breakpoint-mobile-big"];
 exports["default"] = {
     animationFastMs: animationFastMs,
     animationNormalMs: animationNormalMs,
     animationSlowMs: animationSlowMs,
-    popperViewportPadding: popperViewportPadding
+    popperViewportPadding: popperViewportPadding,
+    breakpointMobileBig: breakpointMobileBig
 };
-
-
-/***/ }),
-
-/***/ 145:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-var isTouchEnabled = function () {
-    return ('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        // @ts-expect-error
-        (navigator.msMaxTouchPoints > 0);
-};
-exports["default"] = isTouchEnabled;
 
 
 /***/ }),
@@ -4045,49 +3290,6 @@ var parsePx = function (value) {
     return undefined;
 };
 exports["default"] = parsePx;
-
-
-/***/ }),
-
-/***/ 444:
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-exports.__esModule = true;
-exports.disablePopper = exports.enablePopper = void 0;
-var enablePopper = function (popper) {
-    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
-            { name: 'eventListeners', enabled: true },
-        ], false) })); });
-    popper.update();
-};
-exports.enablePopper = enablePopper;
-var disablePopper = function (popper) {
-    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
-            { name: 'eventListeners', enabled: false },
-        ], false) })); });
-};
-exports.disablePopper = disablePopper;
 
 
 /***/ }),
@@ -4219,7 +3421,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(5582);
+/******/ 	var __webpack_exports__ = __webpack_require__(2534);
 /******/ 	
 /******/ })()
 ;

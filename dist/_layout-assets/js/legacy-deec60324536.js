@@ -4136,6 +4136,163 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ 3722:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+exports.__esModule = true;
+var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
+var addSideMenu = function () {
+    var hidingTimeoutId = -1;
+    // side-menu
+    var openMenu = function () {
+        clearTimeout(hidingTimeoutId);
+        var sideMenu = document.getElementById("sideMenu");
+        var sideMenuBody = sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.querySelector(".side-menu__body");
+        var burger = document.querySelector("#header .header__burger-btn");
+        if (sideMenu && burger && sideMenuBody) {
+            sideMenuBody.scrollTop = 0;
+            sideMenu.classList.add("open");
+            burger.classList.add("open");
+            document.documentElement.classList.add("modal-open");
+        }
+    };
+    var closeMenu = function () {
+        var sideMenu = document.getElementById("sideMenu");
+        var burger = document.querySelector("#header .header__burger-btn");
+        if (sideMenu && burger) {
+            sideMenu.classList.remove("open");
+            burger.classList.remove("open");
+            sideMenu.classList.add("hiding");
+            clearTimeout(hidingTimeoutId);
+            hidingTimeoutId = window.setTimeout(function () {
+                sideMenu.classList.remove("hiding");
+            }, ANIMATION_NORMAL_MS);
+            document.documentElement.classList.remove("modal-open");
+        }
+    };
+    var toggleMenu = function () {
+        var sideMenu = document.getElementById("sideMenu");
+        if (sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.classList.contains("open")) {
+            closeMenu();
+        }
+        else {
+            openMenu();
+        }
+    };
+    var overlay = document.querySelector("#sideMenu .side-menu__overlay");
+    var burger = document.querySelector("#header .header__burger-btn");
+    if (overlay)
+        overlay.addEventListener("click", closeMenu);
+    if (burger)
+        burger.addEventListener("click", toggleMenu);
+    // tab-group
+    document.querySelectorAll(".tab-group").forEach(function (tabGroup) {
+        var label = tabGroup.querySelector(".tab-group__label");
+        if (label)
+            label.addEventListener("click", function () {
+                tabGroup.classList.toggle("expanded");
+            });
+    });
+};
+exports["default"] = addSideMenu;
+
+
+/***/ }),
+
+/***/ 7215:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+exports.__esModule = true;
+var core_1 = __webpack_require__(4750);
+var popperModifiers_1 = __webpack_require__(1607);
+var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
+var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var SHOW_TIME_MS = 2000;
+var addCopyText = function () {
+    document.querySelectorAll(".copy-text").forEach(function (copyText) {
+        var _a, _b;
+        var value = (_b = (_a = copyText.querySelector(".copy-text__value")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim();
+        var tooltip = copyText.querySelector(".copy-text__success-tooltip");
+        if (!value || !(tooltip instanceof HTMLElement))
+            return;
+        var placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0];
+        var popper = (0, core_1.createPopper)(copyText, tooltip, {
+            placement: placement,
+            strategy: "absolute",
+            modifiers: [
+                {
+                    name: "flip",
+                    options: {
+                        fallbackPlacements: ['auto']
+                    }
+                },
+                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
+                    element.classList.remove("top");
+                    element.classList.remove("left");
+                    element.classList.remove("right");
+                    element.classList.remove("bottom");
+                    element.classList.add(placement);
+                }),
+            ]
+        });
+        var hidingTimeout;
+        var autoHidingTimeout;
+        var showTooltip = function () {
+            clearTimeout(hidingTimeout);
+            popper.update();
+            tooltip.classList.add("show");
+            tooltip.classList.remove("fade-out-slow");
+        };
+        var hideTooltip = function (options) {
+            if (options === void 0) { options = {}; }
+            clearTimeout(hidingTimeout);
+            if (options.rightNow) {
+                tooltip.classList.remove("show");
+                tooltip.classList.remove("fade-out-slow");
+            }
+            else {
+                tooltip.classList.add("fade-out-slow");
+                hidingTimeout = window.setTimeout(function () {
+                    tooltip.classList.remove("show");
+                    tooltip.classList.remove("fade-out-slow");
+                }, ANIMATION_SLOW_MS);
+            }
+        };
+        var onClickOutside = function (e) {
+            if (e.target instanceof HTMLElement && e.target.closest(".copy-text") === copyText)
+                return;
+            hideTooltip({ rightNow: true });
+            document.documentElement.removeEventListener("click", onClickOutside);
+        };
+        copyText.addEventListener("click", function () {
+            (0, copyToClipboard_1["default"])(value).then(function () {
+                clearTimeout(autoHidingTimeout);
+                showTooltip();
+                autoHidingTimeout = window.setTimeout(function () {
+                    hideTooltip();
+                    document.documentElement.removeEventListener("click", onClickOutside);
+                }, SHOW_TIME_MS);
+            });
+            document.documentElement.addEventListener("click", onClickOutside);
+        });
+        document.body.appendChild(tooltip);
+    });
+};
+exports["default"] = addCopyText;
+
+
+/***/ }),
+
 /***/ 2397:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -4759,7 +4916,7 @@ exports["default"] = addTooltiped;
 
 /***/ }),
 
-/***/ 9914:
+/***/ 2533:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -4770,11 +4927,11 @@ exports.__esModule = true;
 var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
 // common
 var addHeader_1 = __importDefault(__webpack_require__(8112));
-var addSideMenu_1 = __importDefault(__webpack_require__(9812));
+var addSideMenu_1 = __importDefault(__webpack_require__(3722));
 var addPopper_1 = __importDefault(__webpack_require__(2744));
 var addInput_1 = __importDefault(__webpack_require__(3846));
 var addModal_1 = __importDefault(__webpack_require__(1949));
-var addCopyText_1 = __importDefault(__webpack_require__(9611));
+var addCopyText_1 = __importDefault(__webpack_require__(7215));
 var addTabs_1 = __importDefault(__webpack_require__(2179));
 var addTextareaAutosize_1 = __importDefault(__webpack_require__(9375));
 var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
@@ -4805,7 +4962,7 @@ var addChat_1 = __importDefault(__webpack_require__(2270));
 var addCashoutPool_1 = __importDefault(__webpack_require__(3400));
 var addAllNotifications_1 = __importDefault(__webpack_require__(2121));
 var addPromoCard_1 = __importDefault(__webpack_require__(8442));
-$(document).ready(function () {
+window.addEventListener("load", function () {
     // header
     (0, addHeader_1["default"])();
     // side menu
@@ -5052,87 +5209,6 @@ var addCollapseTable = function () {
     });
 };
 exports["default"] = addCollapseTable;
-
-
-/***/ }),
-
-/***/ 9611:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
-var addCopyText = function () {
-    $('.copy-text').each(function (i, copyText) {
-        var value = $(copyText).find(".copy-text__value").text().trim();
-        var tooltip = $(copyText).find(".copy-text__success-tooltip").get(0);
-        if (!tooltip)
-            return;
-        document.body.appendChild(tooltip);
-        var placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0];
-        var popper = (0, core_1.createPopper)(copyText, tooltip, {
-            placement: placement,
-            strategy: "absolute",
-            modifiers: [
-                {
-                    name: "flip",
-                    options: {
-                        fallbackPlacements: ['auto']
-                    }
-                },
-                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                    $(element).removeClass("top");
-                    $(element).removeClass("left");
-                    $(element).removeClass("right");
-                    $(element).removeClass("bottom");
-                    $(element).addClass(placement);
-                }),
-            ]
-        });
-        var hidingTimeout;
-        var showTooltip = function () {
-            popper.update();
-            clearTimeout(hidingTimeout);
-            $(tooltip).addClass("show").removeClass("fade-out-slow");
-        };
-        var hideTooltip = function (options) {
-            if (options === void 0) { options = {}; }
-            clearTimeout(hidingTimeout);
-            if (options.rightNow) {
-                $(tooltip).removeClass("show").removeClass("fade-out-slow");
-            }
-            else {
-                $(tooltip).addClass("fade-out-slow");
-                hidingTimeout = window.setTimeout(function () {
-                    $(tooltip).removeClass("show").removeClass("fade-out-slow");
-                }, ANIMATION_SLOW_MS);
-            }
-        };
-        var autoHidingTimeout;
-        $(copyText).click(function () {
-            (0, copyToClipboard_1["default"])(value).then(function () {
-                showTooltip();
-                clearTimeout(autoHidingTimeout);
-                autoHidingTimeout = window.setTimeout(function () {
-                    hideTooltip();
-                }, 2000);
-            });
-        });
-        $(document.documentElement).click(function (e) {
-            if ($(copyText).has(e.target).length === 0 && !$(e.target).hasClass("copy-text")) {
-                hideTooltip({ rightNow: true });
-            }
-        });
-    });
-};
-exports["default"] = addCopyText;
 
 
 /***/ }),
@@ -5767,50 +5843,6 @@ exports["default"] = addPromoCard;
 
 /***/ }),
 
-/***/ 9812:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
-var addSideMenu = function () {
-    var hidingTimeoutId = -1;
-    var openMenu = function () {
-        clearTimeout(hidingTimeoutId);
-        $("#sideMenu").addClass("open").find(".side-menu__body").scrollTop(0);
-        $("#header .header__burger-btn").addClass("open");
-        $(document.documentElement).addClass("modal-open");
-    };
-    var closeMenu = function () {
-        $("#sideMenu").removeClass("open").addClass("hiding");
-        $("#header .header__burger-btn").removeClass("open");
-        clearTimeout(hidingTimeoutId);
-        hidingTimeoutId = window.setTimeout(function () {
-            $("#sideMenu").removeClass("hiding");
-        }, ANIMATION_NORMAL_MS);
-        $(document.documentElement).removeClass("modal-open");
-    };
-    var toggleMenu = function () {
-        if ($("#sideMenu").hasClass("open")) {
-            closeMenu();
-        }
-        else {
-            openMenu();
-        }
-    };
-    $('#sideMenu .side-menu__overlay').click(closeMenu);
-    $("#sideMenu .tab").click(closeMenu);
-    $("#header .header__burger-btn").click(toggleMenu);
-};
-exports["default"] = addSideMenu;
-
-
-/***/ }),
-
 /***/ 9498:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -6378,11 +6410,13 @@ var animationFastMs = parseFloat(variables_module_scss_1["default"]["animation-f
 var animationNormalMs = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
 var animationSlowMs = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
 var popperViewportPadding = (0, parsePx_1["default"])(variables_module_scss_1["default"]["popper-viewport-padding"]);
+var breakpointMobileBig = variables_module_scss_1["default"]["breakpoint-mobile-big"];
 exports["default"] = {
     animationFastMs: animationFastMs,
     animationNormalMs: animationNormalMs,
     animationSlowMs: animationSlowMs,
-    popperViewportPadding: popperViewportPadding
+    popperViewportPadding: popperViewportPadding,
+    breakpointMobileBig: breakpointMobileBig
 };
 
 
@@ -15820,7 +15854,7 @@ function EffectCards({
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(9914);
+/******/ 	var __webpack_exports__ = __webpack_require__(2533);
 /******/ 	
 /******/ })()
 ;
