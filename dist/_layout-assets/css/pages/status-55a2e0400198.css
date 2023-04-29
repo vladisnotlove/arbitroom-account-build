@@ -240,28 +240,19 @@
   color: rgba(255, 255, 255, 0.92);
   border-radius: 1rem;
   cursor: pointer;
+  transition: background 0.2s;
 }
-.program::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.5s;
+.program:hover {
+  background: rgb(61, 54, 71);
 }
 .program.selected {
-  background: linear-gradient(rgba(255, 198, 255, 0.12) 0%, rgba(255, 198, 255, 0.12) 100%), linear-gradient(rgba(255, 101, 0, 0.08) 0%, rgba(255, 101, 0, 0.08) 100%);
+  background: rgb(64, 47, 57);
 }
 .program.selected .program__info {
   display: inline-block;
 }
-.program:hover::before {
-  opacity: 1;
-  transition: opacity 0.5s;
+.program.selected:hover {
+  background: rgb(75, 58, 69);
 }
 
 .program__cell {
