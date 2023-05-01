@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Arbitroom | Личный кабинет | Структура партнеров</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<!-- layout css -->
+	<link href="../_layout-assets/css/common-debbe725a0ac.css" rel="stylesheet">
+	<link href="../_layout-assets/css/pages/structure-partner-details-fd2f27ebe3af.css" rel="stylesheet">
+</head>
+
+<body>
+	<!-- LOADER -->
+	<div class="page-loader" id="pageLoader">
+		<div class="page-loader__spinner"></div>
+	</div>
+	<style>
+	.page-loader {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 100000;
+		opacity: 1;
+	}
+
+	.page-loader__spinner {
+		position: relative;
+		width: 53px;
+		height: 53px;
+		border: 3px solid rgba(255, 198, 255, 0.12);
+		border-radius: 50%;
+	}
+
+	.page-loader__spinner::before {
+		content: "";
+		position: absolute;
+		top: -3px;
+		left: -3px;
+		width: 53px;
+		height: 53px;
+		border: 3px solid transparent;
+		border-radius: 50%;
+		border-right-color: #FF6500;
+		animation: rotate 0.8s infinite linear;
+	}
+
+	@keyframes rotate {
+		0% {
+			transform: rotate(0);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.page-loader.loaded {
+		top: -200vh;
+		opacity: 0;
+		transition: top 0s 0.2s, opacity 0.2s;
+	}
+	</style>
+	<!-- MAIN -->
+	<div class="partner-details">
+		<div class="partner-details__header">
+			<div class="partner-details__profile">
+				<img class="partner-details__profile-avatar" src="../_layout-assets/img/profile.png" alt="">
+				<div class="partner-details__profile-body">
+					<div class="partner-details__profile-name"> Марина Елисеева </div>
+					<div class="partner-details__profile-level"> Партнер: Уровень 1 </div>
+				</div>
+			</div>
+			<button class="partner-details__close icon-button contained color-gray">
+				<svg data-icon-name="close" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+					<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
+				</svg>
+			</button>
+		</div>
+		<button class="partner-details__chat-btn button contained medium full-width" data-chat-url="../structure-partner-chat"> Написать в чат </button>
+		<div class="partner-details__body">
+			<div class="partner-details__records-title">Сводная информация</div>
+			<div class="partner-details__records">
+				<div class="partner-details__record">
+					<span>Актив в пуле</span>
+					<span>5 000 USDT</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Копилка открыта на</span>
+					<span>2 500 USDT</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Личные партнеры</span>
+					<span>14 чел</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Квалификация</span>
+					<span>B1</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Зачетный оборот</span>
+					<span>80 000 USDT</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Общий оборот</span>
+					<span>320 000 USDT</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Кол-во всех партнеров</span>
+					<span>127 чел</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Глубина партнеров</span>
+					<span>15 уровней</span>
+				</div>
+				<div class="partner-details__record">
+					<span>Топ 3 партнера со структуры</span>
+					<span>B3 A3 A1</span>
+				</div>
+			</div>
+		</div>
+		<button class="partner-details__structure button text medium full-width" data-partners-url="../structure-partners"> Посмотреть структуру </button>
+	</div>
+	<!-- layout script -->
+	<script src="../_layout-assets/js/pages/structure-partner-details-5fba44977468.js"></script>
+	<script>
+	window.addEventListener("load", () => {
+		const pageLoader = document.getElementById("pageLoader");
+		const content = document.getElementById("content");
+		if(pageLoader) pageLoader.classList.add("loaded");
+	})
+	</script>
+</body>
+
+</html>

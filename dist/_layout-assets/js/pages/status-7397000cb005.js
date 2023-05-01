@@ -2577,9 +2577,9 @@ module.exports = styleTagTransform;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
+var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
     // side-menu
@@ -2638,103 +2638,14 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 7215:
+/***/ 2534:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
-var SHOW_TIME_MS = 2000;
-var addCopyText = function () {
-    document.querySelectorAll(".copy-text").forEach(function (copyText) {
-        var _a, _b;
-        var value = (_b = (_a = copyText.querySelector(".copy-text__value")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim();
-        var tooltip = copyText.querySelector(".copy-text__success-tooltip");
-        if (!value || !(tooltip instanceof HTMLElement))
-            return;
-        var placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0];
-        var popper = (0, core_1.createPopper)(copyText, tooltip, {
-            placement: placement,
-            strategy: "absolute",
-            modifiers: [
-                {
-                    name: "flip",
-                    options: {
-                        fallbackPlacements: ['auto']
-                    }
-                },
-                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                    element.classList.remove("top");
-                    element.classList.remove("left");
-                    element.classList.remove("right");
-                    element.classList.remove("bottom");
-                    element.classList.add(placement);
-                }),
-            ]
-        });
-        var hidingTimeout;
-        var autoHidingTimeout;
-        var showTooltip = function () {
-            clearTimeout(hidingTimeout);
-            popper.update();
-            tooltip.classList.add("show");
-            tooltip.classList.remove("fade-out-slow");
-        };
-        var hideTooltip = function (options) {
-            if (options === void 0) { options = {}; }
-            clearTimeout(hidingTimeout);
-            if (options.rightNow) {
-                tooltip.classList.remove("show");
-                tooltip.classList.remove("fade-out-slow");
-            }
-            else {
-                tooltip.classList.add("fade-out-slow");
-                hidingTimeout = window.setTimeout(function () {
-                    tooltip.classList.remove("show");
-                    tooltip.classList.remove("fade-out-slow");
-                }, ANIMATION_SLOW_MS);
-            }
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".copy-text") === copyText)
-                return;
-            hideTooltip({ rightNow: true });
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        copyText.addEventListener("click", function () {
-            (0, copyToClipboard_1["default"])(value).then(function () {
-                clearTimeout(autoHidingTimeout);
-                showTooltip();
-                autoHidingTimeout = window.setTimeout(function () {
-                    hideTooltip();
-                    document.documentElement.removeEventListener("click", onClickOutside);
-                }, SHOW_TIME_MS);
-            });
-            document.documentElement.addEventListener("click", onClickOutside);
-        });
-        document.body.appendChild(tooltip);
-    });
-};
-exports["default"] = addCopyText;
-
-
-/***/ }),
-
-/***/ 7421:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 // common
 var addPopper_1 = __importDefault(__webpack_require__(2744));
 var addInput_1 = __importDefault(__webpack_require__(3846));
@@ -2747,30 +2658,27 @@ var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
 var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
 var addMediaViewer_1 = __importDefault(__webpack_require__(840));
 // special
-var addCopyText_1 = __importDefault(__webpack_require__(7215));
 window.addEventListener("load", function () {
     // popper
-    (0, addPopper_1["default"])();
+    (0, addPopper_1.default)();
     // input
-    (0, addInput_1["default"])();
+    (0, addInput_1.default)();
     // modal
-    (0, addModal_1["default"])();
+    (0, addModal_1.default)();
     // with tooltip
-    (0, addWithTooltip_1["default"])();
+    (0, addWithTooltip_1.default)();
     // side menu
-    (0, addSideMenu_1["default"])();
+    (0, addSideMenu_1.default)();
     // header
-    (0, addHeader_1["default"])();
+    (0, addHeader_1.default)();
     // data toggle
-    (0, addToggleClass_1["default"])();
+    (0, addToggleClass_1.default)();
     // video player
-    (0, addVideoPlayer_1["default"])();
+    (0, addVideoPlayer_1.default)();
     // media viewer
-    (0, addMediaViewer_1["default"])();
+    (0, addMediaViewer_1.default)();
     // youtube
-    (0, addYoutubePlayer_1["default"])();
-    // copy text
-    (0, addCopyText_1["default"])();
+    (0, addYoutubePlayer_1.default)();
 });
 
 
@@ -2780,7 +2688,7 @@ window.addEventListener("load", function () {
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addHeader = function () {
     var headerTitle = $("#header .header__title").get(0);
     if (headerTitle) {
@@ -2803,7 +2711,7 @@ exports["default"] = addHeader;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addInput = function () {
     $('.input').each(function (i, input) {
         var realInput = $(input).find("input").get(0);
@@ -2853,7 +2761,7 @@ exports["default"] = addInput;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addMediaViewer = function () {
     var mediaViewer = document.querySelector(".media-viewer");
     var nextButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__next");
@@ -2919,7 +2827,7 @@ exports["default"] = addMediaViewer;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addModal = function () {
     var closeModal = function (modal) {
         $(modal).removeClass("open");
@@ -2982,11 +2890,11 @@ var __assign = (this && this.__assign) || function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var POPPER_VIEWPORT_PADDING = cssVariables_1["default"].popperViewportPadding;
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
     $('.popper').each(function (i, popperMenu) {
         var onHover = $(popperMenu).data('popper-on-hover') !== undefined;
@@ -3007,7 +2915,7 @@ var addPopper = function () {
                             options: {
                                 altAxis: true,
                                 padding: POPPER_VIEWPORT_PADDING
-                            }
+                            },
                         }]
                 });
             if (!options.disableOverlay) {
@@ -3071,7 +2979,7 @@ exports["default"] = addPopper;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addToggleClass = function () {
     document.querySelectorAll("[data-toggle-class]").forEach(function (elem) {
         if (!(elem instanceof HTMLElement))
@@ -3100,7 +3008,7 @@ exports["default"] = addToggleClass;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
 var addVideoPlayer = function () {
     var _a, _b;
@@ -3110,13 +3018,13 @@ var addVideoPlayer = function () {
         return;
     if (!player)
         return;
-    (0, addOnAttrChange_1["default"])(videoPlayer, "class", function () {
+    (0, addOnAttrChange_1.default)(videoPlayer, "class", function () {
         var isOpen = videoPlayer.classList.contains("open");
         if (!isOpen) {
             player === null || player === void 0 ? void 0 : player.api("pause");
         }
     });
-    (0, addOnAttrChange_1["default"])(videoPlayer, "data-src", function () {
+    (0, addOnAttrChange_1.default)(videoPlayer, "data-src", function () {
         var src = videoPlayer.getAttribute("data-src");
         if (src) {
             player === null || player === void 0 ? void 0 : player.api("file", src);
@@ -3156,11 +3064,11 @@ exports["default"] = addVideoPlayer;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
     var tooltipContent = document.createElement("div");
@@ -3193,14 +3101,14 @@ var addWithTooltip = function () {
                         {
                             name: "flip",
                             options: {
-                                fallbackPlacements: ['auto']
-                            }
+                                fallbackPlacements: ['auto'],
+                            },
                         },
                         {
                             name: 'preventOverflow',
                             options: {
                                 padding: VIEWPORT_PADDING
-                            }
+                            },
                         },
                         (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
                             element.classList.remove("top");
@@ -3209,7 +3117,7 @@ var addWithTooltip = function () {
                             element.classList.remove("bottom");
                             element.classList.add(placement);
                         }),
-                    ]
+                    ],
                 });
             tooltip.style.maxWidth = "calc(100vw - ".concat(VIEWPORT_PADDING * 2, "px)");
             tooltip.classList.add("show");
@@ -3241,9 +3149,9 @@ exports["default"] = addWithTooltip;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
         iframe.src = iframe.src;
@@ -3306,7 +3214,7 @@ exports["default"] = addYoutubePlayer;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addOnAttrChange = function (element, attrName, callback) {
     var prevAttr = element.getAttribute(attrName);
     var observer = new MutationObserver(function (mutationList) {
@@ -3318,48 +3226,13 @@ var addOnAttrChange = function (element, attrName, callback) {
     });
     observer.observe(element, {
         attributes: true,
-        attributeFilter: [attrName]
+        attributeFilter: [attrName],
     });
     return function () {
         observer.disconnect();
     };
 };
 exports["default"] = addOnAttrChange;
-
-
-/***/ }),
-
-/***/ 9797:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-// return a promise
-function copyToClipboard(textToCopy) {
-    // navigator clipboard api needs a secure context (https)
-    if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard api method'
-        return navigator.clipboard.writeText(textToCopy);
-    }
-    else {
-        // text area method
-        var textArea_1 = document.createElement("textarea");
-        textArea_1.value = textToCopy;
-        // make the textarea out of viewport
-        textArea_1.style.position = "fixed";
-        textArea_1.style.left = "-999999px";
-        textArea_1.style.top = "-999999px";
-        document.body.appendChild(textArea_1);
-        textArea_1.focus();
-        textArea_1.select();
-        return new Promise(function (res, rej) {
-            // here the magic happens
-            document.execCommand('copy') ? res(undefined) : rej();
-            textArea_1.remove();
-        });
-    }
-}
-exports["default"] = copyToClipboard;
 
 
 /***/ }),
@@ -3371,14 +3244,14 @@ exports["default"] = copyToClipboard;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
 var parsePx_1 = __importDefault(__webpack_require__(6871));
-var animationFastMs = parseFloat(variables_module_scss_1["default"]["animation-fast"]) * 1000;
-var animationNormalMs = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
-var animationSlowMs = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
-var popperViewportPadding = (0, parsePx_1["default"])(variables_module_scss_1["default"]["popper-viewport-padding"]);
-var breakpointMobileBig = variables_module_scss_1["default"]["breakpoint-mobile-big"];
+var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
+var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
+var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
+var popperViewportPadding = (0, parsePx_1.default)(variables_module_scss_1.default["popper-viewport-padding"]);
+var breakpointMobileBig = variables_module_scss_1.default["breakpoint-mobile-big"];
 exports["default"] = {
     animationFastMs: animationFastMs,
     animationNormalMs: animationNormalMs,
@@ -3397,7 +3270,7 @@ exports["default"] = {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var remToPx_1 = __importDefault(__webpack_require__(8638));
 var parsePx = function (value) {
     if (typeof value === "number")
@@ -3406,7 +3279,7 @@ var parsePx = function (value) {
         if (value.indexOf("rem") > 0) {
             var rem = parseFloat(value);
             if (!isNaN(rem)) {
-                return (0, remToPx_1["default"])(rem);
+                return (0, remToPx_1.default)(rem);
             }
         }
         var px = parseFloat(value);
@@ -3425,7 +3298,7 @@ exports["default"] = parsePx;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createPlacementHandler = exports.sameWidth = void 0;
 exports.sameWidth = {
     name: "sameWidth",
@@ -3462,7 +3335,7 @@ exports.createPlacementHandler = createPlacementHandler;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var remToPx = function (rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
@@ -3548,7 +3421,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(7421);
+/******/ 	var __webpack_exports__ = __webpack_require__(2534);
 /******/ 	
 /******/ })()
 ;

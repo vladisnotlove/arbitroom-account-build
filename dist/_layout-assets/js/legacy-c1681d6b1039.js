@@ -4143,9 +4143,9 @@ module.exports = styleTagTransform;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
+var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
     // side-menu
@@ -4211,12 +4211,12 @@ exports["default"] = addSideMenu;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
 var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var SHOW_TIME_MS = 2000;
 var addCopyText = function () {
     document.querySelectorAll(".copy-text").forEach(function (copyText) {
@@ -4233,8 +4233,8 @@ var addCopyText = function () {
                 {
                     name: "flip",
                     options: {
-                        fallbackPlacements: ['auto']
-                    }
+                        fallbackPlacements: ['auto'],
+                    },
                 },
                 (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
                     element.classList.remove("top");
@@ -4243,7 +4243,7 @@ var addCopyText = function () {
                     element.classList.remove("bottom");
                     element.classList.add(placement);
                 }),
-            ]
+            ],
         });
         var hidingTimeout;
         var autoHidingTimeout;
@@ -4275,7 +4275,7 @@ var addCopyText = function () {
             document.documentElement.removeEventListener("click", onClickOutside);
         };
         copyText.addEventListener("click", function () {
-            (0, copyToClipboard_1["default"])(value).then(function () {
+            (0, copyToClipboard_1.default)(value).then(function () {
                 clearTimeout(autoHidingTimeout);
                 showTooltip();
                 autoHidingTimeout = window.setTimeout(function () {
@@ -4297,7 +4297,7 @@ exports["default"] = addCopyText;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var constants_1 = __webpack_require__(5111);
 var addInputUrlSync = function () {
     var elements = document.querySelectorAll(".input-url-sync:not([data-url-sync-disabled])");
@@ -4349,7 +4349,7 @@ exports["default"] = addInputUrlSync;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var setValue = function (linearSelect, value) {
     var input = linearSelect.querySelector("input");
     var items = linearSelect.querySelectorAll(".linear-select__item");
@@ -4412,7 +4412,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperEnable_1 = __webpack_require__(444);
 var popperModifiers_1 = __webpack_require__(1607);
@@ -4549,7 +4549,7 @@ exports["default"] = addMultiSelect;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperEnable_1 = __webpack_require__(444);
 var popperModifiers_1 = __webpack_require__(1607);
@@ -4648,11 +4648,47 @@ exports["default"] = addSelect;
 
 /***/ }),
 
+/***/ 4742:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addTextareaAutosize = function () {
+    var updateHeight = function (element) {
+        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
+        var prevHeight = element.style.height;
+        element.style.height = "auto";
+        if (maxHeight && element.scrollHeight < maxHeight) {
+            $(element).css({
+                height: element.scrollHeight,
+                overflowY: "hidden",
+            });
+        }
+        else {
+            $(element).css({
+                height: prevHeight,
+                overflowY: "auto",
+            });
+        }
+    };
+    $(".textarea-autosize").each(function (i, textareaAutosize) {
+        // add handlers
+        $(textareaAutosize).on("input", function (e) {
+            if (e.currentTarget instanceof HTMLElement)
+                updateHeight(e.currentTarget);
+        });
+    });
+};
+exports["default"] = addTextareaAutosize;
+
+
+/***/ }),
+
 /***/ 5856:
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var getFinishDate = function (el) {
     var str = el.getAttribute("data-timer-finish-date");
     var finishDate = str ? new Date(str) : undefined;
@@ -4700,7 +4736,7 @@ var updateTimer = function (_a) {
             .replace("ss", "" + seconds);
     }
     return {
-        isFinished: diff === 0
+        isFinished: diff === 0,
     };
 };
 var addTimer = function () {
@@ -4734,7 +4770,7 @@ exports["default"] = addTimer;
 
 
 // HELPERS
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var setValue = function (elements, value) {
     var _a, _b;
     (_a = elements.input) === null || _a === void 0 ? void 0 : _a.setAttribute("value", value);
@@ -4828,13 +4864,13 @@ exports["default"] = addToggleButtonGroup;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
 var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
 var popperEnable_1 = __webpack_require__(444);
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
+var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var createTooltip = function (content) {
     var tooltip = document.createElement("div");
     tooltip.classList.add("tooltip");
@@ -4861,8 +4897,8 @@ var addTooltiped = function () {
                 {
                     name: "flip",
                     options: {
-                        fallbackPlacements: ['auto']
-                    }
+                        fallbackPlacements: ['auto'],
+                    },
                 },
                 (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
                     element.classList.remove("top");
@@ -4871,7 +4907,7 @@ var addTooltiped = function () {
                     element.classList.remove("bottom");
                     element.classList.add(placement);
                 }),
-            ]
+            ],
         });
         var run = initialShow;
         var content = initialContent;
@@ -4906,8 +4942,8 @@ var addTooltiped = function () {
                 (0, popperEnable_1.disablePopper)(popper);
             }
         };
-        (0, addOnAttrChange_1["default"])(anchor, "class", onClassChange);
-        (0, addOnAttrChange_1["default"])(anchor, "data-tooltip-content", onDataTooltipContentChange);
+        (0, addOnAttrChange_1.default)(anchor, "class", onClassChange);
+        (0, addOnAttrChange_1.default)(anchor, "data-tooltip-content", onDataTooltipContentChange);
         onClassChange();
     });
 };
@@ -4923,7 +4959,7 @@ exports["default"] = addTooltiped;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
 // common
 var addHeader_1 = __importDefault(__webpack_require__(8112));
@@ -4933,7 +4969,7 @@ var addInput_1 = __importDefault(__webpack_require__(3846));
 var addModal_1 = __importDefault(__webpack_require__(1949));
 var addCopyText_1 = __importDefault(__webpack_require__(7215));
 var addTabs_1 = __importDefault(__webpack_require__(2179));
-var addTextareaAutosize_1 = __importDefault(__webpack_require__(9375));
+var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
 var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
 var addCollapseTable_1 = __importDefault(__webpack_require__(8558));
 var addInputCode_1 = __importDefault(__webpack_require__(8575));
@@ -4964,77 +5000,77 @@ var addAllNotifications_1 = __importDefault(__webpack_require__(2121));
 var addPromoCard_1 = __importDefault(__webpack_require__(8442));
 window.addEventListener("load", function () {
     // header
-    (0, addHeader_1["default"])();
+    (0, addHeader_1.default)();
     // side menu
-    (0, addSideMenu_1["default"])();
+    (0, addSideMenu_1.default)();
     // popper
-    (0, addPopper_1["default"])();
+    (0, addPopper_1.default)();
     // input
-    (0, addInput_1["default"])();
+    (0, addInput_1.default)();
     // modal
-    (0, addModal_1["default"])();
+    (0, addModal_1.default)();
     // copy text
-    (0, addCopyText_1["default"])();
+    (0, addCopyText_1.default)();
     // tabs (aka in materials)
-    (0, addTabs_1["default"])();
+    (0, addTabs_1.default)();
     // textarea autosize
-    (0, addTextareaAutosize_1["default"])();
+    (0, addTextareaAutosize_1.default)();
     // with tooltip
-    (0, addWithTooltip_1["default"])();
+    (0, addWithTooltip_1.default)();
     // collapse table
-    (0, addCollapseTable_1["default"])();
+    (0, addCollapseTable_1.default)();
     // input code
-    (0, addInputCode_1["default"])();
+    (0, addInputCode_1.default)();
     // data toggle
-    (0, addToggleClass_1["default"])();
+    (0, addToggleClass_1.default)();
     // drag scroll
-    (0, addDragScroll_1["default"])();
+    (0, addDragScroll_1.default)();
     // with linked select
-    (0, addWithLinkedSelect_1["default"])();
+    (0, addWithLinkedSelect_1.default)();
     // video player
-    (0, addVideoPlayer_1["default"])();
+    (0, addVideoPlayer_1.default)();
     // drag to scroll
-    if (!(0, isTouchEnabled_1["default"])()) {
-        (0, addDragToScroll_1["default"])();
+    if (!(0, isTouchEnabled_1.default)()) {
+        (0, addDragToScroll_1.default)();
     }
     // media viewer
-    (0, addMediaViewer_1["default"])();
+    (0, addMediaViewer_1.default)();
     // swiper
-    (0, addSwiper_1["default"])();
+    (0, addSwiper_1.default)();
     // youtube
-    (0, addYoutubePlayer_1["default"])();
+    (0, addYoutubePlayer_1.default)();
     // tooltiped
-    (0, addTooltiped_1["default"])();
+    (0, addTooltiped_1.default)();
     // timer
-    (0, addTimer_1["default"])();
+    (0, addTimer_1.default)();
     // linear select
-    (0, addLinearSelect_1["default"])();
+    (0, addLinearSelect_1.default)();
     // select
-    (0, addSelect_1["default"])();
+    (0, addSelect_1.default)();
     // multi select
-    (0, addMultiSelect_1["default"])();
+    (0, addMultiSelect_1.default)();
     // input url sync
-    (0, addInputUrlSync_1["default"])();
+    (0, addInputUrlSync_1.default)();
     // toggle buttons
-    (0, addToggleButtonGroup_1["default"])();
+    (0, addToggleButtonGroup_1.default)();
     // event 
-    (0, addEvent_1["default"])();
+    (0, addEvent_1.default)();
     // event-ticket
-    (0, addEventTicket_1["default"])();
+    (0, addEventTicket_1.default)();
     // buy event tickets
-    (0, addBuyEventTicketModals_1["default"])();
+    (0, addBuyEventTicketModals_1.default)();
     // programs collapse
-    (0, addPrograms_1["default"])();
+    (0, addPrograms_1.default)();
     // line list
-    (0, addLineList_1["default"])();
+    (0, addLineList_1.default)();
     // chat
-    (0, addChat_1["default"])();
+    (0, addChat_1.default)();
     // cashout pool
-    (0, addCashoutPool_1["default"])();
+    (0, addCashoutPool_1.default)();
     // all notifications
-    (0, addAllNotifications_1["default"])();
+    (0, addAllNotifications_1.default)();
     // promo card
-    (0, addPromoCard_1["default"])();
+    (0, addPromoCard_1.default)();
 });
 
 
@@ -5044,7 +5080,7 @@ window.addEventListener("load", function () {
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addAllNotifications = function () {
     document.querySelectorAll(".all-notifications__body").forEach(function (allNotifications) {
         allNotifications.addEventListener("click", function (e) {
@@ -5069,7 +5105,7 @@ exports["default"] = addAllNotifications;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var showTooltip_1 = __importDefault(__webpack_require__(232));
 var addBuyEventTicketModals = function () {
     var modal = document.getElementById("buyEventTicketModal");
@@ -5111,7 +5147,7 @@ var addBuyEventTicketModals = function () {
             var subForms = (form === null || form === void 0 ? void 0 : form.querySelectorAll(".buy-event-ticket-modal__sub-form")) || [];
             if (subForms.length >= maxTickets) {
                 if (maxTicketsMessage)
-                    (0, showTooltip_1["default"])(addButton, maxTicketsMessage);
+                    (0, showTooltip_1.default)(addButton, maxTicketsMessage);
             }
             else if (subForms[0]) {
                 var newSubForm = subForms[0].cloneNode(true);
@@ -5131,7 +5167,7 @@ exports["default"] = addBuyEventTicketModals;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addCashoutPool = function () {
     var expressToggler = $("#expressToggler");
     $(expressToggler).find(".toggle-button").click(function (e) {
@@ -5166,7 +5202,7 @@ exports["default"] = addCashoutPool;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addChat = function () {
     $(".chat-list").click(function (e) {
         if ($(e.target).closest(".chat-list__item-pin").length === 0) {
@@ -5193,7 +5229,7 @@ exports["default"] = addChat;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addCollapseTable = function () {
     $(".collapse-table").each(function (i, collapseTable) {
         var collapseBtn = $(collapseTable).find(".collapse-table__collapse-btn button").get(0);
@@ -5220,13 +5256,13 @@ exports["default"] = addCollapseTable;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
 var scrollbooster_1 = __importDefault(__webpack_require__(1701));
 var addDragScroll = function () {
     // !IMPORTANT: data-drag-scroll must have style "overflow: <hidden | scroll>"
     window.addEventListener('load', function () {
-        if ((0, isTouchEnabled_1["default"])())
+        if ((0, isTouchEnabled_1.default)())
             return;
         document.querySelectorAll("[data-drag-scroll]").forEach(function (elem) {
             var content = elem.querySelector("[data-drag-scroll-content]");
@@ -5234,10 +5270,10 @@ var addDragScroll = function () {
                 return;
             if (!(content instanceof HTMLElement))
                 return;
-            new scrollbooster_1["default"]({
+            new scrollbooster_1.default({
                 viewport: elem,
                 content: content,
-                scrollMode: 'native'
+                scrollMode: 'native',
             });
         });
     });
@@ -5265,11 +5301,11 @@ var __assign = (this && this.__assign) || function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
 var addDragToScroll = function () {
     var stopCoef = 0.95;
-    if ((0, isTouchEnabled_1["default"])())
+    if ((0, isTouchEnabled_1.default)())
         return;
     document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
         if (!(element instanceof HTMLElement))
@@ -5280,13 +5316,13 @@ var addDragToScroll = function () {
             top: 0,
             left: 0,
             x: 0,
-            y: 0
+            y: 0,
         };
         var pos = {
             top: 0,
             left: 0,
             x: 0,
-            y: 0
+            y: 0,
         };
         var prevPos = __assign({}, pos);
         var isGrabbed = false;
@@ -5297,7 +5333,7 @@ var addDragToScroll = function () {
                 left: element.scrollLeft,
                 top: element.scrollTop,
                 x: e.clientX,
-                y: e.clientY
+                y: e.clientY,
             };
             pos = __assign({}, startPos);
             prevPos = __assign({}, pos);
@@ -5305,7 +5341,7 @@ var addDragToScroll = function () {
             isGrabbed = true;
             transform = {
                 x: 0,
-                y: 0
+                y: 0,
             };
             if (!isCursorDisabled)
                 element.style.cursor = "grabbing";
@@ -5339,12 +5375,11 @@ var addDragToScroll = function () {
                 return;
             transform = {
                 x: prevPos.left - pos.left,
-                y: prevPos.top - pos.top
+                y: prevPos.top - pos.top,
             };
             element.scrollTop = pos.top;
             element.scrollLeft = pos.left;
             prevPos = __assign({}, pos);
-            console.log("move");
             requestAnimationFrame(move);
         };
         var moveByInertia = function () {
@@ -5362,10 +5397,9 @@ var addDragToScroll = function () {
         var preventClickIfMove = function (e) {
             var diff = {
                 x: startPos.x - e.clientX,
-                y: startPos.y - e.clientY
+                y: startPos.y - e.clientY,
             };
             var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-            console.log(diffLength);
             if (diffLength > 4) {
                 e.stopPropagation();
             }
@@ -5374,7 +5408,7 @@ var addDragToScroll = function () {
             element.style.cursor = "grab";
         element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("click", preventClickIfMove, {
-            capture: true
+            capture: true,
         });
     });
 };
@@ -5387,7 +5421,7 @@ exports["default"] = addDragToScroll;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addEvent = function () {
     var ticketsList = document.querySelectorAll(".event__tickets");
     ticketsList.forEach(function (tickets) {
@@ -5406,7 +5440,7 @@ exports["default"] = addEvent;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var html_to_image_1 = __webpack_require__(183);
 var TICKET_IMG_WIDTH = 1080;
 var addEventTicket = function () {
@@ -5427,7 +5461,7 @@ var addEventTicket = function () {
         (0, html_to_image_1.toPng)(main, {
             quality: 0.95,
             canvasWidth: TICKET_IMG_WIDTH,
-            canvasHeight: TICKET_IMG_WIDTH / main.clientWidth * main.clientHeight
+            canvasHeight: TICKET_IMG_WIDTH / main.clientWidth * main.clientHeight,
         })
             .then(function (dataUrl) {
             var link = document.createElement('a');
@@ -5447,7 +5481,7 @@ exports["default"] = addEventTicket;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addHeader = function () {
     var headerTitle = $("#header .header__title").get(0);
     if (headerTitle) {
@@ -5470,7 +5504,7 @@ exports["default"] = addHeader;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addInput = function () {
     $('.input').each(function (i, input) {
         var realInput = $(input).find("input").get(0);
@@ -5520,7 +5554,7 @@ exports["default"] = addInput;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addInputCode = function () {
     document.querySelectorAll(".input-code > input").forEach(function (input) {
         input.addEventListener("input", function (e) {
@@ -5543,7 +5577,7 @@ exports["default"] = addInputCode;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addLineList = function () {
     $(".line-list").each(function (i, lineList) {
         var menu = $(lineList).find(".line-list__menu");
@@ -5570,7 +5604,7 @@ exports["default"] = addLineList;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addMediaViewer = function () {
     var mediaViewer = document.querySelector(".media-viewer");
     var nextButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__next");
@@ -5636,7 +5670,7 @@ exports["default"] = addMediaViewer;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addModal = function () {
     var closeModal = function (modal) {
         $(modal).removeClass("open");
@@ -5699,11 +5733,11 @@ var __assign = (this && this.__assign) || function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var POPPER_VIEWPORT_PADDING = cssVariables_1["default"].popperViewportPadding;
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
     $('.popper').each(function (i, popperMenu) {
         var onHover = $(popperMenu).data('popper-on-hover') !== undefined;
@@ -5724,7 +5758,7 @@ var addPopper = function () {
                             options: {
                                 altAxis: true,
                                 padding: POPPER_VIEWPORT_PADDING
-                            }
+                            },
                         }]
                 });
             if (!options.disableOverlay) {
@@ -5788,7 +5822,7 @@ exports["default"] = addPopper;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addPrograms = function () {
     $(".programs").each(function (i, programs) {
         var expandBtn = $(programs).find(".programs__expand-btn button").get(0);
@@ -5812,7 +5846,7 @@ exports["default"] = addPrograms;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addPromoCard = function () {
     $(".promo-card").each(function (i, promoCard) {
         var more = $(promoCard).find(".promo-card__content-more").get(0);
@@ -5870,10 +5904,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var swiper_1 = __importStar(__webpack_require__(6541));
 var addSwiper = function () {
-    var swiper = new swiper_1["default"]('.swiper', {
+    var swiper = new swiper_1.default('.swiper', {
         modules: [swiper_1.Navigation, swiper_1.Pagination],
         navigation: {
             prevEl: ".swiper-button-prev",
@@ -5883,7 +5917,7 @@ var addSwiper = function () {
             el: '.swiper-pagination',
             clickable: true
         },
-        loop: true
+        loop: true,
     });
 };
 exports["default"] = addSwiper;
@@ -5895,7 +5929,7 @@ exports["default"] = addSwiper;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var throttle_debounce_1 = __webpack_require__(2189);
 var addTabs = function () {
@@ -5959,7 +5993,7 @@ var addTabs = function () {
         });
         var overlay;
         var popper = (0, core_1.createPopper)(moreItems, moreItemsMenu, {
-            strategy: "fixed"
+            strategy: "fixed",
         });
         var openMoreItemsMenu = function () {
             overlay = $("<div class='tabs__overlay'></div>")
@@ -6010,47 +6044,11 @@ exports["default"] = addTabs;
 
 /***/ }),
 
-/***/ 9375:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-var addTextareaAutosize = function () {
-    var updateHeight = function (element) {
-        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
-        var prevHeight = element.style.height;
-        element.style.height = "auto";
-        if (maxHeight && element.scrollHeight < maxHeight) {
-            $(element).css({
-                height: element.scrollHeight,
-                overflowY: "hidden"
-            });
-        }
-        else {
-            $(element).css({
-                height: prevHeight,
-                overflowY: "auto"
-            });
-        }
-    };
-    $(".textarea-autosize").each(function (i, textareaAutosize) {
-        // add handlers
-        $(textareaAutosize).on("input", function (e) {
-            if (e.currentTarget instanceof HTMLElement)
-                updateHeight(e.currentTarget);
-        });
-    });
-};
-exports["default"] = addTextareaAutosize;
-
-
-/***/ }),
-
 /***/ 2971:
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addToggleClass = function () {
     document.querySelectorAll("[data-toggle-class]").forEach(function (elem) {
         if (!(elem instanceof HTMLElement))
@@ -6079,7 +6077,7 @@ exports["default"] = addToggleClass;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
 var addVideoPlayer = function () {
     var _a, _b;
@@ -6089,13 +6087,13 @@ var addVideoPlayer = function () {
         return;
     if (!player)
         return;
-    (0, addOnAttrChange_1["default"])(videoPlayer, "class", function () {
+    (0, addOnAttrChange_1.default)(videoPlayer, "class", function () {
         var isOpen = videoPlayer.classList.contains("open");
         if (!isOpen) {
             player === null || player === void 0 ? void 0 : player.api("pause");
         }
     });
-    (0, addOnAttrChange_1["default"])(videoPlayer, "data-src", function () {
+    (0, addOnAttrChange_1.default)(videoPlayer, "data-src", function () {
         var src = videoPlayer.getAttribute("data-src");
         if (src) {
             player === null || player === void 0 ? void 0 : player.api("file", src);
@@ -6132,7 +6130,7 @@ exports["default"] = addVideoPlayer;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addWithLinkedSelect = function () {
     document.querySelectorAll(".with-linked-select").forEach(function (elem) {
         if (!(elem instanceof HTMLElement))
@@ -6177,11 +6175,11 @@ exports["default"] = addWithLinkedSelect;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
     var tooltipContent = document.createElement("div");
@@ -6214,14 +6212,14 @@ var addWithTooltip = function () {
                         {
                             name: "flip",
                             options: {
-                                fallbackPlacements: ['auto']
-                            }
+                                fallbackPlacements: ['auto'],
+                            },
                         },
                         {
                             name: 'preventOverflow',
                             options: {
                                 padding: VIEWPORT_PADDING
-                            }
+                            },
                         },
                         (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
                             element.classList.remove("top");
@@ -6230,7 +6228,7 @@ var addWithTooltip = function () {
                             element.classList.remove("bottom");
                             element.classList.add(placement);
                         }),
-                    ]
+                    ],
                 });
             tooltip.style.maxWidth = "calc(100vw - ".concat(VIEWPORT_PADDING * 2, "px)");
             tooltip.classList.add("show");
@@ -6262,9 +6260,9 @@ exports["default"] = addWithTooltip;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
         iframe.src = iframe.src;
@@ -6327,7 +6325,7 @@ exports["default"] = addYoutubePlayer;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.INPUT_VALUE_SEP = void 0;
 exports.INPUT_VALUE_SEP = ",";
 
@@ -6338,7 +6336,7 @@ exports.INPUT_VALUE_SEP = ",";
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addOnAttrChange = function (element, attrName, callback) {
     var prevAttr = element.getAttribute(attrName);
     var observer = new MutationObserver(function (mutationList) {
@@ -6350,7 +6348,7 @@ var addOnAttrChange = function (element, attrName, callback) {
     });
     observer.observe(element, {
         attributes: true,
-        attributeFilter: [attrName]
+        attributeFilter: [attrName],
     });
     return function () {
         observer.disconnect();
@@ -6365,7 +6363,7 @@ exports["default"] = addOnAttrChange;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 // return a promise
 function copyToClipboard(textToCopy) {
     // navigator clipboard api needs a secure context (https)
@@ -6403,14 +6401,14 @@ exports["default"] = copyToClipboard;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
 var parsePx_1 = __importDefault(__webpack_require__(6871));
-var animationFastMs = parseFloat(variables_module_scss_1["default"]["animation-fast"]) * 1000;
-var animationNormalMs = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
-var animationSlowMs = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
-var popperViewportPadding = (0, parsePx_1["default"])(variables_module_scss_1["default"]["popper-viewport-padding"]);
-var breakpointMobileBig = variables_module_scss_1["default"]["breakpoint-mobile-big"];
+var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
+var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
+var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
+var popperViewportPadding = (0, parsePx_1.default)(variables_module_scss_1.default["popper-viewport-padding"]);
+var breakpointMobileBig = variables_module_scss_1.default["breakpoint-mobile-big"];
 exports["default"] = {
     animationFastMs: animationFastMs,
     animationNormalMs: animationNormalMs,
@@ -6426,7 +6424,7 @@ exports["default"] = {
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var isTouchEnabled = function () {
     return ('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0) ||
@@ -6445,7 +6443,7 @@ exports["default"] = isTouchEnabled;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var remToPx_1 = __importDefault(__webpack_require__(8638));
 var parsePx = function (value) {
     if (typeof value === "number")
@@ -6454,7 +6452,7 @@ var parsePx = function (value) {
         if (value.indexOf("rem") > 0) {
             var rem = parseFloat(value);
             if (!isNaN(rem)) {
-                return (0, remToPx_1["default"])(rem);
+                return (0, remToPx_1.default)(rem);
             }
         }
         var px = parseFloat(value);
@@ -6493,7 +6491,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.disablePopper = exports.enablePopper = void 0;
 var enablePopper = function (popper) {
     popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
@@ -6516,7 +6514,7 @@ exports.disablePopper = disablePopper;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createPlacementHandler = exports.sameWidth = void 0;
 exports.sameWidth = {
     name: "sameWidth",
@@ -6553,7 +6551,7 @@ exports.createPlacementHandler = createPlacementHandler;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var remToPx = function (rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
@@ -6569,11 +6567,11 @@ exports["default"] = remToPx;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var showTooltip = function (anchor, message, options) {
     if (options === void 0) { options = {}; }
     var tooltipContent = document.createElement("div");
@@ -6590,8 +6588,8 @@ var showTooltip = function (anchor, message, options) {
             {
                 name: "flip",
                 options: {
-                    fallbackPlacements: ['auto']
-                }
+                    fallbackPlacements: ['auto'],
+                },
             },
             (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
                 element.classList.remove("top");
@@ -6600,7 +6598,7 @@ var showTooltip = function (anchor, message, options) {
                 element.classList.remove("bottom");
                 element.classList.add(placement);
             }),
-        ]
+        ],
     });
     var onCLick = function (e) {
         document.documentElement.removeEventListener("click", onCLick);

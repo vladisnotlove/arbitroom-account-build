@@ -1,5 +1,38 @@
 # CHANGELOG
 
+## [9.4.0]
+
+### Добавлено
+
+- Добавлена страница "Стурктура"
+  - В ней есть три iframe:
+    - Чат ./structure-partner-chat
+    - Делатали ./structure-partner-details
+    - Карта с партнерами ./structure-partners
+  - Хексагоны строятся на основе dataset, который передается в ".hexagon-partners" в data-dataset и имеет следующий вид:
+  ```typescript
+  [{
+      id: number,
+      content: {
+          pretitle: string
+          status: string,
+          name: string,
+          turn: string,
+          turnLabel: string,
+      },
+      theme: "A1" | "A2" | "A3" | "B1" | "B1-F" | "B2" | "B2-F" |
+      "B3" | "B3-F" | "C1" | "C1-F" | "C2" | "C2-F" | "C3" | 
+      "C3-F" | "D1" | "D2" | "D3" | "none" | "base",
+      backgroundSrc: string | undefined,
+      partnerDetailsUrl: string,
+  }]
+  ```
+  - На странице есть временный скрипт, который сделан для демо и на проде его надо удалить или доработать
+ 
+### Изменено
+
+- Исправил баг: в новых страницах на мобильных экранах отображается переключатель языка в заголовке
+
 ## [9.3.2]
 
 ### Изменено

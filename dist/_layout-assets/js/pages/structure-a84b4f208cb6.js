@@ -2577,9 +2577,9 @@ module.exports = styleTagTransform;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
+var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
     // side-menu
@@ -2638,606 +2638,237 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 2397:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-exports.__esModule = true;
-var constants_1 = __webpack_require__(5111);
-var addInputUrlSync = function () {
-    var elements = document.querySelectorAll(".input-url-sync:not([data-url-sync-disabled])");
-    var updateValue = function (input) {
-        var url = new URL(window.location.href);
-        var paramValues = url.searchParams.getAll(input.name);
-        var value = paramValues.join(constants_1.INPUT_VALUE_SEP);
-        if (input.value !== value) {
-            input.setAttribute("value", value);
-            input.dispatchEvent(new Event('change'));
-        }
-    };
-    var updateUrl = function (input) {
-        var name = input.name;
-        var value = input.value;
-        var url = new URL(window.location.href);
-        url.searchParams.set(name, value);
-        if (window.location.href !== url.href) {
-            window.localStorage.setItem("page-scroll-top", "" + document.documentElement.scrollTop);
-            window.location.replace(url.href);
-        }
-    };
-    elements.forEach(function (element) {
-        element.addEventListener("change", function (e) {
-            if (!(e.currentTarget instanceof HTMLInputElement))
-                return;
-            updateUrl(e.currentTarget);
-        });
-        if (element instanceof HTMLInputElement)
-            updateValue(element);
-    });
-    window.addEventListener("locationchange", function (e) {
-        elements.forEach(function (element) {
-            if (element instanceof HTMLInputElement)
-                updateValue(element);
-        });
-    });
-    var pageScrollTop = parseFloat(window.localStorage.getItem("page-scroll-top") || "0");
-    document.documentElement.style.scrollBehavior = "auto";
-    window.scrollTo({ top: pageScrollTop });
-    document.documentElement.style.scrollBehavior = "";
-};
-exports["default"] = addInputUrlSync;
-
-
-/***/ }),
-
-/***/ 4819:
+/***/ 4742:
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
-var setValue = function (linearSelect, value) {
-    var input = linearSelect.querySelector("input");
-    var items = linearSelect.querySelectorAll(".linear-select__item");
-    if (input) {
-        input.setAttribute("value", value);
-    }
-    if (items) {
-        items.forEach(function (item) {
-            var itemValue = item.getAttribute("data-value");
-            if (itemValue === value) {
-                item.classList.add("selected");
-            }
-            else {
-                item.classList.remove("selected");
-            }
-        });
-    }
-};
-var addLinearSelect = function () {
-    document.querySelectorAll(".linear-select").forEach(function (linearSelect) {
-        if (!(linearSelect instanceof HTMLElement)) {
-            console.error("'.linear-select' is not HTMLElement", linearSelect);
-            return;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addTextareaAutosize = function () {
+    var updateHeight = function (element) {
+        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
+        var prevHeight = element.style.height;
+        element.style.height = "auto";
+        if (maxHeight && element.scrollHeight < maxHeight) {
+            $(element).css({
+                height: element.scrollHeight,
+                overflowY: "hidden",
+            });
         }
-        var input = linearSelect.querySelector("input");
-        if (!input) {
-            console.error("No input in '.linear-select'", linearSelect);
-            return;
+        else {
+            $(element).css({
+                height: prevHeight,
+                overflowY: "auto",
+            });
         }
-        var value = input.value;
-        setValue(linearSelect, value);
-        linearSelect.addEventListener("click", function (e) {
-            if (!(e.target instanceof HTMLElement))
-                return;
-            var item = e.target.closest(".linear-select__item");
-            if (!(item instanceof HTMLElement))
-                return;
-            var itemValue = item.getAttribute("data-value");
-            if (itemValue !== null) {
-                setValue(linearSelect, itemValue);
-            }
+    };
+    $(".textarea-autosize").each(function (i, textareaAutosize) {
+        // add handlers
+        $(textareaAutosize).on("input", function (e) {
+            if (e.currentTarget instanceof HTMLElement)
+                updateHeight(e.currentTarget);
         });
     });
 };
-exports["default"] = addLinearSelect;
+exports["default"] = addTextareaAutosize;
 
 
 /***/ }),
 
-/***/ 4287:
+/***/ 577:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+// HELPERS
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var setValue = function (elements, value) {
+    var _a, _b;
+    (_a = elements.input) === null || _a === void 0 ? void 0 : _a.setAttribute("value", value);
+    (_b = elements.input) === null || _b === void 0 ? void 0 : _b.dispatchEvent(new Event("change"));
+};
+var updateActive = function (elements) {
+    var _a;
+    var value = elements.input.value;
+    var activeIndex = 0;
+    elements.toggleButtonGroup.querySelectorAll(".toggle-button").forEach(function (button, index) {
+        if (button.getAttribute("data-value") === value) {
+            button.classList.add("active");
+            activeIndex = index;
+        }
+        else {
+            button.classList.remove("active");
+        }
+    });
+    (_a = elements.target) === null || _a === void 0 ? void 0 : _a.forEach(function (elem) {
+        Array.from(elem.children).forEach(function (child, index) {
+            if (index === activeIndex) {
+                child.classList.add("active");
+            }
+            else {
+                child.classList.remove("active");
+            }
+        });
+    });
+};
+// MAIN
+var addToggleButtonGroup = function () {
+    document.querySelectorAll(".toggle-button-group").forEach(function (toggleButtonGroup) {
+        if (!(toggleButtonGroup instanceof HTMLElement)) {
+            console.error(".toggleButtonGroup is not a HTMLElement", toggleButtonGroup);
+            return;
+        }
+        var input = toggleButtonGroup.querySelector("input");
+        var buttons = Array.from(toggleButtonGroup.querySelectorAll(".toggle-button"));
+        var str = toggleButtonGroup.getAttribute("data-toggle-button-group-target");
+        var target = str ? Array.from(document.querySelectorAll(str)) : undefined;
+        toggleButtonGroup.addEventListener("click", function (e) {
+            if (!(e.target instanceof HTMLElement) || !e.target.closest(".toggle-button"))
+                return;
+            var activeButton = e.target;
+            var value = activeButton.getAttribute("data-value");
+            // set value in input
+            if (input && value !== null) {
+                setValue({ input: input }, value);
+            }
+            // change active button
+            buttons.forEach(function (button) {
+                if (button === activeButton) {
+                    button.classList.add("active");
+                }
+                else {
+                    button.classList.remove("active");
+                }
+            });
+            // change active target
+            if (target) {
+                var activeIndex_1 = buttons.findIndex(function (button) { return button === activeButton; });
+                target.forEach(function (elem) {
+                    Array.from(elem.children).forEach(function (child, index) {
+                        if (index === activeIndex_1) {
+                            child.classList.add("active");
+                        }
+                        else {
+                            child.classList.remove("active");
+                        }
+                    });
+                });
+            }
+        });
+        if (input) {
+            updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
+            input.addEventListener("change", function () {
+                updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
+            });
+        }
+    });
+};
+exports["default"] = addToggleButtonGroup;
+
+
+/***/ }),
+
+/***/ 602:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var popperEnable_1 = __webpack_require__(444);
-var popperModifiers_1 = __webpack_require__(1607);
-var constants_1 = __webpack_require__(5111);
-var addMultiSelect = function () {
-    document.querySelectorAll(".multi-select").forEach(function (select) {
-        var input = select.querySelector("input.multi-select__input");
-        var trigger = select.querySelector(".multi-select__trigger");
-        var triggerValue = select.querySelector(".multi-select__trigger-value");
-        var menu = select.querySelector(".multi-select__menu");
-        var menuItems = select.querySelectorAll(".multi-select__menu-item");
-        if (!(input instanceof HTMLInputElement)) {
-            console.error("'.multi-select' has no input", input);
-            return;
-        }
-        if (!(trigger instanceof HTMLElement)) {
-            console.error("'.multi-select' has no trigger", trigger);
-            return;
-        }
-        if (!(triggerValue instanceof HTMLElement)) {
-            console.error("'.multi-select' has no triggerValue", triggerValue);
-            return;
-        }
-        if (!(menu instanceof HTMLElement)) {
-            console.error("'.multi-select' has no menu", menu);
-            return;
-        }
-        var popper = (0, core_1.createPopper)(trigger, menu, {
-            strategy: "fixed",
-            modifiers: [
-                popperModifiers_1.sameWidth
-            ]
-        });
-        var isMenuOpen = function () {
-            return select.classList.contains("open");
-        };
-        var openMenu = function () {
-            select.classList.add("open");
-            menu.classList.add("open");
-            (0, popperEnable_1.enablePopper)(popper);
-            popper.update();
-        };
-        var closeMenu = function () {
-            select.classList.remove("open");
-            menu.classList.remove("open");
-            (0, popperEnable_1.disablePopper)(popper);
-        };
-        var updateSelected = function () {
-            var displayValue = "";
-            var values = input.value.split(constants_1.INPUT_VALUE_SEP);
-            menuItems.forEach(function (menuItem) {
-                var _a;
-                var itemValue = menuItem.getAttribute("data-value");
-                var itemInput = menuItem.querySelector("input");
-                if (!itemInput)
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var routes_1 = __importDefault(__webpack_require__(7901));
+// MAIN
+var addHexagonPartners = function () {
+    try {
+        document.querySelectorAll(".hexagon-partners").forEach(function (hexagonPartners) {
+            if (!(hexagonPartners instanceof HTMLElement))
+                return;
+            // get elements
+            var partnersIframe = hexagonPartners.querySelector(".hexagon-partners__hexs > iframe");
+            var details = hexagonPartners.querySelector(".hexagon-partners__details");
+            var chat = hexagonPartners.querySelector(".hexagon-partners__chat");
+            if (!(details instanceof HTMLElement))
+                throw Error(".hexagon-partners has no .hexagon-partners__details");
+            if (!chat)
+                throw Error(".hexagon-partners has no .hexagon-partners__chat");
+            if (!(partnersIframe instanceof HTMLIFrameElement))
+                throw Error(".hexagon-partners has no .hexagon-partners__hexs > iframe");
+            // helpers
+            var openDetails = function (url) {
+                chat.classList.remove("open");
+                var iframe = document.createElement("iframe");
+                iframe.src = url;
+                details.innerHTML = "";
+                details.appendChild(iframe);
+                details.classList.add("open");
+                iframe.onload = function () {
+                    var _a;
+                    var height = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.scrollHeight;
+                    if (height)
+                        details.style.height = "".concat(height, "px");
+                };
+            };
+            var openChat = function (url) {
+                details.classList.remove("open");
+                var iframe = document.createElement("iframe");
+                iframe.src = url;
+                chat.innerHTML = "";
+                chat.appendChild(iframe);
+                chat.classList.add("open");
+            };
+            // add event listeners
+            window.addEventListener("message", function (event) {
+                var data = JSON.parse(event.data);
+                if (typeof data !== "object")
                     return;
-                if (itemValue && values.includes(itemValue)) {
-                    menuItem.classList.add("selected");
-                    itemInput.checked = true;
-                    if (displayValue)
-                        displayValue += ", ";
-                    displayValue += ((_a = menuItem.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || "";
-                }
-                else {
-                    itemInput.checked = false;
-                    menuItem.classList.remove("selected");
-                }
-            });
-            if (triggerValue instanceof HTMLInputElement) {
-                triggerValue.value = displayValue;
-            }
-            else {
-                triggerValue.textContent = displayValue;
-            }
-        };
-        var addValue = function (value) {
-            var values = input.value ? input.value.split(constants_1.INPUT_VALUE_SEP) : [];
-            if (values.includes(value))
-                return;
-            var newValues = __spreadArray(__spreadArray([], values, true), [value], false);
-            input.setAttribute("value", newValues.join(constants_1.INPUT_VALUE_SEP));
-            input.dispatchEvent(new Event('change'));
-        };
-        var removeValue = function (value) {
-            var values = input.value ? input.value.split(constants_1.INPUT_VALUE_SEP) : [];
-            if (!values.includes(value))
-                return;
-            var newValues = values.filter(function (item) { return item !== value; });
-            input.setAttribute("value", newValues.join(constants_1.INPUT_VALUE_SEP));
-            input.dispatchEvent(new Event('change'));
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".multi-select__menu"))
-                return;
-            closeMenu();
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        trigger.addEventListener("click", function (e) {
-            if (!isMenuOpen()) {
-                openMenu();
-                e.stopPropagation(); // to prevent triggering of document click 
-                document.documentElement.addEventListener("click", onClickOutside);
-            }
-        });
-        menuItems.forEach(function (menuItem) {
-            var _a;
-            var value = menuItem.getAttribute("data-value");
-            if (!value)
-                return;
-            (_a = menuItem.querySelector("input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
-                if (e.currentTarget instanceof HTMLInputElement && e.currentTarget.checked) {
-                    addValue(value);
-                }
-                else {
-                    removeValue(value);
-                }
-                closeMenu();
-            });
-        });
-        input.addEventListener("change", function () {
-            setTimeout(function () {
-                updateSelected();
-            }, 10);
-        });
-        updateSelected();
-    });
-};
-exports["default"] = addMultiSelect;
-
-
-/***/ }),
-
-/***/ 2548:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var popperEnable_1 = __webpack_require__(444);
-var popperModifiers_1 = __webpack_require__(1607);
-var addSelect = function () {
-    document.querySelectorAll(".select").forEach(function (select) {
-        var input = select.querySelector("input");
-        var trigger = select.querySelector(".select__trigger");
-        var triggerValue = select.querySelector(".select__trigger-value");
-        var menu = select.querySelector(".select__menu");
-        var menuItems = select.querySelectorAll(".select__menu-item");
-        if (!input) {
-            console.error("'.select' has no input", input);
-            return;
-        }
-        if (!(trigger instanceof HTMLElement)) {
-            console.error("'.select' has no trigger", trigger);
-            return;
-        }
-        if (!(triggerValue instanceof HTMLElement)) {
-            console.error("'.select' has no triggerValue", triggerValue);
-            return;
-        }
-        if (!(menu instanceof HTMLElement)) {
-            console.error("'.select' has no menu", menu);
-            return;
-        }
-        var popper = (0, core_1.createPopper)(trigger, menu, {
-            strategy: "fixed",
-            modifiers: [
-                popperModifiers_1.sameWidth
-            ]
-        });
-        var isMenuOpen = function () {
-            return select.classList.contains("open");
-        };
-        var openMenu = function () {
-            select.classList.add("open");
-            menu.classList.add("open");
-            (0, popperEnable_1.enablePopper)(popper);
-            popper.update();
-        };
-        var closeMenu = function () {
-            select.classList.remove("open");
-            menu.classList.remove("open");
-            (0, popperEnable_1.disablePopper)(popper);
-        };
-        var updateSelected = function () {
-            var displayValue = "";
-            var value = input.value;
-            menuItems.forEach(function (menuItem) {
-                if (menuItem.getAttribute("data-value") === value) {
-                    menuItem.classList.add("selected");
-                    displayValue = menuItem.textContent || "";
-                }
-                else {
-                    menuItem.classList.remove("selected");
-                }
-            });
-            triggerValue.textContent = displayValue;
-        };
-        var setValue = function (value) {
-            input.value = value || "";
-            input.dispatchEvent(new Event('change'));
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".select__menu"))
-                return;
-            closeMenu();
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        trigger.addEventListener("click", function (e) {
-            if (!isMenuOpen()) {
-                openMenu();
-                e.stopPropagation(); // to prevent triggering of document click 
-                document.documentElement.addEventListener("click", onClickOutside);
-            }
-        });
-        menu.addEventListener("click", function (e) {
-            if (!(e.target instanceof Element))
-                return;
-            var menuItem = e.target.closest(".select__menu-item");
-            if (!(menuItem instanceof HTMLElement))
-                return;
-            var value = menuItem.dataset.value;
-            setValue(value || "");
-            closeMenu();
-        });
-        input.addEventListener("change", function () {
-            updateSelected();
-        });
-        updateSelected();
-    });
-};
-exports["default"] = addSelect;
-
-
-/***/ }),
-
-/***/ 5856:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-exports.__esModule = true;
-var getFinishDate = function (el) {
-    var str = el.getAttribute("data-timer-finish-date");
-    var finishDate = str ? new Date(str) : undefined;
-    return finishDate;
-};
-var getFormat = function (el) {
-    var str = el.getAttribute("data-timer-format");
-    return str || "hhhh:mm:ss";
-};
-var updateTimer = function (_a) {
-    var timer = _a.timer, daysContainer = _a.daysContainer, hoursContainer = _a.hoursContainer, minutesContainer = _a.minutesContainer, secondsContainer = _a.secondsContainer;
-    var finishDate = getFinishDate(timer);
-    var format = getFormat(timer);
-    if (!finishDate) {
-        return {
-            isFinished: true
-        };
-    }
-    var finish = finishDate.getTime();
-    var now = Date.now();
-    var diff = finish - now;
-    diff = diff > 0 ? diff : 0;
-    var seconds = String(Math.floor(diff / 1000) % 60).padStart(2, "0");
-    var minutes = String(Math.floor(diff / (60 * 1000)) % 60).padStart(2, "0");
-    var allhours = Math.floor(diff / (60 * 60 * 1000));
-    var hours = String(Math.floor(allhours % 24)).padStart(2, "0");
-    var days = Math.floor(diff / (60 * 60 * 1000 * 24));
-    if (daysContainer) {
-        daysContainer.textContent = "" + days;
-    }
-    if (hoursContainer) {
-        hoursContainer.textContent = "" + hours;
-    }
-    if (minutesContainer) {
-        minutesContainer.textContent = "" + minutes;
-    }
-    if (secondsContainer) {
-        secondsContainer.textContent = "" + seconds;
-    }
-    if (!daysContainer && !hoursContainer && !minutesContainer && !secondsContainer) {
-        timer.textContent = format.replace("dd", "" + days)
-            .replace("hhhh", "" + allhours)
-            .replace("hh", "" + hours)
-            .replace("mm", "" + minutes)
-            .replace("ss", "" + seconds);
-    }
-    return {
-        isFinished: diff === 0
-    };
-};
-var addTimer = function () {
-    var timers = document.querySelectorAll(".timer");
-    timers.forEach(function (timer) {
-        var finishDate = getFinishDate(timer);
-        if (!finishDate) {
-            console.error("timer has no finish date", timer);
-            return;
-        }
-        var daysContainer = timer.querySelector("[data-timer-days]");
-        var hoursContainer = timer.querySelector("[data-timer-hours]");
-        var minutesContainer = timer.querySelector("[data-timer-minutes]");
-        var secondsContainer = timer.querySelector("[data-timer-seconds]");
-        var intervalId = window.setInterval(function () {
-            var isFinished = updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer }).isFinished;
-            if (isFinished) {
-                window.clearInterval(intervalId);
-            }
-        }, 1000);
-        updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer });
-    });
-};
-exports["default"] = addTimer;
-
-
-/***/ }),
-
-/***/ 8393:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var core_1 = __webpack_require__(4750);
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var popperEnable_1 = __webpack_require__(444);
-var ANIMATION_NORMAL_MS = cssVariables_1["default"].animationNormalMs;
-var createTooltip = function (content) {
-    var tooltip = document.createElement("div");
-    tooltip.classList.add("tooltip");
-    var tooltipContent = document.createElement("div");
-    tooltipContent.classList.add("tooltip__content");
-    tooltipContent.textContent = content;
-    tooltip.appendChild(tooltipContent);
-    return tooltip;
-};
-var addTooltiped = function () {
-    document.querySelectorAll(".tooltiped").forEach(function (anchor) {
-        var initialContent = anchor.getAttribute("data-tooltip-content") || "";
-        var initialShow = anchor.classList.contains("show");
-        var placement = (anchor.getAttribute("data-placement") || "auto");
-        var tooltip = createTooltip(initialContent);
-        var tooltipContent = tooltip.querySelector(".tooltip__content");
-        if (!tooltipContent)
-            return;
-        document.body.append(tooltip);
-        var popper = (0, core_1.createPopper)(anchor, tooltip, {
-            placement: placement || "auto",
-            strategy: "absolute",
-            modifiers: [
-                {
-                    name: "flip",
-                    options: {
-                        fallbackPlacements: ['auto']
+                // from partners iframe
+                if (data.source === routes_1.default.structurePartners.path()) {
+                    if (data.type === "open-details") {
+                        openDetails(data.payload.partner.partnerDetailsUrl);
                     }
-                },
-                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                    element.classList.remove("top");
-                    element.classList.remove("left");
-                    element.classList.remove("right");
-                    element.classList.remove("bottom");
-                    element.classList.add(placement);
-                }),
-            ]
+                }
+                // from chat iframe
+                if (data.source === routes_1.default.structurePartnerChat.path()) {
+                    if (data.type === "close") {
+                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
+                    }
+                    if (data.type === "back") {
+                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
+                        details === null || details === void 0 ? void 0 : details.classList.add("open");
+                    }
+                }
+                // from details iframe
+                if (data.source === routes_1.default.structurePartnerDetails.path()) {
+                    if (data.type === "open-chat") {
+                        openChat(data.payload.chatUrl);
+                    }
+                    if (data.type === "open-partners") {
+                        chat.classList.remove("open");
+                        details.classList.remove("open");
+                        partnersIframe.src = data.payload.partnersUrl;
+                    }
+                    if (data.type === "close") {
+                        details === null || details === void 0 ? void 0 : details.classList.remove("open");
+                    }
+                }
+            });
         });
-        var run = initialShow;
-        var content = initialContent;
-        var fadeOutTimeoutId = -1;
-        var update = function () {
-            if (!run)
-                return;
-            popper.update();
-            tooltipContent.textContent = content;
-            requestAnimationFrame(update);
-        };
-        var onDataTooltipContentChange = function () {
-            content = anchor.getAttribute("data-tooltip-content") || "";
-        };
-        var onClassChange = function () {
-            var show = anchor.classList.contains("show");
-            window.clearTimeout(fadeOutTimeoutId);
-            tooltip.classList.remove("fade-out");
-            if (show) {
-                run = true;
-                tooltip.classList.add("show");
-                (0, popperEnable_1.enablePopper)(popper);
-                update();
-            }
-            else {
-                run = false;
-                tooltip.classList.add("fade-out");
-                fadeOutTimeoutId = window.setTimeout(function () {
-                    tooltip.classList.remove("show");
-                    tooltip.classList.remove("fade-out");
-                }, ANIMATION_NORMAL_MS);
-                (0, popperEnable_1.disablePopper)(popper);
-            }
-        };
-        (0, addOnAttrChange_1["default"])(anchor, "class", onClassChange);
-        (0, addOnAttrChange_1["default"])(anchor, "data-tooltip-content", onDataTooltipContentChange);
-        onClassChange();
-    });
+    }
+    catch (e) {
+        console.error(e);
+    }
 };
-exports["default"] = addTooltiped;
+exports["default"] = addHexagonPartners;
 
 
 /***/ }),
 
-/***/ 1219:
+/***/ 1951:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var animMs = cssVariables_1["default"].animationFastMs * 0.5;
-var addAccumGoal = function () {
-    document.querySelectorAll(".accum-goal__card").forEach(function (card) {
-        var timeoutId = -1;
-        var isAnimating = false;
-        card.addEventListener("click", function () {
-            var info = card.querySelector(".accum-goal__info");
-            var award = card.querySelector(".accum-goal__award");
-            if (!(info instanceof HTMLElement))
-                return;
-            if (!(award instanceof HTMLElement))
-                return;
-            if (info.hidden && !isAnimating) {
-                isAnimating = true;
-                award.style.transform = "rotateY(75deg)";
-                award.style.transition = "transform ease-in ".concat(animMs, "ms");
-                info.style.transform = "rotateY(-75deg)";
-                info.style.transition = "transform ease-out ".concat(animMs, "ms");
-                timeoutId = window.setTimeout(function () {
-                    award.hidden = true;
-                    info.hidden = false;
-                    setTimeout(function () {
-                        info.style.transform = "rotateY(0deg)";
-                        isAnimating = false;
-                    }, 10);
-                }, animMs);
-            }
-            else {
-                isAnimating = true;
-                info.style.transform = "rotateY(75deg)";
-                info.style.transition = "transform ease-in ".concat(animMs, "ms");
-                award.style.transform = "rotateY(-75deg)";
-                award.style.transition = "transform ease-out ".concat(animMs, "ms");
-                isAnimating = false;
-                timeoutId = window.setTimeout(function () {
-                    info.hidden = true;
-                    award.hidden = false;
-                    setTimeout(function () {
-                        award.style.transform = "rotateY(0deg)";
-                        isAnimating = false;
-                    }, 10);
-                }, animMs);
-            }
-        });
-    });
-};
-exports["default"] = addAccumGoal;
-
-
-/***/ }),
-
-/***/ 5582:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 // common
 var addPopper_1 = __importDefault(__webpack_require__(2744));
 var addInput_1 = __importDefault(__webpack_require__(3846));
@@ -3248,55 +2879,57 @@ var addHeader_1 = __importDefault(__webpack_require__(8112));
 var addToggleClass_1 = __importDefault(__webpack_require__(2971));
 var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
 var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
 var addMediaViewer_1 = __importDefault(__webpack_require__(840));
-var addTooltiped_1 = __importDefault(__webpack_require__(8393));
-var addTimer_1 = __importDefault(__webpack_require__(5856));
-var addLinearSelect_1 = __importDefault(__webpack_require__(4819));
-var addSelect_1 = __importDefault(__webpack_require__(2548));
-var addMultiSelect_1 = __importDefault(__webpack_require__(4287));
-var addInputUrlSync_1 = __importDefault(__webpack_require__(2397));
 // special
-var addAccumGoal_1 = __importDefault(__webpack_require__(1219));
+var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
+var addHexagonPartners_1 = __importDefault(__webpack_require__(602));
+var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
+var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
 window.addEventListener("load", function () {
+    // common
+    var _a;
     // popper
-    (0, addPopper_1["default"])();
+    (0, addPopper_1.default)();
     // input
-    (0, addInput_1["default"])();
+    (0, addInput_1.default)();
     // modal
-    (0, addModal_1["default"])();
+    (0, addModal_1.default)();
     // with tooltip
-    (0, addWithTooltip_1["default"])();
+    (0, addWithTooltip_1.default)();
     // side menu
-    (0, addSideMenu_1["default"])();
+    (0, addSideMenu_1.default)();
     // header
-    (0, addHeader_1["default"])();
+    (0, addHeader_1.default)();
     // data toggle
-    (0, addToggleClass_1["default"])();
+    (0, addToggleClass_1.default)();
     // video player
-    (0, addVideoPlayer_1["default"])();
-    // drag to scroll
-    if (!(0, isTouchEnabled_1["default"])()) {
-        (0, addDragToScroll_1["default"])();
-    }
+    (0, addVideoPlayer_1.default)();
     // media viewer
-    (0, addMediaViewer_1["default"])();
+    (0, addMediaViewer_1.default)();
     // youtube
-    (0, addYoutubePlayer_1["default"])();
-    // tooltiped
-    (0, addTooltiped_1["default"])();
-    // timer
-    (0, addTimer_1["default"])();
-    // linear select
-    (0, addLinearSelect_1["default"])();
-    // select
-    (0, addSelect_1["default"])();
-    // multi select
-    (0, addMultiSelect_1["default"])();
-    // input url sync
-    (0, addInputUrlSync_1["default"])();
-    // accum goal
-    (0, addAccumGoal_1["default"])();
+    (0, addYoutubePlayer_1.default)();
+    // special
+    // toggle button group
+    (0, addToggleButtonGroup_1.default)();
+    // structure toggler
+    (_a = document.querySelector(".tab__structure-toggler input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
+        var tabStructure = document.querySelector(".tab__structure");
+        var value = e.currentTarget instanceof HTMLInputElement ? e.currentTarget.value : "none";
+        if (value === "scheme") {
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("info");
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("scheme");
+        }
+        if (value === "info") {
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("scheme");
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("info");
+        }
+    });
+    // hexagon partners
+    (0, addHexagonPartners_1.default)();
+    // drag to scroll
+    (0, addDragToScroll_1.default)();
+    // textarea autosize
+    (0, addTextareaAutosize_1.default)();
 });
 
 
@@ -3320,11 +2953,11 @@ var __assign = (this && this.__assign) || function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
 var addDragToScroll = function () {
     var stopCoef = 0.95;
-    if ((0, isTouchEnabled_1["default"])())
+    if ((0, isTouchEnabled_1.default)())
         return;
     document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
         if (!(element instanceof HTMLElement))
@@ -3335,13 +2968,13 @@ var addDragToScroll = function () {
             top: 0,
             left: 0,
             x: 0,
-            y: 0
+            y: 0,
         };
         var pos = {
             top: 0,
             left: 0,
             x: 0,
-            y: 0
+            y: 0,
         };
         var prevPos = __assign({}, pos);
         var isGrabbed = false;
@@ -3352,7 +2985,7 @@ var addDragToScroll = function () {
                 left: element.scrollLeft,
                 top: element.scrollTop,
                 x: e.clientX,
-                y: e.clientY
+                y: e.clientY,
             };
             pos = __assign({}, startPos);
             prevPos = __assign({}, pos);
@@ -3360,7 +2993,7 @@ var addDragToScroll = function () {
             isGrabbed = true;
             transform = {
                 x: 0,
-                y: 0
+                y: 0,
             };
             if (!isCursorDisabled)
                 element.style.cursor = "grabbing";
@@ -3394,12 +3027,11 @@ var addDragToScroll = function () {
                 return;
             transform = {
                 x: prevPos.left - pos.left,
-                y: prevPos.top - pos.top
+                y: prevPos.top - pos.top,
             };
             element.scrollTop = pos.top;
             element.scrollLeft = pos.left;
             prevPos = __assign({}, pos);
-            console.log("move");
             requestAnimationFrame(move);
         };
         var moveByInertia = function () {
@@ -3417,10 +3049,9 @@ var addDragToScroll = function () {
         var preventClickIfMove = function (e) {
             var diff = {
                 x: startPos.x - e.clientX,
-                y: startPos.y - e.clientY
+                y: startPos.y - e.clientY,
             };
             var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-            console.log(diffLength);
             if (diffLength > 4) {
                 e.stopPropagation();
             }
@@ -3429,7 +3060,7 @@ var addDragToScroll = function () {
             element.style.cursor = "grab";
         element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("click", preventClickIfMove, {
-            capture: true
+            capture: true,
         });
     });
 };
@@ -3442,7 +3073,7 @@ exports["default"] = addDragToScroll;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addHeader = function () {
     var headerTitle = $("#header .header__title").get(0);
     if (headerTitle) {
@@ -3465,7 +3096,7 @@ exports["default"] = addHeader;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addInput = function () {
     $('.input').each(function (i, input) {
         var realInput = $(input).find("input").get(0);
@@ -3515,7 +3146,7 @@ exports["default"] = addInput;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addMediaViewer = function () {
     var mediaViewer = document.querySelector(".media-viewer");
     var nextButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__next");
@@ -3581,7 +3212,7 @@ exports["default"] = addMediaViewer;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addModal = function () {
     var closeModal = function (modal) {
         $(modal).removeClass("open");
@@ -3644,11 +3275,11 @@ var __assign = (this && this.__assign) || function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var POPPER_VIEWPORT_PADDING = cssVariables_1["default"].popperViewportPadding;
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
     $('.popper').each(function (i, popperMenu) {
         var onHover = $(popperMenu).data('popper-on-hover') !== undefined;
@@ -3669,7 +3300,7 @@ var addPopper = function () {
                             options: {
                                 altAxis: true,
                                 padding: POPPER_VIEWPORT_PADDING
-                            }
+                            },
                         }]
                 });
             if (!options.disableOverlay) {
@@ -3733,7 +3364,7 @@ exports["default"] = addPopper;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addToggleClass = function () {
     document.querySelectorAll("[data-toggle-class]").forEach(function (elem) {
         if (!(elem instanceof HTMLElement))
@@ -3762,7 +3393,7 @@ exports["default"] = addToggleClass;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
 var addVideoPlayer = function () {
     var _a, _b;
@@ -3772,13 +3403,13 @@ var addVideoPlayer = function () {
         return;
     if (!player)
         return;
-    (0, addOnAttrChange_1["default"])(videoPlayer, "class", function () {
+    (0, addOnAttrChange_1.default)(videoPlayer, "class", function () {
         var isOpen = videoPlayer.classList.contains("open");
         if (!isOpen) {
             player === null || player === void 0 ? void 0 : player.api("pause");
         }
     });
-    (0, addOnAttrChange_1["default"])(videoPlayer, "data-src", function () {
+    (0, addOnAttrChange_1.default)(videoPlayer, "data-src", function () {
         var src = videoPlayer.getAttribute("data-src");
         if (src) {
             player === null || player === void 0 ? void 0 : player.api("file", src);
@@ -3818,11 +3449,11 @@ exports["default"] = addVideoPlayer;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
 var popperModifiers_1 = __webpack_require__(1607);
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
     var tooltipContent = document.createElement("div");
@@ -3855,14 +3486,14 @@ var addWithTooltip = function () {
                         {
                             name: "flip",
                             options: {
-                                fallbackPlacements: ['auto']
-                            }
+                                fallbackPlacements: ['auto'],
+                            },
                         },
                         {
                             name: 'preventOverflow',
                             options: {
                                 padding: VIEWPORT_PADDING
-                            }
+                            },
                         },
                         (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
                             element.classList.remove("top");
@@ -3871,7 +3502,7 @@ var addWithTooltip = function () {
                             element.classList.remove("bottom");
                             element.classList.add(placement);
                         }),
-                    ]
+                    ],
                 });
             tooltip.style.maxWidth = "calc(100vw - ".concat(VIEWPORT_PADDING * 2, "px)");
             tooltip.classList.add("show");
@@ -3903,9 +3534,9 @@ exports["default"] = addWithTooltip;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1["default"].animationSlowMs;
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
         iframe.src = iframe.src;
@@ -3964,13 +3595,89 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 5111:
+/***/ 7901:
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
-exports.INPUT_VALUE_SEP = void 0;
-exports.INPUT_VALUE_SEP = ",";
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var routes = {
+    index: {
+        path: function () { return "/"; }
+    },
+    stableFund: {
+        path: function () { return "/stable-fund"; }
+    },
+    moneyBox: {
+        path: function () { return "/money-box"; }
+    },
+    arbitration: {
+        path: function () { return "/arbitration"; }
+    },
+    arbitrationInnerExchange: {
+        path: function () { return "/arbitration-inner-exchange"; }
+    },
+    balance: {
+        path: function () { return "/balance"; }
+    },
+    pool: {
+        path: function () { return "/pool"; }
+    },
+    learn: {
+        path: function () { return "/learn"; }
+    },
+    leader: {
+        path: function () { return "/leader"; }
+    },
+    personalPartners: {
+        path: function () { return "/personal-partners"; }
+    },
+    status: {
+        path: function () { return "/status"; }
+    },
+    structure: {
+        path: function () { return "/structure"; }
+    },
+    structurePartners: {
+        path: function () { return "/structure-partners"; }
+    },
+    structurePartnerChat: {
+        path: function () { return "/structure-partner-chat"; }
+    },
+    structurePartnerDetails: {
+        path: function () { return "/structure-partner-details"; }
+    },
+    materials: {
+        path: function () { return "/materials"; }
+    },
+    cashout: {
+        path: function () { return "/cashout"; }
+    },
+    promo: {
+        path: function () { return "/promo"; }
+    },
+    events: {
+        path: function () { return "/events"; }
+    },
+    event: {
+        path: function (name) { return "/events/" + name; }
+    },
+    presentations: {
+        path: function () { return "/presentations"; }
+    },
+    operations: {
+        path: function () { return "/operations"; }
+    },
+    profile: {
+        path: function () { return "/profile"; }
+    },
+    contacts: {
+        path: function () { return "/contacts"; }
+    },
+    notifications: {
+        path: function () { return "/notifications"; }
+    }
+};
+exports["default"] = routes;
 
 
 /***/ }),
@@ -3979,7 +3686,7 @@ exports.INPUT_VALUE_SEP = ",";
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addOnAttrChange = function (element, attrName, callback) {
     var prevAttr = element.getAttribute(attrName);
     var observer = new MutationObserver(function (mutationList) {
@@ -3991,7 +3698,7 @@ var addOnAttrChange = function (element, attrName, callback) {
     });
     observer.observe(element, {
         attributes: true,
-        attributeFilter: [attrName]
+        attributeFilter: [attrName],
     });
     return function () {
         observer.disconnect();
@@ -4009,14 +3716,14 @@ exports["default"] = addOnAttrChange;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
 var parsePx_1 = __importDefault(__webpack_require__(6871));
-var animationFastMs = parseFloat(variables_module_scss_1["default"]["animation-fast"]) * 1000;
-var animationNormalMs = parseFloat(variables_module_scss_1["default"]["animation-normal"]) * 1000;
-var animationSlowMs = parseFloat(variables_module_scss_1["default"]["animation-slow"]) * 1000;
-var popperViewportPadding = (0, parsePx_1["default"])(variables_module_scss_1["default"]["popper-viewport-padding"]);
-var breakpointMobileBig = variables_module_scss_1["default"]["breakpoint-mobile-big"];
+var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
+var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
+var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
+var popperViewportPadding = (0, parsePx_1.default)(variables_module_scss_1.default["popper-viewport-padding"]);
+var breakpointMobileBig = variables_module_scss_1.default["breakpoint-mobile-big"];
 exports["default"] = {
     animationFastMs: animationFastMs,
     animationNormalMs: animationNormalMs,
@@ -4032,7 +3739,7 @@ exports["default"] = {
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var isTouchEnabled = function () {
     return ('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0) ||
@@ -4051,7 +3758,7 @@ exports["default"] = isTouchEnabled;
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var remToPx_1 = __importDefault(__webpack_require__(8638));
 var parsePx = function (value) {
     if (typeof value === "number")
@@ -4060,7 +3767,7 @@ var parsePx = function (value) {
         if (value.indexOf("rem") > 0) {
             var rem = parseFloat(value);
             if (!isNaN(rem)) {
-                return (0, remToPx_1["default"])(rem);
+                return (0, remToPx_1.default)(rem);
             }
         }
         var px = parseFloat(value);
@@ -4075,54 +3782,11 @@ exports["default"] = parsePx;
 
 /***/ }),
 
-/***/ 444:
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-exports.__esModule = true;
-exports.disablePopper = exports.enablePopper = void 0;
-var enablePopper = function (popper) {
-    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
-            { name: 'eventListeners', enabled: true },
-        ], false) })); });
-    popper.update();
-};
-exports.enablePopper = enablePopper;
-var disablePopper = function (popper) {
-    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
-            { name: 'eventListeners', enabled: false },
-        ], false) })); });
-};
-exports.disablePopper = disablePopper;
-
-
-/***/ }),
-
 /***/ 1607:
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createPlacementHandler = exports.sameWidth = void 0;
 exports.sameWidth = {
     name: "sameWidth",
@@ -4159,7 +3823,7 @@ exports.createPlacementHandler = createPlacementHandler;
 /***/ ((__unused_webpack_module, exports) => {
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var remToPx = function (rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
@@ -4245,7 +3909,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(5582);
+/******/ 	var __webpack_exports__ = __webpack_require__(1951);
 /******/ 	
 /******/ })()
 ;
