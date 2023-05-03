@@ -17293,9 +17293,10 @@ var point_in_polygon_1 = __importDefault(__webpack_require__(6960));
 var addOnFontsLoad_1 = __importDefault(__webpack_require__(3542));
 var setSmartInterval_1 = __importDefault(__webpack_require__(2539));
 // constants
-var minScale = 0.3;
+var minScale = 0.34;
 var maxScale = 5;
 var scaleStep = 0.1;
+var pinchScaleStep = 0.005;
 var hexMargin = 2;
 var hexSize = new Vector_1.default(243, 210);
 var hexPeriod = new Vector_1.default(hexSize.x * 1.5 + hexMargin * 2, hexSize.y + hexMargin * 2);
@@ -17506,7 +17507,7 @@ var addStructurePartners = function () {
                     position: new Vector_1.default(0, 0),
                 }
             ];
-        }, 400);
+        }, 600);
         var zoom_1 = function (zoomPosition, newScale) {
             if (newScale < minScale)
                 return;
@@ -17560,14 +17561,14 @@ var addStructurePartners = function () {
                     tile.element = element;
                 }
             });
-        }, 50);
+        }, 100);
         // 2. render tiles
         (0, addOnFontsLoad_1.default)(["400 16px Golos", "500 16px Golos", "600 16px Golos", "700 16px Golos"], function () {
             (0, setSmartInterval_1.default)(function () {
                 tiles_1.forEach(function (tile) {
                     if (tile.isRendered || !tile.element)
                         return;
-                    var ctx = tile.element.getContext("2d");
+                    var ctx = tile.element.getContext("2d", { alpha: false });
                     if (!ctx)
                         return;
                     // calc limit points
@@ -17710,6 +17711,7 @@ var addStructurePartners = function () {
         }, {
             capture: true,
         });
+        var touchState_1 = "idle";
         var prevTouch_1;
         var startTouch_1;
         var prevTouchDiff_1;
@@ -17718,21 +17720,26 @@ var addStructurePartners = function () {
                 event.preventDefault();
                 prevTouch_1 = event.touches[0];
                 startTouch_1 = event.touches[0];
+                touchState_1 = "move";
             }
             if (event.touches.length === 2) {
                 event.preventDefault();
                 var touch1 = new Vector_1.default(event.touches[0].pageX, event.touches[0].pageY);
                 var touch2 = new Vector_1.default(event.touches[1].pageX, event.touches[1].pageY);
                 prevTouchDiff_1 = touch1.subtract(touch2).length;
+                touchState_1 = "zoom";
             }
         });
         hexsInner_1.addEventListener("touchmove", function (event) {
             if (event.touches.length === 1) {
                 event.preventDefault();
                 var touch = event.touches[0];
-                var movement = new Vector_1.default(touch.pageX - prevTouch_1.pageX, touch.pageY - prevTouch_1.pageY).divide(scale_1).multiply(-1);
-                position_1 = position_1.add(movement);
+                if (touchState_1 !== "zoom") {
+                    var movement = new Vector_1.default(touch.pageX - prevTouch_1.pageX, touch.pageY - prevTouch_1.pageY).divide(scale_1).multiply(-1);
+                    position_1 = position_1.add(movement);
+                }
                 prevTouch_1 = touch;
+                touchState_1 = "move";
             }
             if (event.touches.length === 2 && prevTouchDiff_1) {
                 event.preventDefault();
@@ -17745,17 +17752,16 @@ var addStructurePartners = function () {
                     var from1to2 = touch2.subtract(touch1);
                     var touchViewPosition = touch1.add(from1to2.normalize().multiply(from1to2.length * 0.5));
                     var zoomPosition = position_1.subtract(touchViewPosition.subtract(hexsViewPosition).divide(scale_1));
-                    var newScale = scale_1 + scale_1 * 0.012 * Math.sign(delta);
+                    var newScale = scale_1 + scale_1 * Math.abs(delta) * pinchScaleStep * Math.sign(delta);
                     zoom_1(zoomPosition, newScale);
                 }
                 prevTouchDiff_1 = touchDiff;
+                touchState_1 = "zoom";
             }
         });
         window.addEventListener("touchend", function (event) {
-            var touches = event.touches;
-            if (touches.length === 0)
-                touches = event.changedTouches;
-            if (touches.length === 1) {
+            var touches = event.touches.length > 0 ? event.touches : event.changedTouches;
+            if (touches.length === 1 && touchState_1 !== "zoom") {
                 var touch = touches[0];
                 if (!startTouch_1)
                     return;
