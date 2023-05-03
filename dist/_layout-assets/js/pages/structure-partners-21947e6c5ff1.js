@@ -17290,6 +17290,8 @@ var routes_1 = __importDefault(__webpack_require__(7901));
 var Queue_1 = __importDefault(__webpack_require__(8801));
 var Vector_1 = __importDefault(__webpack_require__(1196));
 var point_in_polygon_1 = __importDefault(__webpack_require__(6960));
+var addOnFontsLoad_1 = __importDefault(__webpack_require__(3542));
+var setSmartInterval_1 = __importDefault(__webpack_require__(2539));
 // constants
 var minScale = 0.3;
 var maxScale = 5;
@@ -17518,6 +17520,122 @@ var addStructurePartners = function () {
             tileSize_1 = size_1.multiply(1.5);
             resetTiles_1();
         };
+        // loops:
+        // 1. show / hide tiles 
+        (0, setSmartInterval_1.default)(function () {
+            // remove tiles outside view 
+            tiles_1 = tiles_1.filter(function (tile) {
+                var _a;
+                var tileRect = { topLeft: tile.position, bottomRight: tile.position.add(tileSize_1) };
+                var viewRect = { topLeft: position_1, bottomRight: position_1.add(size_1) };
+                if (!areRectsIntersected(tileRect, viewRect)) {
+                    (_a = tile.element) === null || _a === void 0 ? void 0 : _a.remove();
+                    return false;
+                }
+                return true;
+            });
+            // add tiles inside view
+            var topLeft = position_1.divide(tileSize_1).floor().multiply(tileSize_1);
+            var bottomRight = position_1.add(size_1);
+            var _loop_1 = function (x) {
+                var _loop_2 = function (y) {
+                    if (!tiles_1.find(function (tile) { return tile.position.x === x && tile.position.y === y; })) {
+                        tiles_1.push({
+                            position: new Vector_1.default(x, y),
+                        });
+                    }
+                };
+                for (var y = topLeft.y; y < bottomRight.y; y += tileSize_1.y) {
+                    _loop_2(y);
+                }
+            };
+            for (var x = topLeft.x; x < bottomRight.x; x += tileSize_1.x) {
+                _loop_1(x);
+            }
+            // create elements
+            tiles_1.forEach(function (tile) {
+                if (!tile.element) {
+                    var element = createTileElement({ size: tileSize_1 });
+                    hexsInner_1.appendChild(element);
+                    tile.element = element;
+                }
+            });
+        }, 50);
+        // 2. render tiles
+        (0, addOnFontsLoad_1.default)(["400 16px Golos", "500 16px Golos", "600 16px Golos", "700 16px Golos"], function () {
+            (0, setSmartInterval_1.default)(function () {
+                tiles_1.forEach(function (tile) {
+                    if (tile.isRendered || !tile.element)
+                        return;
+                    var ctx = tile.element.getContext("2d");
+                    if (!ctx)
+                        return;
+                    // calc limit points
+                    var start = tile.position.divide(hexPeriod).floor().multiply(hexPeriod);
+                    var end = tile.position.add(tileSize_1);
+                    // fill background
+                    ctx.fillStyle = "#31293C";
+                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                    // draw background hexs
+                    for (var x = start.x; x < end.x; x += hexPeriod.x) {
+                        for (var y = start.y; y < end.y; y += hexPeriod.y) {
+                            var positionInTile = (new Vector_1.default(x, y)).subtract(tile.position);
+                            drawHexagon(ctx, positionInTile);
+                        }
+                    }
+                    start = start.subtract(hexPeriod.multiply(0.5));
+                    for (var x = start.x; x < end.x; x += hexPeriod.x) {
+                        for (var y = start.y; y < end.y; y += hexPeriod.y) {
+                            var positionInTile = (new Vector_1.default(x, y)).subtract(tile.position);
+                            drawHexagon(ctx, positionInTile);
+                        }
+                    }
+                    // draw partner hexes shadow
+                    partners_1.forEach(function (partner, index) {
+                        var positionInTile = partnerPositions_1[index].subtract(tile.position);
+                        if (positionInTile.x > -2 * hexPeriod.x &&
+                            positionInTile.y > -2 * hexPeriod.x &&
+                            positionInTile.x < tileSize_1.x + 2 * hexPeriod.x &&
+                            positionInTile.y < tileSize_1.y + 2 * hexPeriod.x) {
+                            drawHexagonShadow(ctx, positionInTile, partner);
+                            ctx.shadowBlur = 0;
+                            ctx.shadowColor = "#000";
+                        }
+                    });
+                    // draw partner hexes
+                    partners_1.forEach(function (partner, index) {
+                        var positionInTile = partnerPositions_1[index].subtract(tile.position);
+                        if (positionInTile.x > -2 * hexPeriod.x &&
+                            positionInTile.y > -2 * hexPeriod.x &&
+                            positionInTile.x < tileSize_1.x + 2 * hexPeriod.x &&
+                            positionInTile.y < tileSize_1.y + 2 * hexPeriod.x) {
+                            drawHexagon(ctx, positionInTile);
+                            drawPartnerHexagon(ctx, positionInTile, partner);
+                        }
+                    });
+                    tile.isRendered = true;
+                });
+            }, 100);
+        });
+        // 3. transform tiles
+        var prevScale_1;
+        var prevPosition_1;
+        var updateTransfrom_1 = function () {
+            if (prevScale_1 === scale_1 && (prevPosition_1 === null || prevPosition_1 === void 0 ? void 0 : prevPosition_1.isEqual(position_1))) {
+                requestAnimationFrame(updateTransfrom_1);
+            }
+            else {
+                tiles_1.forEach(function (tile) {
+                    if (!tile.element)
+                        return;
+                    var translate = tile.position.subtract(position_1);
+                    tile.element.style.transform = "translate(".concat(translate.x, "px, ").concat(translate.y, "px)");
+                });
+                hexsInner_1.style.transform = "scale(".concat(scale_1, ")");
+                requestAnimationFrame(updateTransfrom_1);
+            }
+        };
+        updateTransfrom_1();
         // set event listeners
         hexs_1.addEventListener("wheel", function (event) {
             if (event.ctrlKey) {
@@ -17539,7 +17657,7 @@ var addStructurePartners = function () {
             isMouseMoving_1 = true;
             document.documentElement.style.userSelect = "none";
         });
-        document.addEventListener("mousemove", function (event) {
+        window.addEventListener("mousemove", function (event) {
             event.preventDefault();
             if (!prevMouseEvent_1 || !isMouseMoving_1)
                 return;
@@ -17548,7 +17666,11 @@ var addStructurePartners = function () {
             position_1 = position_1.add(movement);
             prevMouseEvent_1 = event;
         });
-        document.addEventListener("mouseup", function () {
+        window.addEventListener("mouseup", function () {
+            isMouseMoving_1 = false;
+            document.documentElement.style.userSelect = "";
+        });
+        document.addEventListener("mouseleave", function () {
             isMouseMoving_1 = false;
             document.documentElement.style.userSelect = "";
         });
@@ -17589,13 +17711,13 @@ var addStructurePartners = function () {
             capture: true,
         });
         var prevTouch_1;
-        var startTouches_1;
+        var startTouch_1;
         var prevTouchDiff_1;
         hexsInner_1.addEventListener("touchstart", function (event) {
-            startTouches_1 = event.touches;
             if (event.touches.length === 1) {
                 event.preventDefault();
                 prevTouch_1 = event.touches[0];
+                startTouch_1 = event.touches[0];
             }
             if (event.touches.length === 2) {
                 event.preventDefault();
@@ -17629,19 +17751,18 @@ var addStructurePartners = function () {
                 prevTouchDiff_1 = touchDiff;
             }
         });
-        hexsInner_1.addEventListener("touchend", function (event) {
+        window.addEventListener("touchend", function (event) {
             var touches = event.touches;
             if (touches.length === 0)
                 touches = event.changedTouches;
             if (touches.length === 1) {
-                var touch_1 = touches[0];
-                var startTouch = Array.from(touches).find(function (startTouch) { return startTouch.identifier === touch_1.identifier; });
-                if (!startTouch)
+                var touch = touches[0];
+                if (!startTouch_1)
                     return;
-                var delta = new Vector_1.default(startTouch.clientX - touch_1.clientX, startTouch.clientY - touch_1.clientY);
+                var delta = new Vector_1.default(startTouch_1.clientX - touch.clientX, startTouch_1.clientY - touch.clientY);
                 if (delta.length < 4) {
                     var hexsViewPosition = Vector_1.default.from(hexs_1.getBoundingClientRect());
-                    var touchViewPosition = new Vector_1.default(touch_1.pageX, touch_1.pageY);
+                    var touchViewPosition = new Vector_1.default(touch.pageX, touch.pageY);
                     var touchPosition_1 = position_1.add(touchViewPosition.subtract(hexsViewPosition).divide(scale_1));
                     partners_1.forEach(function (partner, index) {
                         var partnerPosition = partnerPositions_1[index];
@@ -17665,107 +17786,6 @@ var addStructurePartners = function () {
                 }
             }
         });
-        // loops:
-        // 1. update tiles 
-        setInterval(function () {
-            // remove tiles outside view 
-            tiles_1 = tiles_1.filter(function (tile) {
-                var _a;
-                var tileRect = { topLeft: tile.position, bottomRight: tile.position.add(tileSize_1) };
-                var viewRect = { topLeft: position_1, bottomRight: position_1.add(size_1) };
-                if (!areRectsIntersected(tileRect, viewRect)) {
-                    (_a = tile.element) === null || _a === void 0 ? void 0 : _a.remove();
-                    return false;
-                }
-                return true;
-            });
-            // add tiles inside view
-            var topLeft = position_1.divide(tileSize_1).floor().multiply(tileSize_1);
-            var bottomRight = position_1.add(size_1);
-            var _loop_1 = function (x) {
-                var _loop_2 = function (y) {
-                    if (!tiles_1.find(function (tile) { return tile.position.x === x && tile.position.y === y; })) {
-                        tiles_1.push({
-                            position: new Vector_1.default(x, y),
-                        });
-                    }
-                };
-                for (var y = topLeft.y; y < bottomRight.y; y += tileSize_1.y) {
-                    _loop_2(y);
-                }
-            };
-            for (var x = topLeft.x; x < bottomRight.x; x += tileSize_1.x) {
-                _loop_1(x);
-            }
-            // create elements
-            tiles_1.forEach(function (tile) {
-                if (!tile.element) {
-                    var element = createTileElement({ size: tileSize_1 });
-                    hexsInner_1.appendChild(element);
-                    tile.element = element;
-                }
-            });
-        }, 50);
-        // 2. render tiles
-        setInterval(function () {
-            if (document.fonts.check("400 16px Golos") && document.fonts.check("500 16px Golos") && document.fonts.check("600 16px Golos") && document.fonts.check("700 16px Golos")) {
-                tiles_1.forEach(function (tile) {
-                    if (tile.isRendered || !tile.element)
-                        return;
-                    var ctx = tile.element.getContext("2d");
-                    if (!ctx)
-                        return;
-                    // calc limit points
-                    var start = tile.position.divide(hexPeriod).floor().multiply(hexPeriod);
-                    var end = tile.position.add(tileSize_1);
-                    // fill background
-                    ctx.fillStyle = "#31293C";
-                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-                    // draw background hexs
-                    for (var x = start.x; x < end.x; x += hexPeriod.x) {
-                        for (var y = start.y; y < end.y; y += hexPeriod.y) {
-                            var pointInside = (new Vector_1.default(x, y)).subtract(tile.position);
-                            drawHexagon(ctx, pointInside);
-                        }
-                    }
-                    start = start.subtract(hexPeriod.multiply(0.5));
-                    for (var x = start.x; x < end.x; x += hexPeriod.x) {
-                        for (var y = start.y; y < end.y; y += hexPeriod.y) {
-                            var pointInside = (new Vector_1.default(x, y)).subtract(tile.position);
-                            drawHexagon(ctx, pointInside);
-                        }
-                    }
-                    // draw partner hexes shadow
-                    partners_1.forEach(function (partner, index) {
-                        var partnerPosition = partnerPositions_1[index].subtract(tile.position);
-                        drawHexagonShadow(ctx, partnerPosition, partner);
-                        ctx.shadowBlur = 0;
-                        ctx.shadowColor = "#000";
-                    });
-                    // draw partner hexes
-                    partners_1.forEach(function (partner, index) {
-                        var partnerPosition = partnerPositions_1[index].subtract(tile.position);
-                        drawHexagon(ctx, partnerPosition);
-                        drawPartnerHexagon(ctx, partnerPosition, partner);
-                    });
-                    tile.isRendered = true;
-                });
-            }
-        }, 100);
-        // 3. change transform
-        (function () {
-            var update = function () {
-                tiles_1.forEach(function (tile) {
-                    if (!tile.element)
-                        return;
-                    var translate = tile.position.subtract(position_1);
-                    tile.element.style.transform = "translate(".concat(translate.x, "px, ").concat(translate.y, "px)");
-                });
-                hexsInner_1.style.transform = "scale(".concat(scale_1, ")");
-                requestAnimationFrame(update);
-            };
-            update();
-        })();
     }
     catch (e) {
         console.error(e);
@@ -18007,6 +18027,9 @@ var Vector = /** @class */ (function () {
             return this.normalize().multiply(length);
         return Vector.from(this);
     };
+    Vector.prototype.isEqual = function (other) {
+        return this.x === other.x && this.y === other.y;
+    };
     // static
     Vector.from = function (value) {
         return new Vector(value.x, value.y);
@@ -18025,6 +18048,85 @@ var Vector = /** @class */ (function () {
     return Vector;
 }());
 exports["default"] = Vector;
+
+
+/***/ }),
+
+/***/ 3542:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addOnFontsLoad = function (fonts, callback, options) {
+    var _a;
+    if (options === void 0) { options = {}; }
+    var maxCheckTime = (_a = options.maxCheckTime) !== null && _a !== void 0 ? _a : 10000;
+    var startTime = performance.now();
+    var intervalId = setInterval(function () {
+        var loaded = fonts.reduce(function (loaded, font) {
+            return loaded && document.fonts.check(font);
+        }, true);
+        if (loaded) {
+            callback();
+            clearInterval(intervalId);
+        }
+        else {
+            var currentTime = performance.now();
+            if (currentTime - startTime > maxCheckTime) {
+                clearInterval(intervalId);
+            }
+        }
+    }, 100);
+};
+exports["default"] = addOnFontsLoad;
+
+
+/***/ }),
+
+/***/ 2539:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.clearSmartInterval = void 0;
+var _a = (function () {
+    // state
+    var runningSmartIntervals = new Set();
+    var lastId = 0;
+    // main functions
+    var setSmartInveral = function (callback, ms) {
+        var id = lastId + 1;
+        lastId++;
+        runningSmartIntervals.add(id);
+        var intervalMs = ms;
+        var intervalId = -1;
+        var intervalCallback = function () {
+            if (!runningSmartIntervals.has(id)) {
+                clearInterval(intervalId);
+                return;
+            }
+            var start = performance.now();
+            callback();
+            var finish = performance.now();
+            var delta = finish - start;
+            if (delta > intervalMs) {
+                intervalMs = delta + ms;
+                clearInterval(intervalId);
+                intervalId = window.setInterval(intervalCallback, intervalMs);
+            }
+        };
+        intervalId = window.setInterval(intervalCallback, intervalMs);
+        return id;
+    };
+    var clearSmartInterval = function (id) {
+        runningSmartIntervals.delete(id);
+    };
+    return { setSmartInveral: setSmartInveral, clearSmartInterval: clearSmartInterval };
+})(), setSmartInveral = _a.setSmartInveral, clearSmartInterval = _a.clearSmartInterval;
+exports.clearSmartInterval = clearSmartInterval;
+exports["default"] = setSmartInveral;
 
 
 /***/ })
