@@ -3699,7 +3699,11 @@ html.media-viewer-open {
     left: 0.5rem;
     top: 50%;
     transform: translate(0, -50%);
+    background: rgba(40, 30, 28, 0.32);
     z-index: 3;
+  }
+  .media-viewer__prev:hover {
+    background: rgba(40, 30, 28, 0.44);
   }
 }
 @media screen and (max-width: 480px) {
@@ -3708,7 +3712,11 @@ html.media-viewer-open {
     right: 0.5rem;
     top: 50%;
     transform: translate(0, -50%);
+    background: rgba(40, 30, 28, 0.32);
     z-index: 3;
+  }
+  .media-viewer__next:hover {
+    background: rgba(40, 30, 28, 0.44);
   }
 }
 @media screen and (max-width: 480px) {

@@ -3905,7 +3905,6 @@ html.media-viewer-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 209, 178, 0.1215686275);
   padding: 0.625rem;
   border-radius: 50%;
   cursor: pointer;
@@ -3952,14 +3951,22 @@ html.media-viewer-open {
     left: 0.5rem;
     top: 50%;
     transform: translate(0, -50%);
+    background: rgba(40, 30, 28, 0.32);
     z-index: 3;
+  }
+  .media-viewer__prev:hover {
+    background: rgba(40, 30, 28, 0.44);
   }
   .media-viewer__next {
     position: absolute;
     right: 0.5rem;
     top: 50%;
     transform: translate(0, -50%);
+    background: rgba(40, 30, 28, 0.32);
     z-index: 3;
+  }
+  .media-viewer__next:hover {
+    background: rgba(40, 30, 28, 0.44);
   }
   .media-viewer__media-container {
     position: static;

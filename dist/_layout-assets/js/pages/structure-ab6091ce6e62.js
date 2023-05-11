@@ -3673,6 +3673,9 @@ var routes = {
     contacts: {
         path: function () { return "/contacts"; }
     },
+    info: {
+        path: function () { return "/info"; }
+    },
     notifications: {
         path: function () { return "/notifications"; }
     }
