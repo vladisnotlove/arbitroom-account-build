@@ -2638,230 +2638,7 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 4742:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addTextareaAutosize = function () {
-    var updateHeight = function (element) {
-        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
-        var prevHeight = element.style.height;
-        element.style.height = "auto";
-        if (maxHeight && element.scrollHeight < maxHeight) {
-            $(element).css({
-                height: element.scrollHeight,
-                overflowY: "hidden",
-            });
-        }
-        else {
-            $(element).css({
-                height: prevHeight,
-                overflowY: "auto",
-            });
-        }
-    };
-    $(".textarea-autosize").each(function (i, textareaAutosize) {
-        // add handlers
-        $(textareaAutosize).on("input", function (e) {
-            if (e.currentTarget instanceof HTMLElement)
-                updateHeight(e.currentTarget);
-        });
-    });
-};
-exports["default"] = addTextareaAutosize;
-
-
-/***/ }),
-
-/***/ 577:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-// HELPERS
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var setValue = function (elements, value) {
-    var _a, _b;
-    (_a = elements.input) === null || _a === void 0 ? void 0 : _a.setAttribute("value", value);
-    (_b = elements.input) === null || _b === void 0 ? void 0 : _b.dispatchEvent(new Event("change"));
-};
-var updateActive = function (elements) {
-    var _a;
-    var value = elements.input.value;
-    var activeIndex = 0;
-    elements.toggleButtonGroup.querySelectorAll(".toggle-button").forEach(function (button, index) {
-        if (button.getAttribute("data-value") === value) {
-            button.classList.add("active");
-            activeIndex = index;
-        }
-        else {
-            button.classList.remove("active");
-        }
-    });
-    (_a = elements.target) === null || _a === void 0 ? void 0 : _a.forEach(function (elem) {
-        Array.from(elem.children).forEach(function (child, index) {
-            if (index === activeIndex) {
-                child.classList.add("active");
-            }
-            else {
-                child.classList.remove("active");
-            }
-        });
-    });
-};
-// MAIN
-var addToggleButtonGroup = function () {
-    document.querySelectorAll(".toggle-button-group").forEach(function (toggleButtonGroup) {
-        if (!(toggleButtonGroup instanceof HTMLElement)) {
-            console.error(".toggleButtonGroup is not a HTMLElement", toggleButtonGroup);
-            return;
-        }
-        var input = toggleButtonGroup.querySelector("input");
-        var buttons = Array.from(toggleButtonGroup.querySelectorAll(".toggle-button"));
-        var str = toggleButtonGroup.getAttribute("data-toggle-button-group-target");
-        var target = str ? Array.from(document.querySelectorAll(str)) : undefined;
-        toggleButtonGroup.addEventListener("click", function (e) {
-            if (!(e.target instanceof HTMLElement) || !e.target.closest(".toggle-button"))
-                return;
-            var activeButton = e.target;
-            var value = activeButton.getAttribute("data-value");
-            // set value in input
-            if (input && value !== null) {
-                setValue({ input: input }, value);
-            }
-            // change active button
-            buttons.forEach(function (button) {
-                if (button === activeButton) {
-                    button.classList.add("active");
-                }
-                else {
-                    button.classList.remove("active");
-                }
-            });
-            // change active target
-            if (target) {
-                var activeIndex_1 = buttons.findIndex(function (button) { return button === activeButton; });
-                target.forEach(function (elem) {
-                    Array.from(elem.children).forEach(function (child, index) {
-                        if (index === activeIndex_1) {
-                            child.classList.add("active");
-                        }
-                        else {
-                            child.classList.remove("active");
-                        }
-                    });
-                });
-            }
-        });
-        if (input) {
-            updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
-            input.addEventListener("change", function () {
-                updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
-            });
-        }
-    });
-};
-exports["default"] = addToggleButtonGroup;
-
-
-/***/ }),
-
-/***/ 602:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes_1 = __importDefault(__webpack_require__(7901));
-// MAIN
-var addHexagonPartners = function () {
-    try {
-        document.querySelectorAll(".hexagon-partners").forEach(function (hexagonPartners) {
-            if (!(hexagonPartners instanceof HTMLElement))
-                return;
-            // get elements
-            var partnersIframe = hexagonPartners.querySelector(".hexagon-partners__hexs > iframe");
-            var details = hexagonPartners.querySelector(".hexagon-partners__details");
-            var chat = hexagonPartners.querySelector(".hexagon-partners__chat");
-            if (!(details instanceof HTMLElement))
-                throw Error(".hexagon-partners has no .hexagon-partners__details");
-            if (!chat)
-                throw Error(".hexagon-partners has no .hexagon-partners__chat");
-            if (!(partnersIframe instanceof HTMLIFrameElement))
-                throw Error(".hexagon-partners has no .hexagon-partners__hexs > iframe");
-            // helpers
-            var openDetails = function (url) {
-                chat.classList.remove("open");
-                var iframe = document.createElement("iframe");
-                iframe.src = url;
-                details.innerHTML = "";
-                details.appendChild(iframe);
-                details.classList.add("open");
-                iframe.onload = function () {
-                    var _a;
-                    var height = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.scrollHeight;
-                    if (height)
-                        details.style.height = "".concat(height, "px");
-                };
-            };
-            var openChat = function (url) {
-                details.classList.remove("open");
-                var iframe = document.createElement("iframe");
-                iframe.src = url;
-                chat.innerHTML = "";
-                chat.appendChild(iframe);
-                chat.classList.add("open");
-            };
-            // add event listeners
-            window.addEventListener("message", function (event) {
-                var data = JSON.parse(event.data);
-                if (typeof data !== "object")
-                    return;
-                // from partners iframe
-                if (data.source === routes_1.default.structurePartners.path()) {
-                    if (data.type === "open-details") {
-                        openDetails(data.payload.partner.partnerDetailsUrl);
-                    }
-                }
-                // from chat iframe
-                if (data.source === routes_1.default.structurePartnerChat.path()) {
-                    if (data.type === "close") {
-                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
-                    }
-                    if (data.type === "back") {
-                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
-                        details === null || details === void 0 ? void 0 : details.classList.add("open");
-                    }
-                }
-                // from details iframe
-                if (data.source === routes_1.default.structurePartnerDetails.path()) {
-                    if (data.type === "open-chat") {
-                        openChat(data.payload.chatUrl);
-                    }
-                    if (data.type === "open-partners") {
-                        chat.classList.remove("open");
-                        details.classList.remove("open");
-                        partnersIframe.src = data.payload.partnersUrl;
-                    }
-                    if (data.type === "close") {
-                        details === null || details === void 0 ? void 0 : details.classList.remove("open");
-                    }
-                }
-            });
-        });
-    }
-    catch (e) {
-        console.error(e);
-    }
-};
-exports["default"] = addHexagonPartners;
-
-
-/***/ }),
-
-/***/ 1951:
+/***/ 2534:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2881,13 +2658,7 @@ var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
 var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
 var addMediaViewer_1 = __importDefault(__webpack_require__(840));
 // special
-var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
-var addHexagonPartners_1 = __importDefault(__webpack_require__(602));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
-var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
 window.addEventListener("load", function () {
-    // common
-    var _a;
     // popper
     (0, addPopper_1.default)();
     // input
@@ -2908,163 +2679,7 @@ window.addEventListener("load", function () {
     (0, addMediaViewer_1.default)();
     // youtube
     (0, addYoutubePlayer_1.default)();
-    // special
-    // toggle button group
-    (0, addToggleButtonGroup_1.default)();
-    // structure toggler
-    (_a = document.querySelector(".tab__structure-toggler input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
-        var tabStructure = document.querySelector(".tab__structure");
-        var value = e.currentTarget instanceof HTMLInputElement ? e.currentTarget.value : "none";
-        if (value === "scheme") {
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("info");
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("scheme");
-        }
-        if (value === "info") {
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("scheme");
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("info");
-        }
-    });
-    // hexagon partners
-    (0, addHexagonPartners_1.default)();
-    // drag to scroll
-    (0, addDragToScroll_1.default)();
-    // textarea autosize
-    (0, addTextareaAutosize_1.default)();
 });
-
-
-/***/ }),
-
-/***/ 1912:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
-var addDragToScroll = function () {
-    var stopCoef = 0.95;
-    if ((0, isTouchEnabled_1.default)())
-        return;
-    document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
-        if (!(element instanceof HTMLElement))
-            return;
-        var isCursorDisabled = element.dataset.cursorDisabled !== undefined;
-        // for grab
-        var startPos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-        };
-        var pos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-        };
-        var prevPos = __assign({}, pos);
-        var isGrabbed = false;
-        // for intertia
-        var transform = { x: 0, y: 0 };
-        var onMouseDown = function (e) {
-            startPos = {
-                left: element.scrollLeft,
-                top: element.scrollTop,
-                x: e.clientX,
-                y: e.clientY,
-            };
-            pos = __assign({}, startPos);
-            prevPos = __assign({}, pos);
-            prevPos;
-            isGrabbed = true;
-            transform = {
-                x: 0,
-                y: 0,
-            };
-            if (!isCursorDisabled)
-                element.style.cursor = "grabbing";
-            element.style.userSelect = "none";
-            element
-                .querySelectorAll("img")
-                .forEach(function (img) { return (img.draggable = false); });
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-            requestAnimationFrame(move);
-        };
-        var onMouseMove = function (e) {
-            var dx = e.clientX - startPos.x;
-            var dy = e.clientY - startPos.y;
-            pos.left = startPos.left - dx;
-            pos.top = startPos.top - dy;
-            pos.x = e.clientX;
-            pos.y = e.clientY;
-        };
-        var onMouseUp = function (e) {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-            isGrabbed = false;
-            if (!isCursorDisabled)
-                element.style.cursor = "grab";
-            element.style.removeProperty("user-select");
-            requestAnimationFrame(moveByInertia);
-        };
-        var move = function () {
-            if (!isGrabbed)
-                return;
-            transform = {
-                x: prevPos.left - pos.left,
-                y: prevPos.top - pos.top,
-            };
-            element.scrollTop = pos.top;
-            element.scrollLeft = pos.left;
-            prevPos = __assign({}, pos);
-            requestAnimationFrame(move);
-        };
-        var moveByInertia = function () {
-            if (isGrabbed)
-                return;
-            if (Math.pow(transform.x, 2) + Math.pow(transform.y, 2) <
-                0.3)
-                return;
-            transform.x *= stopCoef;
-            transform.y *= stopCoef;
-            element.scrollLeft -= transform.x;
-            element.scrollTop -= transform.y;
-            requestAnimationFrame(moveByInertia);
-        };
-        var preventClickIfMove = function (e) {
-            var diff = {
-                x: startPos.x - e.clientX,
-                y: startPos.y - e.clientY,
-            };
-            var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-            if (diffLength > 4) {
-                e.stopPropagation();
-            }
-        };
-        if (!isCursorDisabled)
-            element.style.cursor = "grab";
-        element.addEventListener("mousedown", onMouseDown);
-        element.addEventListener("click", preventClickIfMove, {
-            capture: true,
-        });
-    });
-};
-exports["default"] = addDragToScroll;
 
 
 /***/ }),
@@ -3352,6 +2967,9 @@ var addPopper = function () {
                     closePopper();
                 }
             });
+            $(window).blur(function () {
+                closePopper();
+            });
         }
     });
 };
@@ -3595,96 +3213,6 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 7901:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes = {
-    index: {
-        path: function () { return "/"; }
-    },
-    stableFund: {
-        path: function () { return "/stable-fund"; }
-    },
-    moneyBox: {
-        path: function () { return "/money-box"; }
-    },
-    arbitration: {
-        path: function () { return "/arbitration"; }
-    },
-    arbitrationInnerExchange: {
-        path: function () { return "/arbitration-inner-exchange"; }
-    },
-    balance: {
-        path: function () { return "/balance"; }
-    },
-    pool: {
-        path: function () { return "/pool"; }
-    },
-    learn: {
-        path: function () { return "/learn"; }
-    },
-    leader: {
-        path: function () { return "/leader"; }
-    },
-    personalPartners: {
-        path: function () { return "/personal-partners"; }
-    },
-    status: {
-        path: function () { return "/status"; }
-    },
-    structure: {
-        path: function () { return "/structure"; }
-    },
-    structurePartners: {
-        path: function () { return "/structure-partners"; }
-    },
-    structurePartnerChat: {
-        path: function () { return "/structure-partner-chat"; }
-    },
-    structurePartnerDetails: {
-        path: function () { return "/structure-partner-details"; }
-    },
-    materials: {
-        path: function () { return "/materials"; }
-    },
-    cashout: {
-        path: function () { return "/cashout"; }
-    },
-    promo: {
-        path: function () { return "/promo"; }
-    },
-    events: {
-        path: function () { return "/events"; }
-    },
-    event: {
-        path: function (name) { return "/events/" + name; }
-    },
-    presentations: {
-        path: function () { return "/presentations"; }
-    },
-    operations: {
-        path: function () { return "/operations"; }
-    },
-    profile: {
-        path: function () { return "/profile"; }
-    },
-    contacts: {
-        path: function () { return "/contacts"; }
-    },
-    info: {
-        path: function () { return "/info"; }
-    },
-    notifications: {
-        path: function () { return "/notifications"; }
-    }
-};
-exports["default"] = routes;
-
-
-/***/ }),
-
 /***/ 9418:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -3734,22 +3262,6 @@ exports["default"] = {
     popperViewportPadding: popperViewportPadding,
     breakpointMobileBig: breakpointMobileBig
 };
-
-
-/***/ }),
-
-/***/ 145:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled = function () {
-    return ('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        // @ts-expect-error
-        (navigator.msMaxTouchPoints > 0);
-};
-exports["default"] = isTouchEnabled;
 
 
 /***/ }),
@@ -3912,7 +3424,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(1951);
+/******/ 	var __webpack_exports__ = __webpack_require__(2534);
 /******/ 	
 /******/ })()
 ;

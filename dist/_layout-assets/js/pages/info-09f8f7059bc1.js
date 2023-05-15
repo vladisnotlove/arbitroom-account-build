@@ -2638,96 +2638,7 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 7215:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
-var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
-var SHOW_TIME_MS = 2000;
-var addCopyText = function () {
-    document.querySelectorAll(".copy-text").forEach(function (copyText) {
-        var _a, _b;
-        var value = (_b = (_a = copyText.querySelector(".copy-text__value")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim();
-        var tooltip = copyText.querySelector(".copy-text__success-tooltip");
-        if (!value || !(tooltip instanceof HTMLElement))
-            return;
-        var placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0];
-        var popper = (0, core_1.createPopper)(copyText, tooltip, {
-            placement: placement,
-            strategy: "absolute",
-            modifiers: [
-                {
-                    name: "flip",
-                    options: {
-                        fallbackPlacements: ['auto'],
-                    },
-                },
-                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                    element.classList.remove("top");
-                    element.classList.remove("left");
-                    element.classList.remove("right");
-                    element.classList.remove("bottom");
-                    element.classList.add(placement);
-                }),
-            ],
-        });
-        var hidingTimeout;
-        var autoHidingTimeout;
-        var showTooltip = function () {
-            clearTimeout(hidingTimeout);
-            popper.update();
-            tooltip.classList.add("show");
-            tooltip.classList.remove("fade-out-slow");
-        };
-        var hideTooltip = function (options) {
-            if (options === void 0) { options = {}; }
-            clearTimeout(hidingTimeout);
-            if (options.rightNow) {
-                tooltip.classList.remove("show");
-                tooltip.classList.remove("fade-out-slow");
-            }
-            else {
-                tooltip.classList.add("fade-out-slow");
-                hidingTimeout = window.setTimeout(function () {
-                    tooltip.classList.remove("show");
-                    tooltip.classList.remove("fade-out-slow");
-                }, ANIMATION_SLOW_MS);
-            }
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".copy-text") === copyText)
-                return;
-            hideTooltip({ rightNow: true });
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        copyText.addEventListener("click", function () {
-            (0, copyToClipboard_1.default)(value).then(function () {
-                clearTimeout(autoHidingTimeout);
-                showTooltip();
-                autoHidingTimeout = window.setTimeout(function () {
-                    hideTooltip();
-                    document.documentElement.removeEventListener("click", onClickOutside);
-                }, SHOW_TIME_MS);
-            });
-            document.documentElement.addEventListener("click", onClickOutside);
-        });
-        document.body.appendChild(tooltip);
-    });
-};
-exports["default"] = addCopyText;
-
-
-/***/ }),
-
-/***/ 7421:
+/***/ 2349:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2747,8 +2658,9 @@ var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
 var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
 var addMediaViewer_1 = __importDefault(__webpack_require__(840));
 // special
-var addCopyText_1 = __importDefault(__webpack_require__(7215));
+var addCollapse_1 = __importDefault(__webpack_require__(9719));
 window.addEventListener("load", function () {
+    // common
     // popper
     (0, addPopper_1.default)();
     // input
@@ -2769,9 +2681,69 @@ window.addEventListener("load", function () {
     (0, addMediaViewer_1.default)();
     // youtube
     (0, addYoutubePlayer_1.default)();
-    // copy text
-    (0, addCopyText_1.default)();
+    // special
+    // collapse
+    (0, addCollapse_1.default)();
 });
+
+
+/***/ }),
+
+/***/ 9719:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addCollapse = function () {
+    try {
+        document.querySelectorAll("[data-collapse]").forEach(function (trigger) {
+            if (!(trigger instanceof HTMLElement))
+                throw new Error("[data-collapse] is not HTMLElement");
+            var str = trigger.dataset.target;
+            var collapses = str ? document.querySelectorAll(str) : [];
+            collapses.forEach(function (collapse) {
+                var content = collapse.querySelector(".collapse__content");
+                if (!(collapse instanceof HTMLElement)) {
+                    throw new Error("\".collapse\" is not HTMLElement");
+                }
+                if (!(content instanceof HTMLElement)) {
+                    throw new Error("Element \".collapse__content\" is not found");
+                }
+                collapse.style.height = "0px";
+                collapse.style.overflow = "hidden";
+                var heightAutoTimeout = -1;
+                var collapseTimeout = -1;
+                trigger.addEventListener("click", function () {
+                    var contentHeight = content.getBoundingClientRect().height;
+                    var animationTime = Math.sqrt(contentHeight) / 28;
+                    collapse.style.transition = "height ".concat(animationTime, "s");
+                    clearTimeout(heightAutoTimeout);
+                    clearTimeout(collapseTimeout);
+                    if (trigger.classList.contains("expanded")) {
+                        collapse.style.height = contentHeight + "px";
+                        collapseTimeout = window.setTimeout(function () {
+                            trigger.classList.remove("expanded");
+                            collapse.classList.remove("expanded");
+                            collapse.style.height = "0";
+                        }, 1);
+                    }
+                    else {
+                        trigger.classList.add("expanded");
+                        collapse.classList.add("expanded");
+                        collapse.style.height = contentHeight + "px";
+                        heightAutoTimeout = window.setTimeout(function () {
+                            collapse.style.height = "auto";
+                        }, animationTime * 1000);
+                    }
+                });
+            });
+        });
+    }
+    catch (e) {
+        console.error(e);
+    }
+};
+exports["default"] = addCollapse;
 
 
 /***/ }),
@@ -3059,6 +3031,9 @@ var addPopper = function () {
                     closePopper();
                 }
             });
+            $(window).blur(function () {
+                closePopper();
+            });
         }
     });
 };
@@ -3329,41 +3304,6 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
-/***/ 9797:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-// return a promise
-function copyToClipboard(textToCopy) {
-    // navigator clipboard api needs a secure context (https)
-    if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard api method'
-        return navigator.clipboard.writeText(textToCopy);
-    }
-    else {
-        // text area method
-        var textArea_1 = document.createElement("textarea");
-        textArea_1.value = textToCopy;
-        // make the textarea out of viewport
-        textArea_1.style.position = "fixed";
-        textArea_1.style.left = "-999999px";
-        textArea_1.style.top = "-999999px";
-        document.body.appendChild(textArea_1);
-        textArea_1.focus();
-        textArea_1.select();
-        return new Promise(function (res, rej) {
-            // here the magic happens
-            document.execCommand('copy') ? res(undefined) : rej();
-            textArea_1.remove();
-        });
-    }
-}
-exports["default"] = copyToClipboard;
-
-
-/***/ }),
-
 /***/ 1503:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3548,7 +3488,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(7421);
+/******/ 	var __webpack_exports__ = __webpack_require__(2349);
 /******/ 	
 /******/ })()
 ;

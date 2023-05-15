@@ -25,12 +25,15 @@
   opacity: 0;
   transition: opacity 0.2s, top 0s 0.2s;
   z-index: 2;
+  overflow: hidden;
 }
 .hexagon-partners__details > iframe,
 .hexagon-partners__chat > iframe {
+  position: relative;
   width: 100%;
   height: 100%;
   border: none;
+  z-index: 2;
 }
 .hexagon-partners__details.open,
 .hexagon-partners__chat.open {

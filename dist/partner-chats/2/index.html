@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Arbitroom | Личный кабинет | Чат</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<!-- layout css -->
+	<link href="../../_layout-assets/css/common-e4ae2c0fd5e8.css" rel="stylesheet">
+	<link href="../../_layout-assets/css/pages/partner-chats-650a6413b280.css" rel="stylesheet">
+</head>
+
+<body>
+	<!-- LOADER -->
+	<div class="page-loader" id="pageLoader">
+		<div class="page-loader__spinner"></div>
+	</div>
+	<style>
+	.page-loader {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 100000;
+		opacity: 1;
+	}
+
+	.page-loader__spinner {
+		position: relative;
+		width: 53px;
+		height: 53px;
+		border: 3px solid rgba(255, 198, 255, 0.12);
+		border-radius: 50%;
+	}
+
+	.page-loader__spinner::before {
+		content: "";
+		position: absolute;
+		top: -3px;
+		left: -3px;
+		width: 53px;
+		height: 53px;
+		border: 3px solid transparent;
+		border-radius: 50%;
+		border-right-color: #FF6500;
+		animation: rotate 0.8s infinite linear;
+	}
+
+	@keyframes rotate {
+		0% {
+			transform: rotate(0);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.page-loader.loaded {
+		top: -200vh;
+		opacity: 0;
+		transition: top 0s 0.2s, opacity 0.2s;
+	}
+	</style>
+	<!-- MAIN -->
+	<div class="partner-chat">
+		<div class="partner-chat__header">
+			<div class="partner-chat__profile">
+				<img class="partner-chat__profile-avatar" src="../../_layout-assets/img/profile.png" alt="">
+				<div class="partner-chat__profile-main">
+					<span class="partner-chat__profile-name">ALICE</span>
+					<span class="partner-chat__profile-status">online</span>
+				</div>
+			</div>
+			<button class="partner-chat__more icon-button text large" id="chatMoreBtn">
+				<svg data-icon-name="more-vert" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.45312C13.1 8.45312 14 7.55312 14 6.45312C14 5.35312 13.1 4.45312 12 4.45312C10.9 4.45312 10 5.35312 10 6.45312C10 7.55312 10.9 8.45312 12 8.45312ZM12 10.4531C10.9 10.4531 10 11.3531 10 12.4531C10 13.5531 10.9 14.4531 12 14.4531C13.1 14.4531 14 13.5531 14 12.4531C14 11.3531 13.1 10.4531 12 10.4531ZM10 18.4531C10 17.3531 10.9 16.4531 12 16.4531C13.1 16.4531 14 17.3531 14 18.4531C14 19.5531 13.1 20.4531 12 20.4531C10.9 20.4531 10 19.5531 10 18.4531Z"></path>
+				</svg>
+			</button>
+			<div class="menu paper elevation1 popper" data-popper-anchor-element="#chatMoreBtn">
+				<a class="menu__item" href="#">
+					<svg data-icon-name="person-lock" class="svg-icon color-prime" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+						<path d="M5.2373 6.45312C5.2373 4.24399 7.02817 2.45312 9.2373 2.45312C11.4464 2.45312 13.2373 4.24399 13.2373 6.45312C13.2373 8.66226 11.4464 10.4531 9.2373 10.4531C7.02817 10.4531 5.2373 8.66226 5.2373 6.45312ZM2.2373 13.4531C2.2373 12.34 3.14046 11.4531 4.24603 11.4531L12.908 11.4531C12.7975 11.7659 12.7373 12.1025 12.7373 12.4531V12.5161C11.8747 12.7382 11.2373 13.5212 11.2373 14.4531V18.2907C10.5991 18.3998 9.92693 18.4531 9.2373 18.4531C7.38256 18.4531 5.65427 18.0671 4.3723 17.2497C3.07011 16.4194 2.2373 15.1443 2.2373 13.4531ZM13.7373 13.4531V12.4531C13.7373 11.3486 14.6327 10.4531 15.7373 10.4531C16.8419 10.4531 17.7373 11.3486 17.7373 12.4531V13.4531H18.2373C18.7896 13.4531 19.2373 13.9008 19.2373 14.4531V18.4531C19.2373 19.0054 18.7896 19.4531 18.2373 19.4531H13.2373C12.685 19.4531 12.2373 19.0054 12.2373 18.4531V14.4531C12.2373 13.9008 12.685 13.4531 13.2373 13.4531H13.7373ZM14.7373 12.4531V13.4531H16.7373V12.4531C16.7373 11.9008 16.2896 11.4531 15.7373 11.4531C15.185 11.4531 14.7373 11.9008 14.7373 12.4531ZM16.4873 16.4531C16.4873 16.0389 16.1515 15.7031 15.7373 15.7031C15.3231 15.7031 14.9873 16.0389 14.9873 16.4531C14.9873 16.8673 15.3231 17.2031 15.7373 17.2031C16.1515 17.2031 16.4873 16.8673 16.4873 16.4531Z"></path>
+					</svg> Заблокировать </a><a class="menu__item" href="#">
+					<svg data-icon-name="warning" class="svg-icon color-prime" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+						<path d="M8.92299 3.30544L2.36427 15.2304C1.81444 16.2301 2.53769 17.4533 3.67859 17.4533H16.796C17.937 17.4533 18.6602 16.2301 18.1104 15.2304L11.5516 3.30544C10.9818 2.26928 9.49288 2.26928 8.92299 3.30544ZM10.2373 7.20329C10.6515 7.20329 10.9873 7.53907 10.9873 7.95329V11.9533C10.9873 12.3675 10.6515 12.7033 10.2373 12.7033C9.82309 12.7033 9.4873 12.3675 9.4873 11.9533V7.95329C9.4873 7.53907 9.82309 7.20329 10.2373 7.20329ZM10.9873 14.2033C10.9873 14.6175 10.6515 14.9533 10.2373 14.9533C9.82309 14.9533 9.4873 14.6175 9.4873 14.2033C9.4873 13.7891 9.82309 13.4533 10.2373 13.4533C10.6515 13.4533 10.9873 13.7891 10.9873 14.2033Z"></path>
+					</svg> Пожаловаться </a>
+			</div>
+		</div>
+		<div class="partner-chat__body">
+			<div class="partner-chat__messages scroll">
+				<div class="partner-chat__empty-text"> Еще нет сообщений </div>
+			</div>
+		</div>
+		<form class="partner-chat__send-form send-form">
+			<textarea class="send-form__textarea textarea-autosize" data-textarea-autosize-max-width="200px" placeholder="Введите сообщение..." rows="1"></textarea>
+			<button class="send-form__send-btn icon-button contained">
+				<!-- icon: send -->
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+					<path d="M2.72113 2.05149L18.0756 9.61746C18.3233 9.73952 18.4252 10.0393 18.3031 10.287C18.2544 10.3858 18.1744 10.4658 18.0756 10.5145L2.72144 18.0803C2.47374 18.2023 2.17399 18.1005 2.05193 17.8528C1.99856 17.7445 1.98619 17.6205 2.0171 17.5038L3.53835 11.7591C3.58866 11.5691 3.7456 11.4262 3.93946 11.3939L10.8204 10.2466C10.9047 10.2325 10.9744 10.1769 11.0079 10.1012L11.0259 10.0411C11.0454 9.92436 10.9805 9.81305 10.8759 9.76934L10.8204 9.7534L3.90061 8.6001C3.70668 8.56778 3.54969 8.4248 3.49942 8.23473L2.01676 2.62789C1.94612 2.36093 2.10528 2.08726 2.37224 2.01663C2.48893 1.98576 2.61285 1.99814 2.72113 2.05149Z"></path>
+				</svg>
+			</button>
+		</form>
+	</div>
+	<!-- vendors -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+	<!-- layout script -->
+	<script src="../../_layout-assets/js/pages/partner-chats-d8664eb19005.js"></script>
+	<script>
+	window.addEventListener("load", () => {
+		const pageLoader = document.getElementById("pageLoader");
+		const content = document.getElementById("content");
+		if(pageLoader) pageLoader.classList.add("loaded");
+	})
+	</script>
+</body>
+
+</html>

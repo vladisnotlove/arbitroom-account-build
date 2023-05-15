@@ -118,6 +118,9 @@ var routes = {
     contacts: {
         path: function () { return "/contacts"; }
     },
+    partnerChat: {
+        path: function (id) { return "/partner-chats/" + id; }
+    },
     info: {
         path: function () { return "/info"; }
     },

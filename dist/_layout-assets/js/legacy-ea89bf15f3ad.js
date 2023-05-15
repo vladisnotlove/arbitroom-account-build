@@ -5810,6 +5810,9 @@ var addPopper = function () {
                     closePopper();
                 }
             });
+            $(window).blur(function () {
+                closePopper();
+            });
         }
     });
 };
