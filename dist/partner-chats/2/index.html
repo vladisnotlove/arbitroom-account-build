@@ -10,7 +10,7 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
 	<link rel="manifest" href="/site.webmanifest">
 	<!-- layout css -->
-	<link href="../../_layout-assets/css/common-e4ae2c0fd5e8.css" rel="stylesheet">
+	<link href="../../_layout-assets/css/common-ce53409d0c72.css" rel="stylesheet">
 	<link href="../../_layout-assets/css/pages/partner-chats-650a6413b280.css" rel="stylesheet">
 </head>
 
@@ -101,9 +101,17 @@
 			</div>
 		</div>
 		<form class="partner-chat__send-form send-form">
-			<textarea class="send-form__textarea textarea-autosize" data-textarea-autosize-max-width="200px" placeholder="Введите сообщение..." rows="1"></textarea>
+			<textarea class="send-form__textarea textarea-autosize" data-textarea-autosize-max-width="200px" placeholder="Введите сообщение..." rows="1" id="chatInput"></textarea>
+			<div class="send-form__emoji-btn emoji-picker" id="chatEmojiPicker" data-input="#chatInput" } data-locale="ru">
+				<button class="icon-button text" type="button">
+					<svg data-icon-name="emoji" class="svg-icon color-prime" xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25">
+						<path d="M12 2.45215C17.5237 2.45215 22.0015 6.93 22.0015 12.4537C22.0015 17.9774 17.5237 22.4552 12 22.4552C6.47626 22.4552 1.99841 17.9774 1.99841 12.4537C1.99841 6.93 6.47626 2.45215 12 2.45215ZM8.4617 15.237C8.20535 14.9117 7.73379 14.8557 7.40843 15.1121C7.08307 15.3684 7.02713 15.84 7.28348 16.1653C8.41408 17.6003 10.1373 18.4553 11.9999 18.4553C13.8601 18.4553 15.5813 17.6026 16.712 16.1709C16.9688 15.8458 16.9134 15.3742 16.5883 15.1175C16.2633 14.8607 15.7916 14.9161 15.5349 15.2412C14.6856 16.3165 13.3962 16.9553 11.9999 16.9553C10.6019 16.9553 9.31084 16.3147 8.4617 15.237ZM9.00041 9.20434C8.31045 9.20434 7.75112 9.76367 7.75112 10.4536C7.75112 11.1436 8.31045 11.7029 9.00041 11.7029C9.69037 11.7029 10.2497 11.1436 10.2497 10.4536C10.2497 9.76367 9.69037 9.20434 9.00041 9.20434ZM15.0004 9.20434C14.3104 9.20434 13.7511 9.76367 13.7511 10.4536C13.7511 11.1436 14.3104 11.7029 15.0004 11.7029C15.6904 11.7029 16.2497 11.1436 16.2497 10.4536C16.2497 9.76367 15.6904 9.20434 15.0004 9.20434Z"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="emoji-picker__menu popper paper" data-popper-anchor-element="#chatEmojiPicker" data-popper-placement="top">
+			</div>
 			<button class="send-form__send-btn icon-button contained">
-				<!-- icon: send -->
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 					<path d="M2.72113 2.05149L18.0756 9.61746C18.3233 9.73952 18.4252 10.0393 18.3031 10.287C18.2544 10.3858 18.1744 10.4658 18.0756 10.5145L2.72144 18.0803C2.47374 18.2023 2.17399 18.1005 2.05193 17.8528C1.99856 17.7445 1.98619 17.6205 2.0171 17.5038L3.53835 11.7591C3.58866 11.5691 3.7456 11.4262 3.93946 11.3939L10.8204 10.2466C10.9047 10.2325 10.9744 10.1769 11.0079 10.1012L11.0259 10.0411C11.0454 9.92436 10.9805 9.81305 10.8759 9.76934L10.8204 9.7534L3.90061 8.6001C3.70668 8.56778 3.54969 8.4248 3.49942 8.23473L2.01676 2.62789C1.94612 2.36093 2.10528 2.08726 2.37224 2.01663C2.48893 1.98576 2.61285 1.99814 2.72113 2.05149Z"></path>
 				</svg>
@@ -112,8 +120,9 @@
 	</div>
 	<!-- vendors -->
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
 	<!-- layout script -->
-	<script src="../../_layout-assets/js/pages/partner-chats-d8664eb19005.js"></script>
+	<script src="../../_layout-assets/js/pages/partner-chats-21894a0c9c78.js"></script>
 	<script>
 	window.addEventListener("load", () => {
 		const pageLoader = document.getElementById("pageLoader");

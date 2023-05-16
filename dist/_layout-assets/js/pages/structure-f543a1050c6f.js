@@ -3680,8 +3680,8 @@ var routes = {
     profile: {
         path: function () { return "/profile"; }
     },
-    contacts: {
-        path: function () { return "/contacts"; }
+    chat: {
+        path: function () { return "/chat"; }
     },
     partnerChat: {
         path: function (id) { return "/partner-chats/" + id; }

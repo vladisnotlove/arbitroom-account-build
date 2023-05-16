@@ -2638,6 +2638,85 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
+/***/ 3853:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addEmojiPicker = function () {
+    try {
+        var EmojiMart_1 = window.EmojiMart;
+        if (EmojiMart_1 === undefined) {
+            throw new Error("EmojiMart is not defined");
+        }
+        document.querySelectorAll(".emoji-picker").forEach(function (trigger) {
+            if (!(trigger instanceof HTMLElement))
+                throw new Error(".emoji-picker is not HTMLElement");
+            var menu = trigger.nextElementSibling;
+            if (!(menu instanceof HTMLElement))
+                throw new Error(".emoji-picker__menu is not HTMLElement");
+            var locale = trigger.getAttribute("data-locale");
+            var inputSelector = trigger.getAttribute("data-input");
+            var input = inputSelector ? document.querySelector(inputSelector) : undefined;
+            if (!(input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement))
+                throw new Error(".emoji-picker has invalid selector in 'data-input'");
+            var picker = new EmojiMart_1.Picker({
+                onEmojiSelect: function (data) {
+                    input.value += data.native;
+                },
+                locale: locale !== null && locale !== void 0 ? locale : undefined,
+                theme: "dark",
+                previewPosition: "none",
+            });
+            // @ts-ignore
+            menu.append(picker);
+        });
+    }
+    catch (e) {
+        console.error(e);
+    }
+};
+exports["default"] = addEmojiPicker;
+
+
+/***/ }),
+
+/***/ 4742:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addTextareaAutosize = function () {
+    var updateHeight = function (element) {
+        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
+        var prevHeight = element.style.height;
+        element.style.height = "auto";
+        if (maxHeight && element.scrollHeight < maxHeight) {
+            $(element).css({
+                height: element.scrollHeight,
+                overflowY: "hidden",
+            });
+        }
+        else {
+            $(element).css({
+                height: prevHeight,
+                overflowY: "auto",
+            });
+        }
+    };
+    $(".textarea-autosize").each(function (i, textareaAutosize) {
+        // add handlers
+        $(textareaAutosize).on("input", function (e) {
+            if (e.currentTarget instanceof HTMLElement)
+                updateHeight(e.currentTarget);
+        });
+    });
+};
+exports["default"] = addTextareaAutosize;
+
+
+/***/ }),
+
 /***/ 6014:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -2657,6 +2736,9 @@ var addToggleClass_1 = __importDefault(__webpack_require__(2971));
 var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
 var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
 var addMediaViewer_1 = __importDefault(__webpack_require__(840));
+// special
+var addEmojiPicker_1 = __importDefault(__webpack_require__(3853));
+var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
 window.addEventListener("load", function () {
     // common
     // popper
@@ -2691,6 +2773,10 @@ window.addEventListener("load", function () {
             console.error(e);
         }
     })();
+    // emoji picker
+    (0, addEmojiPicker_1.default)();
+    // text area autosize
+    (0, addTextareaAutosize_1.default)();
 });
 
 

@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 9252:
+/***/ 8272:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -13,23 +13,39 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var routes_1 = __importDefault(__webpack_require__(7901));
 window.addEventListener("load", function () {
     (function () {
-        var chat = document.querySelector(".partner-chat");
-        var messages = chat === null || chat === void 0 ? void 0 : chat.querySelector(".partner-chat__messages");
-        var backBtn = chat === null || chat === void 0 ? void 0 : chat.querySelector(".partner-chat__back");
-        var closeBtn = chat === null || chat === void 0 ? void 0 : chat.querySelector(".partner-chat__close");
-        if (messages) {
-            messages.scrollTop = messages.scrollHeight;
-        }
-        backBtn === null || backBtn === void 0 ? void 0 : backBtn.addEventListener("click", function () {
+        var details = document.querySelector(".partner-details");
+        var chatBtn = details === null || details === void 0 ? void 0 : details.querySelector(".partner-details__chat-btn");
+        var structureBtn = details === null || details === void 0 ? void 0 : details.querySelector(".partner-details__structure");
+        var closeBtn = details === null || details === void 0 ? void 0 : details.querySelector(".partner-details__close");
+        chatBtn === null || chatBtn === void 0 ? void 0 : chatBtn.addEventListener("click", function () {
+            var chatUrl = chatBtn.getAttribute("data-chat-url");
+            if (!chatUrl)
+                return;
             var message = JSON.stringify({
-                source: routes_1.default.structurePartnerChat.path(),
-                type: "back"
+                source: routes_1.default.structurePartnerDetails.path(),
+                type: "open-chat",
+                payload: {
+                    chatUrl: chatUrl
+                }
+            });
+            window.parent.postMessage(message, '*');
+        });
+        structureBtn === null || structureBtn === void 0 ? void 0 : structureBtn.addEventListener("click", function () {
+            var partnersUrl = structureBtn.getAttribute("data-partners-url");
+            if (!partnersUrl)
+                return;
+            var message = JSON.stringify({
+                source: routes_1.default.structurePartnerDetails.path(),
+                type: "open-partners",
+                payload: {
+                    partnersUrl: partnersUrl
+                }
             });
             window.parent.postMessage(message, '*');
         });
         closeBtn === null || closeBtn === void 0 ? void 0 : closeBtn.addEventListener("click", function () {
             var message = JSON.stringify({
-                source: routes_1.default.structurePartnerChat.path(),
+                source: routes_1.default.structurePartnerDetails.path(),
                 type: "close"
             });
             window.parent.postMessage(message, '*');
@@ -115,8 +131,8 @@ var routes = {
     profile: {
         path: function () { return "/profile"; }
     },
-    contacts: {
-        path: function () { return "/contacts"; }
+    chat: {
+        path: function () { return "/chat"; }
     },
     partnerChat: {
         path: function (id) { return "/partner-chats/" + id; }
@@ -164,7 +180,7 @@ exports["default"] = routes;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(9252);
+/******/ 	var __webpack_exports__ = __webpack_require__(8272);
 /******/ 	
 /******/ })()
 ;
