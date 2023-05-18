@@ -608,6 +608,9 @@ template {
 .block.full-width {
   width: 100%;
 }
+.block.max-width-lg {
+  max-width: 1280px;
+}
 .block.max-width-sm {
   max-width: 540px;
 }
@@ -926,6 +929,7 @@ ul li {
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
+  --switch-width: 71px;
 }
 .switch input {
   display: none;
@@ -933,11 +937,14 @@ ul li {
 .switch.success input:checked + .switch__slider {
   background: #2E906D;
 }
+.switch.small {
+  --switch-width: 51px;
+}
 
 .switch__slider {
   flex-shrink: 0;
   position: relative;
-  width: 71px;
+  width: var(--switch-width);
   height: 31px;
   background-color: rgba(120, 120, 128, 0.16);
   box-sizing: border-box;
@@ -994,7 +1001,7 @@ input:checked + .switch__slider {
 }
 
 input:checked + .switch__slider:before {
-  transform: translateX(40px);
+  transform: translateX(calc(var(--switch-width) - 31px));
 }
 
 .switch__label {
@@ -1432,6 +1439,11 @@ input:checked + .switch__slider:before {
 .select__trigger:focus {
   outline: none;
   border-color: #FF6500;
+}
+
+.select__trigger-value:empty:before {
+  content: attr(data-placeholder);
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .select__trigger-icon {

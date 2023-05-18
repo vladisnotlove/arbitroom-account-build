@@ -17842,6 +17842,12 @@ var routes = {
     arbitrationInnerExchange: {
         path: function () { return "/arbitration-inner-exchange"; }
     },
+    arbitrationBetweenExchange: {
+        path: function () { return "/arbitration-between-exchange"; }
+    },
+    arbitrationMultiExchange: {
+        path: function () { return "/arbitration-multi-exchange"; }
+    },
     balance: {
         path: function () { return "/balance"; }
     },

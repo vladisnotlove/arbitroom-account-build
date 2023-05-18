@@ -2067,794 +2067,283 @@ var popper_lite_createPopper = /*#__PURE__*/popperGenerator({
 
 /***/ }),
 
-/***/ 8132:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8081);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3645);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"color-background": "#141321",
-	"color-background-lower1": "#0d0c17",
-	"color-background-upper1": "rgba(255,198,255,.12)",
-	"color-text": "rgba(255,255,255,.92)",
-	"color-text-secondary": "rgba(255,255,255,.64)",
-	"color-text-more-secondary": "rgba(255,255,255,.32)",
-	"color-prime-main": "#ff6500",
-	"color-success-main": "#2e906d",
-	"color-error-main": "#fc4141",
-	"color-divider": "rgba(255,255,255,.08)",
-	"popper-viewport-padding": "16px",
-	"typography-font-family": "\"Golos\"",
-	"animation-fast": ".2s",
-	"animation-normal": ".35s",
-	"animation-slow": ".5s",
-	"breakpoint-mobile": "360px",
-	"breakpoint-mobile-big": "480px",
-	"breakpoint-table-small": "860px",
-	"breakpoint-table": "1100px",
-	"breakpoint-laptop-small": "1280px",
-	"breakpoint-laptop": "1440px"
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ 3645:
-/***/ ((module) => {
-
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-module.exports = function (cssWithMappingToString) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = "";
-      var needLayer = typeof item[5] !== "undefined";
-
-      if (item[4]) {
-        content += "@supports (".concat(item[4], ") {");
-      }
-
-      if (item[2]) {
-        content += "@media ".concat(item[2], " {");
-      }
-
-      if (needLayer) {
-        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
-      }
-
-      content += cssWithMappingToString(item);
-
-      if (needLayer) {
-        content += "}";
-      }
-
-      if (item[2]) {
-        content += "}";
-      }
-
-      if (item[4]) {
-        content += "}";
-      }
-
-      return content;
-    }).join("");
-  }; // import a list of modules into the list
-
-
-  list.i = function i(modules, media, dedupe, supports, layer) {
-    if (typeof modules === "string") {
-      modules = [[null, modules, undefined]];
-    }
-
-    var alreadyImportedModules = {};
-
-    if (dedupe) {
-      for (var k = 0; k < this.length; k++) {
-        var id = this[k][0];
-
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-
-    for (var _k = 0; _k < modules.length; _k++) {
-      var item = [].concat(modules[_k]);
-
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        continue;
-      }
-
-      if (typeof layer !== "undefined") {
-        if (typeof item[5] === "undefined") {
-          item[5] = layer;
-        } else {
-          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
-          item[5] = layer;
-        }
-      }
-
-      if (media) {
-        if (!item[2]) {
-          item[2] = media;
-        } else {
-          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
-          item[2] = media;
-        }
-      }
-
-      if (supports) {
-        if (!item[4]) {
-          item[4] = "".concat(supports);
-        } else {
-          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
-          item[4] = supports;
-        }
-      }
-
-      list.push(item);
-    }
-  };
-
-  return list;
-};
-
-/***/ }),
-
-/***/ 8081:
-/***/ ((module) => {
-
-
-
-module.exports = function (i) {
-  return i[1];
-};
-
-/***/ }),
-
-/***/ 4908:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3379);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7795);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(569);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3565);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9216);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4589);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_0_use_1_node_modules_sass_loader_dist_cjs_js_variables_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8132);
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_0_use_1_node_modules_sass_loader_dist_cjs_js_variables_module_scss__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_0_use_1_node_modules_sass_loader_dist_cjs_js_variables_module_scss__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_0_use_1_node_modules_sass_loader_dist_cjs_js_variables_module_scss__WEBPACK_IMPORTED_MODULE_6__/* ["default"].locals */ .Z.locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_0_use_1_node_modules_sass_loader_dist_cjs_js_variables_module_scss__WEBPACK_IMPORTED_MODULE_6__/* ["default"].locals */ .Z.locals : undefined);
-
-
-/***/ }),
-
-/***/ 3379:
-/***/ ((module) => {
-
-
-
-var stylesInDOM = [];
-
-function getIndexByIdentifier(identifier) {
-  var result = -1;
-
-  for (var i = 0; i < stylesInDOM.length; i++) {
-    if (stylesInDOM[i].identifier === identifier) {
-      result = i;
-      break;
-    }
-  }
-
-  return result;
-}
-
-function modulesToDom(list, options) {
-  var idCountMap = {};
-  var identifiers = [];
-
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i];
-    var id = options.base ? item[0] + options.base : item[0];
-    var count = idCountMap[id] || 0;
-    var identifier = "".concat(id, " ").concat(count);
-    idCountMap[id] = count + 1;
-    var indexByIdentifier = getIndexByIdentifier(identifier);
-    var obj = {
-      css: item[1],
-      media: item[2],
-      sourceMap: item[3],
-      supports: item[4],
-      layer: item[5]
-    };
-
-    if (indexByIdentifier !== -1) {
-      stylesInDOM[indexByIdentifier].references++;
-      stylesInDOM[indexByIdentifier].updater(obj);
-    } else {
-      var updater = addElementStyle(obj, options);
-      options.byIndex = i;
-      stylesInDOM.splice(i, 0, {
-        identifier: identifier,
-        updater: updater,
-        references: 1
-      });
-    }
-
-    identifiers.push(identifier);
-  }
-
-  return identifiers;
-}
-
-function addElementStyle(obj, options) {
-  var api = options.domAPI(options);
-  api.update(obj);
-
-  var updater = function updater(newObj) {
-    if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
-        return;
-      }
-
-      api.update(obj = newObj);
-    } else {
-      api.remove();
-    }
-  };
-
-  return updater;
-}
-
-module.exports = function (list, options) {
-  options = options || {};
-  list = list || [];
-  var lastIdentifiers = modulesToDom(list, options);
-  return function update(newList) {
-    newList = newList || [];
-
-    for (var i = 0; i < lastIdentifiers.length; i++) {
-      var identifier = lastIdentifiers[i];
-      var index = getIndexByIdentifier(identifier);
-      stylesInDOM[index].references--;
-    }
-
-    var newLastIdentifiers = modulesToDom(newList, options);
-
-    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
-      var _identifier = lastIdentifiers[_i];
-
-      var _index = getIndexByIdentifier(_identifier);
-
-      if (stylesInDOM[_index].references === 0) {
-        stylesInDOM[_index].updater();
-
-        stylesInDOM.splice(_index, 1);
-      }
-    }
-
-    lastIdentifiers = newLastIdentifiers;
-  };
-};
-
-/***/ }),
-
-/***/ 569:
-/***/ ((module) => {
-
-
-
-var memo = {};
-/* istanbul ignore next  */
-
-function getTarget(target) {
-  if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
-
-    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-      try {
-        // This will throw an exception if access to iframe is blocked
-        // due to cross-origin restrictions
-        styleTarget = styleTarget.contentDocument.head;
-      } catch (e) {
-        // istanbul ignore next
-        styleTarget = null;
-      }
-    }
-
-    memo[target] = styleTarget;
-  }
-
-  return memo[target];
-}
-/* istanbul ignore next  */
-
-
-function insertBySelector(insert, style) {
-  var target = getTarget(insert);
-
-  if (!target) {
-    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
-  }
-
-  target.appendChild(style);
-}
-
-module.exports = insertBySelector;
-
-/***/ }),
-
-/***/ 9216:
-/***/ ((module) => {
-
-
-
-/* istanbul ignore next  */
-function insertStyleElement(options) {
-  var element = document.createElement("style");
-  options.setAttributes(element, options.attributes);
-  options.insert(element, options.options);
-  return element;
-}
-
-module.exports = insertStyleElement;
-
-/***/ }),
-
-/***/ 3565:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-
-
-/* istanbul ignore next  */
-function setAttributesWithoutAttributes(styleElement) {
-  var nonce =  true ? __webpack_require__.nc : 0;
-
-  if (nonce) {
-    styleElement.setAttribute("nonce", nonce);
-  }
-}
-
-module.exports = setAttributesWithoutAttributes;
-
-/***/ }),
-
-/***/ 7795:
-/***/ ((module) => {
-
-
-
-/* istanbul ignore next  */
-function apply(styleElement, options, obj) {
-  var css = "";
-
-  if (obj.supports) {
-    css += "@supports (".concat(obj.supports, ") {");
-  }
-
-  if (obj.media) {
-    css += "@media ".concat(obj.media, " {");
-  }
-
-  var needLayer = typeof obj.layer !== "undefined";
-
-  if (needLayer) {
-    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
-  }
-
-  css += obj.css;
-
-  if (needLayer) {
-    css += "}";
-  }
-
-  if (obj.media) {
-    css += "}";
-  }
-
-  if (obj.supports) {
-    css += "}";
-  }
-
-  var sourceMap = obj.sourceMap;
-
-  if (sourceMap && typeof btoa !== "undefined") {
-    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  } // For old IE
-
-  /* istanbul ignore if  */
-
-
-  options.styleTagTransform(css, styleElement, options.options);
-}
-
-function removeStyleElement(styleElement) {
-  // istanbul ignore if
-  if (styleElement.parentNode === null) {
-    return false;
-  }
-
-  styleElement.parentNode.removeChild(styleElement);
-}
-/* istanbul ignore next  */
-
-
-function domAPI(options) {
-  var styleElement = options.insertStyleElement(options);
-  return {
-    update: function update(obj) {
-      apply(styleElement, options, obj);
-    },
-    remove: function remove() {
-      removeStyleElement(styleElement);
-    }
-  };
-}
-
-module.exports = domAPI;
-
-/***/ }),
-
-/***/ 4589:
-/***/ ((module) => {
-
-
-
-/* istanbul ignore next  */
-function styleTagTransform(css, styleElement) {
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css;
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild);
-    }
-
-    styleElement.appendChild(document.createTextNode(css));
-  }
-}
-
-module.exports = styleTagTransform;
-
-/***/ }),
-
-/***/ 3722:
+/***/ 4287:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
-var addSideMenu = function () {
-    var hidingTimeoutId = -1;
-    // side-menu
-    var openMenu = function () {
-        clearTimeout(hidingTimeoutId);
-        var sideMenu = document.getElementById("sideMenu");
-        var sideMenuBody = sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.querySelector(".side-menu__body");
-        var burger = document.querySelector("#header .header__burger-btn");
-        if (sideMenu && burger && sideMenuBody) {
-            sideMenuBody.scrollTop = 0;
-            sideMenu.classList.add("open");
-            burger.classList.add("open");
-            document.documentElement.classList.add("modal-open");
-        }
-    };
-    var closeMenu = function () {
-        var sideMenu = document.getElementById("sideMenu");
-        var burger = document.querySelector("#header .header__burger-btn");
-        if (sideMenu && burger) {
-            sideMenu.classList.remove("open");
-            burger.classList.remove("open");
-            sideMenu.classList.add("hiding");
-            clearTimeout(hidingTimeoutId);
-            hidingTimeoutId = window.setTimeout(function () {
-                sideMenu.classList.remove("hiding");
-            }, ANIMATION_NORMAL_MS);
-            document.documentElement.classList.remove("modal-open");
-        }
-    };
-    var toggleMenu = function () {
-        var sideMenu = document.getElementById("sideMenu");
-        if (sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.classList.contains("open")) {
-            closeMenu();
-        }
-        else {
-            openMenu();
-        }
-    };
-    var overlay = document.querySelector("#sideMenu .side-menu__overlay");
-    var burger = document.querySelector("#header .header__burger-btn");
-    if (overlay)
-        overlay.addEventListener("click", closeMenu);
-    if (burger)
-        burger.addEventListener("click", toggleMenu);
-    // tab-group
-    document.querySelectorAll(".tab-group").forEach(function (tabGroup) {
-        var label = tabGroup.querySelector(".tab-group__label");
-        if (label)
-            label.addEventListener("click", function () {
-                tabGroup.classList.toggle("expanded");
-            });
-    });
-};
-exports["default"] = addSideMenu;
-
-
-/***/ }),
-
-/***/ 4742:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addTextareaAutosize = function () {
-    var updateHeight = function (element) {
-        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
-        var prevHeight = element.style.height;
-        element.style.height = "auto";
-        if (maxHeight && element.scrollHeight < maxHeight) {
-            $(element).css({
-                height: element.scrollHeight,
-                overflowY: "hidden",
-            });
-        }
-        else {
-            $(element).css({
-                height: prevHeight,
-                overflowY: "auto",
-            });
-        }
-    };
-    $(".textarea-autosize").each(function (i, textareaAutosize) {
-        // add handlers
-        $(textareaAutosize).on("input", function (e) {
-            if (e.currentTarget instanceof HTMLElement)
-                updateHeight(e.currentTarget);
-        });
-    });
-};
-exports["default"] = addTextareaAutosize;
-
-
-/***/ }),
-
-/***/ 577:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-// HELPERS
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var setValue = function (elements, value) {
-    var _a, _b;
-    (_a = elements.input) === null || _a === void 0 ? void 0 : _a.setAttribute("value", value);
-    (_b = elements.input) === null || _b === void 0 ? void 0 : _b.dispatchEvent(new Event("change"));
-};
-var updateActive = function (elements) {
-    var _a;
-    var value = elements.input.value;
-    var activeIndex = 0;
-    elements.toggleButtonGroup.querySelectorAll(".toggle-button").forEach(function (button, index) {
-        if (button.getAttribute("data-value") === value) {
-            button.classList.add("active");
-            activeIndex = index;
-        }
-        else {
-            button.classList.remove("active");
-        }
-    });
-    (_a = elements.target) === null || _a === void 0 ? void 0 : _a.forEach(function (elem) {
-        Array.from(elem.children).forEach(function (child, index) {
-            if (index === activeIndex) {
-                child.classList.add("active");
-            }
-            else {
-                child.classList.remove("active");
-            }
-        });
-    });
-};
-// MAIN
-var addToggleButtonGroup = function () {
-    document.querySelectorAll(".toggle-button-group").forEach(function (toggleButtonGroup) {
-        if (!(toggleButtonGroup instanceof HTMLElement)) {
-            console.error(".toggleButtonGroup is not a HTMLElement", toggleButtonGroup);
+var core_1 = __webpack_require__(4750);
+var popperEnable_1 = __webpack_require__(444);
+var popperModifiers_1 = __webpack_require__(1607);
+var constants_1 = __webpack_require__(5111);
+var addMultiSelect = function () {
+    document.querySelectorAll(".multi-select").forEach(function (select) {
+        var input = select.querySelector("input.multi-select__input");
+        var trigger = select.querySelector(".multi-select__trigger");
+        var triggerValue = select.querySelector(".multi-select__trigger-value");
+        var menu = select.querySelector(".multi-select__menu");
+        var menuItems = select.querySelectorAll(".multi-select__menu-item");
+        if (!(input instanceof HTMLInputElement)) {
+            console.error("'.multi-select' has no input", input);
             return;
         }
-        var input = toggleButtonGroup.querySelector("input");
-        var buttons = Array.from(toggleButtonGroup.querySelectorAll(".toggle-button"));
-        var str = toggleButtonGroup.getAttribute("data-toggle-button-group-target");
-        var target = str ? Array.from(document.querySelectorAll(str)) : undefined;
-        toggleButtonGroup.addEventListener("click", function (e) {
-            if (!(e.target instanceof HTMLElement) || !e.target.closest(".toggle-button"))
-                return;
-            var activeButton = e.target;
-            var value = activeButton.getAttribute("data-value");
-            // set value in input
-            if (input && value !== null) {
-                setValue({ input: input }, value);
-            }
-            // change active button
-            buttons.forEach(function (button) {
-                if (button === activeButton) {
-                    button.classList.add("active");
+        if (!(trigger instanceof HTMLElement)) {
+            console.error("'.multi-select' has no trigger", trigger);
+            return;
+        }
+        if (!(triggerValue instanceof HTMLElement)) {
+            console.error("'.multi-select' has no triggerValue", triggerValue);
+            return;
+        }
+        if (!(menu instanceof HTMLElement)) {
+            console.error("'.multi-select' has no menu", menu);
+            return;
+        }
+        var popper = (0, core_1.createPopper)(trigger, menu, {
+            strategy: "fixed",
+            modifiers: [
+                popperModifiers_1.sameWidth
+            ]
+        });
+        var isMenuOpen = function () {
+            return select.classList.contains("open");
+        };
+        var openMenu = function () {
+            select.classList.add("open");
+            menu.classList.add("open");
+            (0, popperEnable_1.enablePopper)(popper);
+            popper.update();
+        };
+        var closeMenu = function () {
+            select.classList.remove("open");
+            menu.classList.remove("open");
+            (0, popperEnable_1.disablePopper)(popper);
+        };
+        var updateSelected = function () {
+            var displayValue = "";
+            var values = input.value.split(constants_1.INPUT_VALUE_SEP);
+            menuItems.forEach(function (menuItem) {
+                var _a;
+                var itemValue = menuItem.getAttribute("data-value");
+                var itemInput = menuItem.querySelector("input");
+                if (!itemInput)
+                    return;
+                if (itemValue && values.includes(itemValue)) {
+                    menuItem.classList.add("selected");
+                    itemInput.checked = true;
+                    if (displayValue)
+                        displayValue += ", ";
+                    displayValue += ((_a = menuItem.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || "";
                 }
                 else {
-                    button.classList.remove("active");
+                    itemInput.checked = false;
+                    menuItem.classList.remove("selected");
                 }
             });
-            // change active target
-            if (target) {
-                var activeIndex_1 = buttons.findIndex(function (button) { return button === activeButton; });
-                target.forEach(function (elem) {
-                    Array.from(elem.children).forEach(function (child, index) {
-                        if (index === activeIndex_1) {
-                            child.classList.add("active");
-                        }
-                        else {
-                            child.classList.remove("active");
-                        }
-                    });
-                });
+            if (triggerValue instanceof HTMLInputElement) {
+                triggerValue.value = displayValue;
+            }
+            else {
+                triggerValue.textContent = displayValue;
+            }
+        };
+        var addValue = function (value) {
+            var values = input.value ? input.value.split(constants_1.INPUT_VALUE_SEP) : [];
+            if (values.includes(value))
+                return;
+            var newValues = __spreadArray(__spreadArray([], values, true), [value], false);
+            input.setAttribute("value", newValues.join(constants_1.INPUT_VALUE_SEP));
+            input.dispatchEvent(new Event('change'));
+        };
+        var removeValue = function (value) {
+            var values = input.value ? input.value.split(constants_1.INPUT_VALUE_SEP) : [];
+            if (!values.includes(value))
+                return;
+            var newValues = values.filter(function (item) { return item !== value; });
+            input.setAttribute("value", newValues.join(constants_1.INPUT_VALUE_SEP));
+            input.dispatchEvent(new Event('change'));
+        };
+        var onClickOutside = function (e) {
+            if (e.target instanceof HTMLElement && e.target.closest(".multi-select__menu"))
+                return;
+            closeMenu();
+            document.documentElement.removeEventListener("click", onClickOutside);
+        };
+        trigger.addEventListener("click", function (e) {
+            if (!isMenuOpen()) {
+                openMenu();
+                e.stopPropagation(); // to prevent triggering of document click 
+                document.documentElement.addEventListener("click", onClickOutside);
             }
         });
-        if (input) {
-            updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
-            input.addEventListener("change", function () {
-                updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
+        menuItems.forEach(function (menuItem) {
+            var _a;
+            var value = menuItem.getAttribute("data-value");
+            if (!value)
+                return;
+            (_a = menuItem.querySelector("input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
+                if (e.currentTarget instanceof HTMLInputElement && e.currentTarget.checked) {
+                    addValue(value);
+                }
+                else {
+                    removeValue(value);
+                }
+                closeMenu();
             });
-        }
+        });
+        input.addEventListener("change", function () {
+            setTimeout(function () {
+                updateSelected();
+            }, 10);
+        });
+        updateSelected();
     });
 };
-exports["default"] = addToggleButtonGroup;
+exports["default"] = addMultiSelect;
 
 
 /***/ }),
 
-/***/ 602:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 2548:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes_1 = __importDefault(__webpack_require__(7901));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-// MAIN
-var addHexagonPartners = function () {
-    try {
-        document.querySelectorAll(".hexagon-partners").forEach(function (hexagonPartners) {
-            if (!(hexagonPartners instanceof HTMLElement))
+var core_1 = __webpack_require__(4750);
+var popperEnable_1 = __webpack_require__(444);
+var popperModifiers_1 = __webpack_require__(1607);
+var addSelect = function () {
+    document.querySelectorAll(".select").forEach(function (select) {
+        var input = select.querySelector("input");
+        var trigger = select.querySelector(".select__trigger");
+        var triggerValue = select.querySelector(".select__trigger-value");
+        var menu = select.querySelector(".select__menu");
+        var menuItems = select.querySelectorAll(".select__menu-item");
+        if (!input) {
+            console.error("'.select' has no input", input);
+            return;
+        }
+        if (!(trigger instanceof HTMLElement)) {
+            console.error("'.select' has no trigger", trigger);
+            return;
+        }
+        if (!(triggerValue instanceof HTMLElement)) {
+            console.error("'.select' has no triggerValue", triggerValue);
+            return;
+        }
+        if (!(menu instanceof HTMLElement)) {
+            console.error("'.select' has no menu", menu);
+            return;
+        }
+        var popper = (0, core_1.createPopper)(trigger, menu, {
+            strategy: "fixed",
+            modifiers: [
+                popperModifiers_1.sameWidth
+            ]
+        });
+        var isMenuOpen = function () {
+            return select.classList.contains("open");
+        };
+        var openMenu = function () {
+            select.classList.add("open");
+            menu.classList.add("open");
+            (0, popperEnable_1.enablePopper)(popper);
+            popper.update();
+        };
+        var closeMenu = function () {
+            select.classList.remove("open");
+            menu.classList.remove("open");
+            (0, popperEnable_1.disablePopper)(popper);
+        };
+        var updateSelected = function () {
+            var displayValue = "";
+            var value = input.value;
+            menuItems.forEach(function (menuItem) {
+                if (menuItem.getAttribute("data-value") === value) {
+                    menuItem.classList.add("selected");
+                    displayValue = menuItem.textContent || "";
+                }
+                else {
+                    menuItem.classList.remove("selected");
+                }
+            });
+            triggerValue.textContent = displayValue;
+        };
+        var setValue = function (value) {
+            input.value = value || "";
+            input.dispatchEvent(new Event('change'));
+        };
+        var onClickOutside = function (e) {
+            if (e.target instanceof HTMLElement && e.target.closest(".select__menu"))
                 return;
-            // get elements
-            var partnersIframe = hexagonPartners.querySelector(".hexagon-partners__hexs > iframe");
-            var details = hexagonPartners.querySelector(".hexagon-partners__details");
-            var chat = hexagonPartners.querySelector(".hexagon-partners__chat");
-            if (!(details instanceof HTMLElement))
-                throw Error(".hexagon-partners has no .hexagon-partners__details");
-            if (!chat)
-                throw Error(".hexagon-partners has no .hexagon-partners__chat");
-            if (!(partnersIframe instanceof HTMLIFrameElement))
-                throw Error(".hexagon-partners has no .hexagon-partners__hexs > iframe");
-            // helpers
-            var openDetails = function (url) {
-                chat.classList.remove("open");
-                var iframe = document.createElement("iframe");
-                iframe.src = url;
-                details.innerHTML = "";
-                details.appendChild(iframe);
-                details.classList.add("open");
-                iframe.onload = function () {
-                    var _a;
-                    var height = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.scrollHeight;
-                    if (height)
-                        details.style.height = "".concat(height, "px");
-                };
-            };
-            var openChat = function (url) {
-                details.classList.remove("open");
-                var iframe = document.createElement("iframe");
-                iframe.src = url;
-                iframe.onload = function () {
-                    var _a;
-                    if (window.innerWidth < parseFloat(cssVariables_1.default["breakpointMobileBig"])) {
-                        (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.classList.add("full-screen");
-                    }
-                };
-                chat.innerHTML = "";
-                chat.appendChild(iframe);
-                chat.classList.add("open");
-            };
-            // add event listeners
-            window.addEventListener("message", function (event) {
-                var data = JSON.parse(event.data);
-                if (typeof data !== "object")
-                    return;
-                // from partners iframe
-                if (data.source === routes_1.default.structurePartners.path()) {
-                    if (data.type === "open-details") {
-                        openDetails(data.payload.partner.partnerDetailsUrl);
-                    }
+            closeMenu();
+            document.documentElement.removeEventListener("click", onClickOutside);
+        };
+        trigger.addEventListener("click", function (e) {
+            if (!isMenuOpen()) {
+                openMenu();
+                e.stopPropagation(); // to prevent triggering of document click 
+                document.documentElement.addEventListener("click", onClickOutside);
+            }
+        });
+        menu.addEventListener("click", function (e) {
+            if (!(e.target instanceof Element))
+                return;
+            var menuItem = e.target.closest(".select__menu-item");
+            if (!(menuItem instanceof HTMLElement))
+                return;
+            var value = menuItem.dataset.value;
+            setValue(value || "");
+            closeMenu();
+        });
+        input.addEventListener("change", function () {
+            updateSelected();
+        });
+        updateSelected();
+    });
+};
+exports["default"] = addSelect;
+
+
+/***/ }),
+
+/***/ 428:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addArbitrFiltersModal = function () {
+    try {
+        var modal = document.getElementById("arbitrFiltersModal");
+        var resetBtn = modal === null || modal === void 0 ? void 0 : modal.querySelector(".reset-btn");
+        var form_1 = resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.closest("form");
+        if (!modal)
+            return;
+        if (!resetBtn)
+            throw new Error("'#arbitrFiltersModal' has no element '.reset-btn'");
+        if (!form_1)
+            throw new Error("'#arbitrFiltersModal' has no element 'form'");
+        resetBtn.addEventListener("click", function () {
+            form_1.reset();
+            form_1.querySelectorAll(".select > input").forEach(function (input) {
+                if (input instanceof HTMLInputElement) {
+                    input.value = "";
+                    input.dispatchEvent(new Event("change"));
                 }
-                // from chat iframe
-                if (data.source === routes_1.default.structurePartnerChat.path()) {
-                    if (data.type === "close") {
-                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
-                    }
-                    if (data.type === "back") {
-                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
-                        details === null || details === void 0 ? void 0 : details.classList.add("open");
-                    }
-                }
-                // from details iframe
-                if (data.source === routes_1.default.structurePartnerDetails.path()) {
-                    if (data.type === "open-chat") {
-                        openChat(data.payload.chatUrl);
-                    }
-                    if (data.type === "open-partners") {
-                        chat.classList.remove("open");
-                        details.classList.remove("open");
-                        partnersIframe.src = data.payload.partnersUrl;
-                    }
-                    if (data.type === "close") {
-                        details === null || details === void 0 ? void 0 : details.classList.remove("open");
-                    }
+            });
+            form_1.querySelectorAll(".multi-select > input").forEach(function (input) {
+                if (input instanceof HTMLInputElement) {
+                    input.setAttribute("value", "");
+                    input.dispatchEvent(new Event("change"));
                 }
             });
         });
@@ -2863,12 +2352,41 @@ var addHexagonPartners = function () {
         console.error(e);
     }
 };
-exports["default"] = addHexagonPartners;
+exports["default"] = addArbitrFiltersModal;
 
 
 /***/ }),
 
-/***/ 1951:
+/***/ 8252:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addArbitr = function () {
+    try {
+        var arbitrs = document.querySelectorAll(".arbitr");
+        arbitrs.forEach(function (arbitr) {
+            var expandBtns = arbitr.querySelectorAll(".arbitr__expand-btn");
+            expandBtns.forEach(function (expandBtn) {
+                var section = expandBtn.closest(".arbitr__section");
+                if (!section)
+                    return;
+                expandBtn.addEventListener("click", function () {
+                    section.classList.toggle("expanded");
+                });
+            });
+        });
+    }
+    catch (e) {
+        console.error(e);
+    }
+};
+exports["default"] = addArbitr;
+
+
+/***/ }),
+
+/***/ 8404:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2876,74 +2394,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-// common
-var addPopper_1 = __importDefault(__webpack_require__(2744));
-var addInput_1 = __importDefault(__webpack_require__(3846));
-var addModal_1 = __importDefault(__webpack_require__(1949));
-var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
-var addSideMenu_1 = __importDefault(__webpack_require__(3722));
-var addHeader_1 = __importDefault(__webpack_require__(8112));
-var addToggleClass_1 = __importDefault(__webpack_require__(2971));
-var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
-var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addMediaViewer_1 = __importDefault(__webpack_require__(840));
-// special
-var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
-var addHexagonPartners_1 = __importDefault(__webpack_require__(602));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
-var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
+var addMultiSelect_1 = __importDefault(__webpack_require__(4287));
+var addSelect_1 = __importDefault(__webpack_require__(2548));
+var addArbitrFiltersModal_1 = __importDefault(__webpack_require__(428));
+var addArbitr_1 = __importDefault(__webpack_require__(8252));
 window.addEventListener("load", function () {
-    // common
-    var _a;
-    // popper
-    (0, addPopper_1.default)();
-    // input
-    (0, addInput_1.default)();
-    // modal
-    (0, addModal_1.default)();
-    // with tooltip
-    (0, addWithTooltip_1.default)();
-    // side menu
-    (0, addSideMenu_1.default)();
-    // header
-    (0, addHeader_1.default)();
-    // data toggle
-    (0, addToggleClass_1.default)();
-    // video player
-    (0, addVideoPlayer_1.default)();
-    // media viewer
-    (0, addMediaViewer_1.default)();
-    // youtube
-    (0, addYoutubePlayer_1.default)();
-    // special
-    // toggle button group
-    (0, addToggleButtonGroup_1.default)();
-    // structure toggler
-    (_a = document.querySelector(".tab__structure-toggler input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
-        var tabStructure = document.querySelector(".tab__structure");
-        var value = e.currentTarget instanceof HTMLInputElement ? e.currentTarget.value : "none";
-        if (value === "scheme") {
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("info");
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("scheme");
-        }
-        if (value === "info") {
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("scheme");
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("info");
-        }
-    });
-    // hexagon partners
-    (0, addHexagonPartners_1.default)();
-    // drag to scroll
-    (0, addDragToScroll_1.default)();
-    // textarea autosize
-    (0, addTextareaAutosize_1.default)();
+    // multi select
+    (0, addMultiSelect_1.default)();
+    // select
+    (0, addSelect_1.default)();
+    // arbitr filters modal
+    (0, addArbitrFiltersModal_1.default)();
+    // arbitr
+    (0, addArbitr_1.default)();
 });
 
 
 /***/ }),
 
-/***/ 1912:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 5111:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.INPUT_VALUE_SEP = void 0;
+exports.INPUT_VALUE_SEP = ",";
+
+
+/***/ }),
+
+/***/ 444:
+/***/ (function(__unused_webpack_module, exports) {
 
 
 var __assign = (this && this.__assign) || function () {
@@ -2957,843 +2438,30 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
-var addDragToScroll = function () {
-    var stopCoef = 0.95;
-    if ((0, isTouchEnabled_1.default)())
-        return;
-    document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
-        if (!(element instanceof HTMLElement))
-            return;
-        var isCursorDisabled = element.dataset.cursorDisabled !== undefined;
-        // for grab
-        var startPos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-        };
-        var pos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-        };
-        var prevPos = __assign({}, pos);
-        var isGrabbed = false;
-        // for intertia
-        var transform = { x: 0, y: 0 };
-        var onMouseDown = function (e) {
-            startPos = {
-                left: element.scrollLeft,
-                top: element.scrollTop,
-                x: e.clientX,
-                y: e.clientY,
-            };
-            pos = __assign({}, startPos);
-            prevPos = __assign({}, pos);
-            prevPos;
-            isGrabbed = true;
-            transform = {
-                x: 0,
-                y: 0,
-            };
-            if (!isCursorDisabled)
-                element.style.cursor = "grabbing";
-            element.style.userSelect = "none";
-            element
-                .querySelectorAll("img")
-                .forEach(function (img) { return (img.draggable = false); });
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-            requestAnimationFrame(move);
-        };
-        var onMouseMove = function (e) {
-            var dx = e.clientX - startPos.x;
-            var dy = e.clientY - startPos.y;
-            pos.left = startPos.left - dx;
-            pos.top = startPos.top - dy;
-            pos.x = e.clientX;
-            pos.y = e.clientY;
-        };
-        var onMouseUp = function (e) {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-            isGrabbed = false;
-            if (!isCursorDisabled)
-                element.style.cursor = "grab";
-            element.style.removeProperty("user-select");
-            requestAnimationFrame(moveByInertia);
-        };
-        var move = function () {
-            if (!isGrabbed)
-                return;
-            transform = {
-                x: prevPos.left - pos.left,
-                y: prevPos.top - pos.top,
-            };
-            element.scrollTop = pos.top;
-            element.scrollLeft = pos.left;
-            prevPos = __assign({}, pos);
-            requestAnimationFrame(move);
-        };
-        var moveByInertia = function () {
-            if (isGrabbed)
-                return;
-            if (Math.pow(transform.x, 2) + Math.pow(transform.y, 2) <
-                0.3)
-                return;
-            transform.x *= stopCoef;
-            transform.y *= stopCoef;
-            element.scrollLeft -= transform.x;
-            element.scrollTop -= transform.y;
-            requestAnimationFrame(moveByInertia);
-        };
-        var preventClickIfMove = function (e) {
-            var diff = {
-                x: startPos.x - e.clientX,
-                y: startPos.y - e.clientY,
-            };
-            var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-            if (diffLength > 4) {
-                e.stopPropagation();
-            }
-        };
-        if (!isCursorDisabled)
-            element.style.cursor = "grab";
-        element.addEventListener("mousedown", onMouseDown);
-        element.addEventListener("click", preventClickIfMove, {
-            capture: true,
-        });
-    });
-};
-exports["default"] = addDragToScroll;
-
-
-/***/ }),
-
-/***/ 8112:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addHeader = function () {
-    var headerTitle = $("#header .header__title").get(0);
-    if (headerTitle) {
-        new ResizeObserver(function () {
-            if (headerTitle.scrollWidth > headerTitle.clientWidth) {
-                $(headerTitle).addClass("overflow");
-            }
-            else {
-                $(headerTitle).removeClass("overflow");
-            }
-        }).observe(headerTitle);
-    }
-};
-exports["default"] = addHeader;
-
-
-/***/ }),
-
-/***/ 3846:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addInput = function () {
-    $('.input').each(function (i, input) {
-        var realInput = $(input).find("input").get(0);
-        $(input)
-            .click(function () {
-            if (realInput)
-                $(realInput).focus();
-        });
-        if (realInput)
-            $(realInput)
-                .focus(function () { return $(input).addClass("focus"); })
-                .blur(function () { return $(input).removeClass("focus"); });
-    });
-    $('.input-password').each(function (i, input) {
-        var realInput = $(input).find("input").get(0);
-        var eyeBtn = $(input).find(".input-password__eye-btn").get(0);
-        var turnEyeOn = function () {
-            $(input).addClass("eye-on");
-            $(input).removeClass("eye-off");
-            if (realInput)
-                $(realInput).attr("type", "text");
-        };
-        var turnEyeOff = function () {
-            $(input).addClass("eye-off");
-            $(input).removeClass("eye-on");
-            if (realInput)
-                $(realInput).attr("type", "password");
-        };
-        if (eyeBtn)
-            $(eyeBtn).click(function (e) {
-                e.stopPropagation();
-                if ($(input).hasClass("eye-on")) {
-                    turnEyeOff();
-                }
-                else {
-                    turnEyeOn();
-                }
-            });
-    });
-};
-exports["default"] = addInput;
-
-
-/***/ }),
-
-/***/ 840:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addMediaViewer = function () {
-    var mediaViewer = document.querySelector(".media-viewer");
-    var nextButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__next");
-    var prevButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__prev");
-    if (mediaViewer && nextButton && prevButton) {
-        var mediaIndex_1 = 0;
-        var close_1 = function () {
-            mediaViewer.classList.remove("open");
-            document.documentElement.classList.remove("media-viewer-open");
-        };
-        var open_1 = function (img) {
-            var downloadImage = mediaViewer.querySelector(".media-viewer__download-image");
-            var image = mediaViewer.querySelector(".media-viewer__image");
-            var src = img.src;
-            var currentIndex = Array.from(document.querySelectorAll("[data-viewable]")).findIndex(function (item) { return item === img; });
-            if (downloadImage && image && src && currentIndex !== -1) {
-                downloadImage.setAttribute("href", src);
-                image.setAttribute("src", src);
-                mediaIndex_1 = currentIndex;
-                mediaViewer.classList.add("open");
-                document.documentElement.classList.add("media-viewer-open");
-            }
-        };
-        var openNext = function () {
-            var medias = document.querySelectorAll("[data-viewable]");
-            var nextMedia = medias[mediaIndex_1 + 1];
-            if (nextMedia && nextMedia instanceof HTMLImageElement) {
-                mediaIndex_1++;
-                open_1(nextMedia);
-            }
-        };
-        var openPrev = function () {
-            var medias = document.querySelectorAll("[data-viewable]");
-            var prevMedia = medias[mediaIndex_1 - 1];
-            if (prevMedia && prevMedia instanceof HTMLImageElement) {
-                mediaIndex_1--;
-                open_1(prevMedia);
-            }
-        };
-        mediaViewer.addEventListener("click", function (e) {
-            var target = e.target;
-            if (target instanceof Element &&
-                (target.classList.contains("media-viewer") || target.classList.contains("media-viewer__body"))) {
-                close_1();
-            }
-        });
-        nextButton.addEventListener("click", openNext);
-        prevButton.addEventListener("click", openPrev);
-        document.documentElement.addEventListener("click", function (e) {
-            var target = e.target;
-            if (target instanceof HTMLImageElement && target.hasAttribute("data-viewable")) {
-                open_1(target);
-            }
-        });
-    }
-};
-exports["default"] = addMediaViewer;
-
-
-/***/ }),
-
-/***/ 1949:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addModal = function () {
-    var closeModal = function (modal) {
-        $(modal).removeClass("open");
-        $(document.documentElement).removeClass("modal-open");
-    };
-    var openModal = function (modal) {
-        $(modal).addClass("open");
-        $(document.documentElement).addClass("modal-open");
-    };
-    $('.modal').each(function (i, modal) {
-        $(modal).addClass("ready");
-        $(modal).find(".block__title-action > .modal__close-btn").click(function () { return closeModal(modal); });
-    });
-    $('.modal-trigger').each(function (i, modalTrigger) {
-        var targetStr = $(modalTrigger).attr("data-modal-trigger-target");
-        if (targetStr) {
-            var modal_1 = $(targetStr);
-            $(modalTrigger).click(function () { return openModal(modal_1); });
-        }
-    });
-    document.documentElement.addEventListener("click", function (e) {
-        var _a, _b, _c, _d, _e, _f;
-        var target = e.target;
-        if (!(target instanceof Element))
-            return;
-        if (target.classList.contains("modal-trigger") ||
-            ((_a = target.parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("modal-trigger")) ||
-            ((_c = (_b = target.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("modal-trigger")) ||
-            ((_f = (_e = (_d = target.parentElement) === null || _d === void 0 ? void 0 : _d.parentElement) === null || _e === void 0 ? void 0 : _e.parentElement) === null || _f === void 0 ? void 0 : _f.classList.contains("modal-trigger"))) {
-            var modalTrigger = target.closest(".modal-trigger");
-            var str = modalTrigger === null || modalTrigger === void 0 ? void 0 : modalTrigger.getAttribute("data-modal-trigger-target");
-            if (str) {
-                var modal = document.querySelector(str);
-                if (modal)
-                    openModal(modal);
-            }
-        }
-    });
-};
-exports["default"] = addModal;
-
-
-/***/ }),
-
-/***/ 2744:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var core_1 = __webpack_require__(4750);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
-var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
-var addPopper = function () {
-    $('.popper').each(function (i, popperMenu) {
-        var onHover = $(popperMenu).data('popper-on-hover') !== undefined;
-        var anchorElement = $($(popperMenu).data('popper-anchor-element'));
-        var closeElements = $(popperMenu).find('[data-popper-close-element]');
-        var overlay;
-        var popper;
-        var closingTimeout;
-        var openPopper = function (currentAnchorElement, _options) {
-            if (_options === void 0) { _options = {}; }
-            var options = __assign({ disableOverlay: false }, _options);
-            clearTimeout(closingTimeout);
-            if (!popper)
-                popper = (0, core_1.createPopper)(currentAnchorElement, popperMenu, {
-                    strategy: "fixed",
-                    modifiers: [{
-                            name: 'preventOverflow',
-                            options: {
-                                altAxis: true,
-                                padding: POPPER_VIEWPORT_PADDING
-                            },
-                        }]
-                });
-            if (!options.disableOverlay) {
-                overlay = $("<div>")
-                    .addClass("popper-overlay")
-                    .on("click", closePopper)
-                    .prependTo("body");
-            }
-            $(popperMenu).addClass("open");
-        };
-        var closePopper = function () {
-            if (overlay)
-                $(overlay).remove();
-            overlay = undefined;
-            $(popperMenu).removeClass("open");
-            clearTimeout(closingTimeout);
-            closingTimeout = window.setTimeout(function () {
-                popper === null || popper === void 0 ? void 0 : popper.destroy();
-                popper = undefined;
-            }, ANIMATION_SLOW_MS);
-        };
-        if (onHover) {
-            $(anchorElement)
-                .on("mouseenter", function (e) {
-                var isOpen = $(popperMenu).hasClass("open");
-                if (!isOpen) {
-                    openPopper(e.currentTarget, { disableOverlay: true });
-                }
-            })
-                .on("mouseleave", function () {
-                var isOpen = $(popperMenu).hasClass("open");
-                if (isOpen) {
-                    closePopper();
-                }
-            });
-        }
-        else {
-            $(closeElements)
-                .on("click", function () {
-                closePopper();
-            });
-            $(anchorElement)
-                .on("click", function (e) {
-                var isOpen = $(popperMenu).hasClass("open");
-                if (!isOpen) {
-                    openPopper(e.currentTarget);
-                }
-                else {
-                    closePopper();
-                }
-            });
-            $(window).blur(function () {
-                closePopper();
-            });
-        }
-    });
-};
-exports["default"] = addPopper;
-
-
-/***/ }),
-
-/***/ 2971:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addToggleClass = function () {
-    document.querySelectorAll("[data-toggle-class]").forEach(function (elem) {
-        if (!(elem instanceof HTMLElement))
-            return;
-        var className = elem.dataset.toggleClass;
-        var selector = elem.dataset.target;
-        var targets = selector ? document.querySelectorAll(selector) : undefined;
-        if (className && targets) {
-            elem.addEventListener("click", function (e) {
-                targets.forEach(function (target) {
-                    target.classList.toggle(className);
-                });
-            });
-        }
-    });
-};
-exports["default"] = addToggleClass;
-
-
-/***/ }),
-
-/***/ 1421:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
-var addVideoPlayer = function () {
-    var _a, _b;
-    var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
-    var videoPlayer = document.getElementById("videoPlayer");
-    if (!videoPlayer)
-        return;
-    if (!player)
-        return;
-    (0, addOnAttrChange_1.default)(videoPlayer, "class", function () {
-        var isOpen = videoPlayer.classList.contains("open");
-        if (!isOpen) {
-            player === null || player === void 0 ? void 0 : player.api("pause");
-        }
-    });
-    (0, addOnAttrChange_1.default)(videoPlayer, "data-src", function () {
-        var src = videoPlayer.getAttribute("data-src");
-        if (src) {
-            player === null || player === void 0 ? void 0 : player.api("file", src);
-        }
-    });
-    var openVideoPlayer = function (src) {
-        videoPlayer.classList.add("open");
-        videoPlayer.setAttribute("data-src", src);
-    };
-    var closeVideoPlayer = function () {
-        videoPlayer.classList.remove("open");
-        videoPlayer.removeAttribute("data-src");
-    };
-    (_a = videoPlayer.querySelector(".video-player__close-btn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", closeVideoPlayer);
-    (_b = videoPlayer.querySelector(".video-player__backdrop")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", closeVideoPlayer);
-    document.querySelectorAll("[data-video-triggers-container]").forEach(function (container) {
-        container.addEventListener("click", function (e) {
-            if (!(e.target instanceof Element))
-                return;
-            var trigger = e.target.closest("[data-video-trigger]");
-            var url = trigger === null || trigger === void 0 ? void 0 : trigger.getAttribute("data-video-trigger");
-            if (url) {
-                openVideoPlayer(url);
-            }
-        });
-    });
-};
-exports["default"] = addVideoPlayer;
-
-
-/***/ }),
-
-/***/ 7540:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
-var VIEWPORT_PADDING = 12;
-var createTooltip = function (text) {
-    var tooltipContent = document.createElement("div");
-    tooltipContent.classList.add("tooltip__content");
-    tooltipContent.textContent = text;
-    var tooltip = document.createElement("div");
-    tooltip.classList.add("tooltip");
-    tooltip.appendChild(tooltipContent);
-    return tooltip;
-};
-var addWithTooltip = function () {
-    $(".with-tooltip").each(function (i, trigger) {
-        var _a;
-        var placement = trigger.dataset.withTooltipPlacement || "top";
-        var text = ((_a = trigger === null || trigger === void 0 ? void 0 : trigger.dataset) === null || _a === void 0 ? void 0 : _a.withTooltipText) || "";
-        var tooltip = trigger.querySelector(".tooltip") || createTooltip(text);
-        if (!(tooltip instanceof HTMLElement))
-            return;
-        var popper;
-        var disappearTimeoutId = -1;
-        trigger.addEventListener("mouseenter", function () {
-            if (tooltip.parentElement !== document.body) {
-                document.body.appendChild(tooltip);
-            }
-            if (!popper)
-                popper = (0, core_1.createPopper)(trigger, tooltip, {
-                    placement: placement,
-                    strategy: "absolute",
-                    modifiers: [
-                        {
-                            name: "flip",
-                            options: {
-                                fallbackPlacements: ['auto'],
-                            },
-                        },
-                        {
-                            name: 'preventOverflow',
-                            options: {
-                                padding: VIEWPORT_PADDING
-                            },
-                        },
-                        (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                            element.classList.remove("top");
-                            element.classList.remove("left");
-                            element.classList.remove("right");
-                            element.classList.remove("bottom");
-                            element.classList.add(placement);
-                        }),
-                    ],
-                });
-            tooltip.style.maxWidth = "calc(100vw - ".concat(VIEWPORT_PADDING * 2, "px)");
-            tooltip.classList.add("show");
-            tooltip.classList.remove("fade-out-slow");
-            clearTimeout(disappearTimeoutId);
-            popper.update();
-        });
-        trigger.addEventListener("mouseleave", function () {
-            tooltip.classList.add("fade-out-slow");
-            disappearTimeoutId = window.setTimeout(function () {
-                tooltip.classList.remove("show");
-                if (popper) {
-                    popper.destroy();
-                    popper = undefined;
-                }
-            }, ANIMATION_SLOW_MS);
-        });
-    });
-};
-exports["default"] = addWithTooltip;
-
-
-/***/ }),
-
-/***/ 158:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
-var addYoutubePlayer = function () {
-    var stopVideo = function (iframe) {
-        iframe.src = iframe.src;
-    };
-    var setSrc = function (iframe, youtubeId) {
-        var src = youtubeId !== undefined ?
-            "https://www.youtube.com/embed/".concat(youtubeId) :
-            iframe.dataset.src;
-        if (src && iframe.src !== src) {
-            iframe.src = src;
-        }
-    };
-    document.querySelectorAll(".youtube-trigger").forEach(function (trigger) {
-        if (!(trigger instanceof HTMLElement))
-            return;
-        var targetId = trigger.dataset.youtubeTriggerTarget;
-        var target = targetId ? document.getElementById(targetId) || document.querySelector(targetId) : undefined;
-        if (!(target instanceof HTMLElement))
-            return;
-        var youtubeId = trigger.dataset.youtubeId;
-        trigger.addEventListener("click", function () {
-            var iframe = target.querySelector("iframe");
-            if (iframe)
-                setSrc(iframe, youtubeId);
-            document.querySelectorAll(".youtube-embedded").forEach(function (other) {
-                if (!(other instanceof HTMLElement))
-                    return;
-                other.classList.remove("open");
-                other.hidden = true;
-            });
-            target.classList.add("open");
-            target.hidden = false;
-        });
-    });
-    document.querySelectorAll(".youtube-embedded").forEach(function (container) {
-        if (!(container instanceof HTMLElement))
-            return;
-        var overlay = container.querySelector(".youtube-embedded__overlay");
-        var iframe = container.querySelector("iframe");
-        if (!(overlay instanceof HTMLElement) || !iframe)
-            return;
-        container.hidden = true;
-        var hiddenTimeout = -1;
-        overlay.addEventListener("click", function () {
-            clearTimeout(hiddenTimeout);
-            container.classList.remove("open");
-            stopVideo(iframe);
-            hiddenTimeout = window.setTimeout(function () {
-                container.hidden = true;
-            }, ANIMATION_SLOW_MS);
-        });
-    });
-};
-exports["default"] = addYoutubePlayer;
-
-
-/***/ }),
-
-/***/ 7901:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes = {
-    index: {
-        path: function () { return "/"; }
-    },
-    stableFund: {
-        path: function () { return "/stable-fund"; }
-    },
-    moneyBox: {
-        path: function () { return "/money-box"; }
-    },
-    arbitration: {
-        path: function () { return "/arbitration"; }
-    },
-    arbitrationInnerExchange: {
-        path: function () { return "/arbitration-inner-exchange"; }
-    },
-    balance: {
-        path: function () { return "/balance"; }
-    },
-    pool: {
-        path: function () { return "/pool"; }
-    },
-    learn: {
-        path: function () { return "/learn"; }
-    },
-    leader: {
-        path: function () { return "/leader"; }
-    },
-    personalPartners: {
-        path: function () { return "/personal-partners"; }
-    },
-    status: {
-        path: function () { return "/status"; }
-    },
-    structure: {
-        path: function () { return "/structure"; }
-    },
-    structurePartners: {
-        path: function () { return "/structure-partners"; }
-    },
-    structurePartnerChat: {
-        path: function () { return "/structure-partner-chat"; }
-    },
-    structurePartnerDetails: {
-        path: function () { return "/structure-partner-details"; }
-    },
-    materials: {
-        path: function () { return "/materials"; }
-    },
-    cashout: {
-        path: function () { return "/cashout"; }
-    },
-    promo: {
-        path: function () { return "/promo"; }
-    },
-    events: {
-        path: function () { return "/events"; }
-    },
-    event: {
-        path: function (name) { return "/events/" + name; }
-    },
-    presentations: {
-        path: function () { return "/presentations"; }
-    },
-    operations: {
-        path: function () { return "/operations"; }
-    },
-    profile: {
-        path: function () { return "/profile"; }
-    },
-    chat: {
-        path: function () { return "/chat"; }
-    },
-    partnerChat: {
-        path: function (id) { return "/partner-chats/" + id; }
-    },
-    info: {
-        path: function () { return "/info"; }
-    },
-    notifications: {
-        path: function () { return "/notifications"; }
-    }
-};
-exports["default"] = routes;
-
-
-/***/ }),
-
-/***/ 9418:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addOnAttrChange = function (element, attrName, callback) {
-    var prevAttr = element.getAttribute(attrName);
-    var observer = new MutationObserver(function (mutationList) {
-        var attr = element.getAttribute(attrName);
-        if (attr !== prevAttr) {
-            callback(attr);
-        }
-        prevAttr = attr;
-    });
-    observer.observe(element, {
-        attributes: true,
-        attributeFilter: [attrName],
-    });
-    return function () {
-        observer.disconnect();
-    };
-};
-exports["default"] = addOnAttrChange;
-
-
-/***/ }),
-
-/***/ 1503:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
-var parsePx_1 = __importDefault(__webpack_require__(6871));
-var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
-var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
-var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
-var popperViewportPadding = (0, parsePx_1.default)(variables_module_scss_1.default["popper-viewport-padding"]);
-var breakpointMobileBig = variables_module_scss_1.default["breakpoint-mobile-big"];
-exports["default"] = {
-    animationFastMs: animationFastMs,
-    animationNormalMs: animationNormalMs,
-    animationSlowMs: animationSlowMs,
-    popperViewportPadding: popperViewportPadding,
-    breakpointMobileBig: breakpointMobileBig
-};
-
-
-/***/ }),
-
-/***/ 145:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled = function () {
-    return ('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        // @ts-expect-error
-        (navigator.msMaxTouchPoints > 0);
-};
-exports["default"] = isTouchEnabled;
-
-
-/***/ }),
-
-/***/ 6871:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var remToPx_1 = __importDefault(__webpack_require__(8638));
-var parsePx = function (value) {
-    if (typeof value === "number")
-        return value;
-    if (typeof value === "string") {
-        if (value.indexOf("rem") > 0) {
-            var rem = parseFloat(value);
-            if (!isNaN(rem)) {
-                return (0, remToPx_1.default)(rem);
-            }
-        }
-        var px = parseFloat(value);
-        if (!isNaN(px)) {
-            return px;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
         }
     }
-    return undefined;
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports["default"] = parsePx;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.disablePopper = exports.enablePopper = void 0;
+var enablePopper = function (popper) {
+    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
+            { name: 'eventListeners', enabled: true },
+        ], false) })); });
+    popper.update();
+};
+exports.enablePopper = enablePopper;
+var disablePopper = function (popper) {
+    popper.setOptions(function (options) { return (__assign(__assign({}, options), { modifiers: __spreadArray(__spreadArray([], (options.modifiers || []), true), [
+            { name: 'eventListeners', enabled: false },
+        ], false) })); });
+};
+exports.disablePopper = disablePopper;
 
 
 /***/ }),
@@ -3833,19 +2501,6 @@ var createPlacementHandler = function (onPlacementChange) {
 exports.createPlacementHandler = createPlacementHandler;
 
 
-/***/ }),
-
-/***/ 8638:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var remToPx = function (rem) {
-    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-};
-exports["default"] = remToPx;
-
-
 /***/ })
 
 /******/ 	});
@@ -3862,7 +2517,7 @@ exports["default"] = remToPx;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
+/******/ 			// no module.id needed
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
@@ -3875,18 +2530,6 @@ exports["default"] = remToPx;
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -3915,17 +2558,12 @@ exports["default"] = remToPx;
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/nonce */
-/******/ 	(() => {
-/******/ 		__webpack_require__.nc = undefined;
-/******/ 	})();
-/******/ 	
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(1951);
+/******/ 	var __webpack_exports__ = __webpack_require__(8404);
 /******/ 	
 /******/ })()
 ;
