@@ -3632,6 +3632,9 @@ var routes = {
     arbitrationMultiExchange: {
         path: function () { return "/arbitration-multi-exchange"; }
     },
+    arbitrationAnalyst: {
+        path: function () { return "/arbitration-analyst"; }
+    },
     balance: {
         path: function () { return "/balance"; }
     },
