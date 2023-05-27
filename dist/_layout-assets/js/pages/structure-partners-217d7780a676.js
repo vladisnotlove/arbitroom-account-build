@@ -17884,6 +17884,9 @@ var routes = {
     materials: {
         path: function () { return "/materials"; }
     },
+    credit: {
+        path: function () { return "/credit"; }
+    },
     cashout: {
         path: function () { return "/cashout"; }
     },

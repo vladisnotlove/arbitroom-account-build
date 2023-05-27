@@ -1,0 +1,226 @@
+.my-credit__content {
+  display: flex;
+  gap: 2rem;
+}
+
+.my-credit__section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.my-credit__divider {
+  align-self: stretch;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.my-credit__chip {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  background: rgba(255, 198, 255, 0.12);
+  border-radius: 2rem;
+  text-align: center;
+}
+.my-credit__chip.success {
+  background: #2E906D;
+}
+.my-credit__chip.error {
+  background: #FC4141;
+}
+
+.my-credit__text {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+  color: rgba(255, 255, 255, 0.64);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .my-credit__content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .my-credit__divider {
+    align-self: stretch;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+.credit-stats__table {
+  display: table;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.credit-stats__row {
+  display: table-row;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.credit-stats__row:first-child > .credit-stats__cell {
+  padding-top: 0;
+}
+.credit-stats__row:last-child {
+  border-bottom: none;
+}
+.credit-stats__row:last-child > .credit-stats__cell {
+  padding-bottom: 0;
+}
+
+.credit-stats__cell {
+  display: table-cell;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+  color: rgba(255, 255, 255, 0.64);
+  padding: 1rem 0.5rem;
+}
+.credit-stats__cell:first-child {
+  padding-left: 0;
+}
+.credit-stats__cell:last-child {
+  padding-right: 0;
+}
+.credit-stats__cell.success {
+  color: #2E906D;
+}
+.credit-stats__cell.error {
+  color: #FC4141;
+}
+
+@media (max-width: 540px) {
+  .credit-stats__table {
+    display: block;
+  }
+  .credit-stats__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "a c" "b c";
+    column-gap: 1rem;
+    row-gap: 0;
+    padding: 1rem 0;
+  }
+  .credit-stats__cell {
+    padding: 0;
+  }
+  .credit-stats__cell:nth-child(1) {
+    grid-area: a;
+  }
+  .credit-stats__cell:nth-child(2) {
+    grid-area: b;
+  }
+  .credit-stats__cell:nth-child(3) {
+    grid-area: c;
+    text-align: right;
+  }
+}
+.credit-form__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.credit-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.credit-form__form-header {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.credit-form__form-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-width: 0;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem;
+}
+.credit-form__form-body::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .credit-form__form-body.variant2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "f t" "b b";
+  }
+  .credit-form__form-body.variant2 > .field {
+    grid-area: f;
+  }
+  .credit-form__form-body.variant2 > .text-block {
+    grid-area: t;
+  }
+  .credit-form__form-body.variant2 > .button {
+    grid-area: b;
+    width: 100%;
+  }
+}
+.tab__credit {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-areas: "m m m m m m t t t t t t" "s s s s s s t t t t t t" "i i i i i f f f f f f f" "o o o o o o o o o o o o";
+  gap: 1rem;
+}
+
+.tab__credit-my-credit {
+  grid-area: m;
+}
+
+.tab__credit-terms {
+  grid-area: t;
+}
+
+.tab__credit-stats {
+  grid-area: s;
+}
+
+.tab__credit-img {
+  grid-area: i;
+  object-fit: cover;
+  border-radius: 1rem;
+  align-self: stretch;
+  justify-self: stretch;
+  min-height: 100%;
+  height: 0;
+}
+
+.tab__credit-form {
+  grid-area: f;
+}
+
+.tab__credit-operations {
+  grid-area: o;
+}
+
+@media (max-width: 800px) {
+  .tab__credit {
+    grid-template-areas: "m m m m m m m m m m m m" "s s s s s s t t t t t t" "i i i i i f f f f f f f" "o o o o o o o o o o o o";
+  }
+}
+@media (max-width: 700px) {
+  .tab__credit {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .tab__credit-img {
+    max-height: 280px;
+    min-height: unset;
+    height: auto;
+  }
+}

@@ -2570,45 +2570,70 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 3853:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 3722:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addEmojiPicker = function () {
-    try {
-        var EmojiMart_1 = window.EmojiMart;
-        if (EmojiMart_1 === undefined) {
-            throw new Error("EmojiMart is not defined");
-        }
-        document.querySelectorAll(".emoji-picker").forEach(function (trigger) {
-            if (!(trigger instanceof HTMLElement))
-                throw new Error(".emoji-picker is not HTMLElement");
-            var menu = trigger.nextElementSibling;
-            if (!(menu instanceof HTMLElement))
-                throw new Error(".emoji-picker__menu is not HTMLElement");
-            var locale = trigger.getAttribute("data-locale");
-            var inputSelector = trigger.getAttribute("data-input");
-            var input = inputSelector ? document.querySelector(inputSelector) : undefined;
-            if (!(input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement))
-                throw new Error(".emoji-picker has invalid selector in 'data-input'");
-            var picker = new EmojiMart_1.Picker({
-                onEmojiSelect: function (data) {
-                    input.value += data.native;
-                },
-                locale: locale !== null && locale !== void 0 ? locale : undefined,
-                theme: "dark",
-                previewPosition: "none",
-            });
-            // @ts-ignore
-            menu.append(picker);
-        });
-    }
-    catch (e) {
-        console.error(e);
-    }
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports["default"] = addEmojiPicker;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
+var addSideMenu = function () {
+    var hidingTimeoutId = -1;
+    // side-menu
+    var openMenu = function () {
+        clearTimeout(hidingTimeoutId);
+        var sideMenu = document.getElementById("sideMenu");
+        var sideMenuBody = sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.querySelector(".side-menu__body");
+        var burger = document.querySelector("#header .header__burger-btn");
+        if (sideMenu && burger && sideMenuBody) {
+            sideMenuBody.scrollTop = 0;
+            sideMenu.classList.add("open");
+            burger.classList.add("open");
+            document.documentElement.classList.add("modal-open");
+        }
+    };
+    var closeMenu = function () {
+        var sideMenu = document.getElementById("sideMenu");
+        var burger = document.querySelector("#header .header__burger-btn");
+        if (sideMenu && burger) {
+            sideMenu.classList.remove("open");
+            burger.classList.remove("open");
+            sideMenu.classList.add("hiding");
+            clearTimeout(hidingTimeoutId);
+            hidingTimeoutId = window.setTimeout(function () {
+                sideMenu.classList.remove("hiding");
+            }, ANIMATION_NORMAL_MS);
+            document.documentElement.classList.remove("modal-open");
+        }
+    };
+    var toggleMenu = function () {
+        var sideMenu = document.getElementById("sideMenu");
+        if (sideMenu === null || sideMenu === void 0 ? void 0 : sideMenu.classList.contains("open")) {
+            closeMenu();
+        }
+        else {
+            openMenu();
+        }
+    };
+    var overlay = document.querySelector("#sideMenu .side-menu__overlay");
+    var burger = document.querySelector("#header .header__burger-btn");
+    if (overlay)
+        overlay.addEventListener("click", closeMenu);
+    if (burger)
+        burger.addEventListener("click", toggleMenu);
+    // tab-group
+    document.querySelectorAll(".tab-group").forEach(function (tabGroup) {
+        var label = tabGroup.querySelector(".tab-group__label");
+        if (label)
+            label.addEventListener("click", function () {
+                tabGroup.classList.toggle("expanded");
+            });
+    });
+};
+exports["default"] = addSideMenu;
 
 
 /***/ }),
@@ -2649,7 +2674,99 @@ exports["default"] = addTextareaAutosize;
 
 /***/ }),
 
-/***/ 9252:
+/***/ 577:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+// HELPERS
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var setValue = function (elements, value) {
+    var _a, _b;
+    (_a = elements.input) === null || _a === void 0 ? void 0 : _a.setAttribute("value", value);
+    (_b = elements.input) === null || _b === void 0 ? void 0 : _b.dispatchEvent(new Event("change"));
+};
+var updateActive = function (elements) {
+    var _a;
+    var value = elements.input.value;
+    var activeIndex = 0;
+    elements.toggleButtonGroup.querySelectorAll(".toggle-button").forEach(function (button, index) {
+        if (button.getAttribute("data-value") === value) {
+            button.classList.add("active");
+            activeIndex = index;
+        }
+        else {
+            button.classList.remove("active");
+        }
+    });
+    (_a = elements.target) === null || _a === void 0 ? void 0 : _a.forEach(function (elem) {
+        Array.from(elem.children).forEach(function (child, index) {
+            if (index === activeIndex) {
+                child.classList.add("active");
+            }
+            else {
+                child.classList.remove("active");
+            }
+        });
+    });
+};
+// MAIN
+var addToggleButtonGroup = function () {
+    document.querySelectorAll(".toggle-button-group").forEach(function (toggleButtonGroup) {
+        if (!(toggleButtonGroup instanceof HTMLElement)) {
+            console.error(".toggleButtonGroup is not a HTMLElement", toggleButtonGroup);
+            return;
+        }
+        var input = toggleButtonGroup.querySelector("input");
+        var buttons = Array.from(toggleButtonGroup.querySelectorAll(".toggle-button"));
+        var str = toggleButtonGroup.getAttribute("data-toggle-button-group-target");
+        var target = str ? Array.from(document.querySelectorAll(str)) : undefined;
+        toggleButtonGroup.addEventListener("click", function (e) {
+            if (!(e.target instanceof HTMLElement) || !e.target.closest(".toggle-button"))
+                return;
+            var activeButton = e.target;
+            var value = activeButton.getAttribute("data-value");
+            // set value in input
+            if (input && value !== null) {
+                setValue({ input: input }, value);
+            }
+            // change active button
+            buttons.forEach(function (button) {
+                if (button === activeButton) {
+                    button.classList.add("active");
+                }
+                else {
+                    button.classList.remove("active");
+                }
+            });
+            // change active target
+            if (target) {
+                var activeIndex_1 = buttons.findIndex(function (button) { return button === activeButton; });
+                target.forEach(function (elem) {
+                    Array.from(elem.children).forEach(function (child, index) {
+                        if (index === activeIndex_1) {
+                            child.classList.add("active");
+                        }
+                        else {
+                            child.classList.remove("active");
+                        }
+                    });
+                });
+            }
+        });
+        if (input) {
+            updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
+            input.addEventListener("change", function () {
+                updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
+            });
+        }
+    });
+};
+exports["default"] = addToggleButtonGroup;
+
+
+/***/ }),
+
+/***/ 602:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2658,41 +2775,491 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var routes_1 = __importDefault(__webpack_require__(7901));
+var cssVariables_1 = __importDefault(__webpack_require__(1503));
+// MAIN
+var addHexagonPartners = function () {
+    try {
+        document.querySelectorAll(".hexagon-partners").forEach(function (hexagonPartners) {
+            if (!(hexagonPartners instanceof HTMLElement))
+                return;
+            // get elements
+            var partnersIframe = hexagonPartners.querySelector(".hexagon-partners__hexs > iframe");
+            var details = hexagonPartners.querySelector(".hexagon-partners__details");
+            var chat = hexagonPartners.querySelector(".hexagon-partners__chat");
+            if (!(details instanceof HTMLElement))
+                throw Error(".hexagon-partners has no .hexagon-partners__details");
+            if (!chat)
+                throw Error(".hexagon-partners has no .hexagon-partners__chat");
+            if (!(partnersIframe instanceof HTMLIFrameElement))
+                throw Error(".hexagon-partners has no .hexagon-partners__hexs > iframe");
+            // helpers
+            var openDetails = function (url) {
+                chat.classList.remove("open");
+                var iframe = document.createElement("iframe");
+                iframe.src = url;
+                details.innerHTML = "";
+                details.appendChild(iframe);
+                details.classList.add("open");
+                iframe.onload = function () {
+                    var _a;
+                    var height = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.scrollHeight;
+                    if (height)
+                        details.style.height = "".concat(height, "px");
+                };
+            };
+            var openChat = function (url) {
+                details.classList.remove("open");
+                var iframe = document.createElement("iframe");
+                iframe.src = url;
+                iframe.onload = function () {
+                    var _a;
+                    if (window.innerWidth < parseFloat(cssVariables_1.default["breakpointMobileBig"])) {
+                        (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.classList.add("full-screen");
+                    }
+                };
+                chat.innerHTML = "";
+                chat.appendChild(iframe);
+                chat.classList.add("open");
+            };
+            // add event listeners
+            window.addEventListener("message", function (event) {
+                var data = JSON.parse(event.data);
+                if (typeof data !== "object")
+                    return;
+                // from partners iframe
+                if (data.source === routes_1.default.structurePartners.path()) {
+                    if (data.type === "open-details") {
+                        openDetails(data.payload.partner.partnerDetailsUrl);
+                    }
+                }
+                // from chat iframe
+                if (data.source === routes_1.default.structurePartnerChat.path()) {
+                    if (data.type === "close") {
+                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
+                    }
+                    if (data.type === "back") {
+                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
+                        details === null || details === void 0 ? void 0 : details.classList.add("open");
+                    }
+                }
+                // from details iframe
+                if (data.source === routes_1.default.structurePartnerDetails.path()) {
+                    if (data.type === "open-chat") {
+                        openChat(data.payload.chatUrl);
+                    }
+                    if (data.type === "open-partners") {
+                        chat.classList.remove("open");
+                        details.classList.remove("open");
+                        partnersIframe.src = data.payload.partnersUrl;
+                    }
+                    if (data.type === "close") {
+                        details === null || details === void 0 ? void 0 : details.classList.remove("open");
+                    }
+                }
+            });
+        });
+    }
+    catch (e) {
+        console.error(e);
+    }
+};
+exports["default"] = addHexagonPartners;
+
+
+/***/ }),
+
+/***/ 1951:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+// common
 var addPopper_1 = __importDefault(__webpack_require__(2744));
+var addInput_1 = __importDefault(__webpack_require__(3846));
+var addModal_1 = __importDefault(__webpack_require__(1949));
+var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
+var addSideMenu_1 = __importDefault(__webpack_require__(3722));
+var addHeader_1 = __importDefault(__webpack_require__(8112));
+var addToggleClass_1 = __importDefault(__webpack_require__(2971));
+var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
+var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
+var addMediaViewer_1 = __importDefault(__webpack_require__(840));
+// special
+var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
+var addHexagonPartners_1 = __importDefault(__webpack_require__(602));
+var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
 var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
-var addEmojiPicker_1 = __importDefault(__webpack_require__(3853));
 window.addEventListener("load", function () {
+    // common
+    var _a;
     // popper
     (0, addPopper_1.default)();
+    // input
+    (0, addInput_1.default)();
+    // modal
+    (0, addModal_1.default)();
+    // with tooltip
+    (0, addWithTooltip_1.default)();
+    // side menu
+    (0, addSideMenu_1.default)();
+    // header
+    (0, addHeader_1.default)();
+    // data toggle
+    (0, addToggleClass_1.default)();
+    // video player
+    (0, addVideoPlayer_1.default)();
+    // media viewer
+    (0, addMediaViewer_1.default)();
+    // youtube
+    (0, addYoutubePlayer_1.default)();
+    // special
+    // toggle button group
+    (0, addToggleButtonGroup_1.default)();
+    // structure toggler
+    (_a = document.querySelector(".tab__structure-toggler input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
+        var tabStructure = document.querySelector(".tab__structure");
+        var value = e.currentTarget instanceof HTMLInputElement ? e.currentTarget.value : "none";
+        if (value === "scheme") {
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("info");
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("scheme");
+        }
+        if (value === "info") {
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("scheme");
+            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("info");
+        }
+    });
+    // hexagon partners
+    (0, addHexagonPartners_1.default)();
+    // drag to scroll
+    (0, addDragToScroll_1.default)();
     // textarea autosize
     (0, addTextareaAutosize_1.default)();
-    // emoji picker
-    (0, addEmojiPicker_1.default)();
-    // chat logic
-    (function () {
-        var chat = document.querySelector(".partner-chat");
-        var messages = chat === null || chat === void 0 ? void 0 : chat.querySelector(".partner-chat__messages");
-        var backBtn = chat === null || chat === void 0 ? void 0 : chat.querySelector(".partner-chat__back");
-        var closeBtn = chat === null || chat === void 0 ? void 0 : chat.querySelector(".partner-chat__close");
-        if (messages) {
-            messages.scrollTop = messages.scrollHeight;
-        }
-        backBtn === null || backBtn === void 0 ? void 0 : backBtn.addEventListener("click", function () {
-            var message = JSON.stringify({
-                source: routes_1.default.structurePartnerChat.path(),
-                type: "back"
-            });
-            window.parent.postMessage(message, '*');
-        });
-        closeBtn === null || closeBtn === void 0 ? void 0 : closeBtn.addEventListener("click", function () {
-            var message = JSON.stringify({
-                source: routes_1.default.structurePartnerChat.path(),
-                type: "close"
-            });
-            window.parent.postMessage(message, '*');
-        });
-    })();
 });
+
+
+/***/ }),
+
+/***/ 1912:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
+var addDragToScroll = function () {
+    var stopCoef = 0.95;
+    if ((0, isTouchEnabled_1.default)())
+        return;
+    document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
+        if (!(element instanceof HTMLElement))
+            return;
+        var isCursorDisabled = element.dataset.cursorDisabled !== undefined;
+        // for grab
+        var startPos = {
+            top: 0,
+            left: 0,
+            x: 0,
+            y: 0,
+        };
+        var pos = {
+            top: 0,
+            left: 0,
+            x: 0,
+            y: 0,
+        };
+        var prevPos = __assign({}, pos);
+        var isGrabbed = false;
+        // for intertia
+        var transform = { x: 0, y: 0 };
+        var onMouseDown = function (e) {
+            startPos = {
+                left: element.scrollLeft,
+                top: element.scrollTop,
+                x: e.clientX,
+                y: e.clientY,
+            };
+            pos = __assign({}, startPos);
+            prevPos = __assign({}, pos);
+            prevPos;
+            isGrabbed = true;
+            transform = {
+                x: 0,
+                y: 0,
+            };
+            if (!isCursorDisabled)
+                element.style.cursor = "grabbing";
+            element.style.userSelect = "none";
+            element
+                .querySelectorAll("img")
+                .forEach(function (img) { return (img.draggable = false); });
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+            requestAnimationFrame(move);
+        };
+        var onMouseMove = function (e) {
+            var dx = e.clientX - startPos.x;
+            var dy = e.clientY - startPos.y;
+            pos.left = startPos.left - dx;
+            pos.top = startPos.top - dy;
+            pos.x = e.clientX;
+            pos.y = e.clientY;
+        };
+        var onMouseUp = function (e) {
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+            isGrabbed = false;
+            if (!isCursorDisabled)
+                element.style.cursor = "grab";
+            element.style.removeProperty("user-select");
+            requestAnimationFrame(moveByInertia);
+        };
+        var move = function () {
+            if (!isGrabbed)
+                return;
+            transform = {
+                x: prevPos.left - pos.left,
+                y: prevPos.top - pos.top,
+            };
+            element.scrollTop = pos.top;
+            element.scrollLeft = pos.left;
+            prevPos = __assign({}, pos);
+            requestAnimationFrame(move);
+        };
+        var moveByInertia = function () {
+            if (isGrabbed)
+                return;
+            if (Math.pow(transform.x, 2) + Math.pow(transform.y, 2) <
+                0.3)
+                return;
+            transform.x *= stopCoef;
+            transform.y *= stopCoef;
+            element.scrollLeft -= transform.x;
+            element.scrollTop -= transform.y;
+            requestAnimationFrame(moveByInertia);
+        };
+        var preventClickIfMove = function (e) {
+            var diff = {
+                x: startPos.x - e.clientX,
+                y: startPos.y - e.clientY,
+            };
+            var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+            if (diffLength > 4) {
+                e.stopPropagation();
+            }
+        };
+        if (!isCursorDisabled)
+            element.style.cursor = "grab";
+        element.addEventListener("mousedown", onMouseDown);
+        element.addEventListener("click", preventClickIfMove, {
+            capture: true,
+        });
+    });
+};
+exports["default"] = addDragToScroll;
+
+
+/***/ }),
+
+/***/ 8112:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addHeader = function () {
+    var headerTitle = $("#header .header__title").get(0);
+    if (headerTitle) {
+        new ResizeObserver(function () {
+            if (headerTitle.scrollWidth > headerTitle.clientWidth) {
+                $(headerTitle).addClass("overflow");
+            }
+            else {
+                $(headerTitle).removeClass("overflow");
+            }
+        }).observe(headerTitle);
+    }
+};
+exports["default"] = addHeader;
+
+
+/***/ }),
+
+/***/ 3846:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addInput = function () {
+    $('.input').each(function (i, input) {
+        var realInput = $(input).find("input").get(0);
+        $(input)
+            .click(function () {
+            if (realInput)
+                $(realInput).focus();
+        });
+        if (realInput)
+            $(realInput)
+                .focus(function () { return $(input).addClass("focus"); })
+                .blur(function () { return $(input).removeClass("focus"); });
+    });
+    $('.input-password').each(function (i, input) {
+        var realInput = $(input).find("input").get(0);
+        var eyeBtn = $(input).find(".input-password__eye-btn").get(0);
+        var turnEyeOn = function () {
+            $(input).addClass("eye-on");
+            $(input).removeClass("eye-off");
+            if (realInput)
+                $(realInput).attr("type", "text");
+        };
+        var turnEyeOff = function () {
+            $(input).addClass("eye-off");
+            $(input).removeClass("eye-on");
+            if (realInput)
+                $(realInput).attr("type", "password");
+        };
+        if (eyeBtn)
+            $(eyeBtn).click(function (e) {
+                e.stopPropagation();
+                if ($(input).hasClass("eye-on")) {
+                    turnEyeOff();
+                }
+                else {
+                    turnEyeOn();
+                }
+            });
+    });
+};
+exports["default"] = addInput;
+
+
+/***/ }),
+
+/***/ 840:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addMediaViewer = function () {
+    var mediaViewer = document.querySelector(".media-viewer");
+    var nextButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__next");
+    var prevButton = mediaViewer === null || mediaViewer === void 0 ? void 0 : mediaViewer.querySelector(".media-viewer__prev");
+    if (mediaViewer && nextButton && prevButton) {
+        var mediaIndex_1 = 0;
+        var close_1 = function () {
+            mediaViewer.classList.remove("open");
+            document.documentElement.classList.remove("media-viewer-open");
+        };
+        var open_1 = function (img) {
+            var downloadImage = mediaViewer.querySelector(".media-viewer__download-image");
+            var image = mediaViewer.querySelector(".media-viewer__image");
+            var src = img.src;
+            var currentIndex = Array.from(document.querySelectorAll("[data-viewable]")).findIndex(function (item) { return item === img; });
+            if (downloadImage && image && src && currentIndex !== -1) {
+                downloadImage.setAttribute("href", src);
+                image.setAttribute("src", src);
+                mediaIndex_1 = currentIndex;
+                mediaViewer.classList.add("open");
+                document.documentElement.classList.add("media-viewer-open");
+            }
+        };
+        var openNext = function () {
+            var medias = document.querySelectorAll("[data-viewable]");
+            var nextMedia = medias[mediaIndex_1 + 1];
+            if (nextMedia && nextMedia instanceof HTMLImageElement) {
+                mediaIndex_1++;
+                open_1(nextMedia);
+            }
+        };
+        var openPrev = function () {
+            var medias = document.querySelectorAll("[data-viewable]");
+            var prevMedia = medias[mediaIndex_1 - 1];
+            if (prevMedia && prevMedia instanceof HTMLImageElement) {
+                mediaIndex_1--;
+                open_1(prevMedia);
+            }
+        };
+        mediaViewer.addEventListener("click", function (e) {
+            var target = e.target;
+            if (target instanceof Element &&
+                (target.classList.contains("media-viewer") || target.classList.contains("media-viewer__body"))) {
+                close_1();
+            }
+        });
+        nextButton.addEventListener("click", openNext);
+        prevButton.addEventListener("click", openPrev);
+        document.documentElement.addEventListener("click", function (e) {
+            var target = e.target;
+            if (target instanceof HTMLImageElement && target.hasAttribute("data-viewable")) {
+                open_1(target);
+            }
+        });
+    }
+};
+exports["default"] = addMediaViewer;
+
+
+/***/ }),
+
+/***/ 1949:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addModal = function () {
+    var closeModal = function (modal) {
+        $(modal).removeClass("open");
+        $(document.documentElement).removeClass("modal-open");
+    };
+    var openModal = function (modal) {
+        $(modal).addClass("open");
+        $(document.documentElement).addClass("modal-open");
+    };
+    $('.modal').each(function (i, modal) {
+        $(modal).addClass("ready");
+        $(modal).find(".block__title-action > .modal__close-btn").click(function () { return closeModal(modal); });
+    });
+    $('.modal-trigger').each(function (i, modalTrigger) {
+        var targetStr = $(modalTrigger).attr("data-modal-trigger-target");
+        if (targetStr) {
+            var modal_1 = $(targetStr);
+            $(modalTrigger).click(function () { return openModal(modal_1); });
+        }
+    });
+    document.documentElement.addEventListener("click", function (e) {
+        var _a, _b, _c, _d, _e, _f;
+        var target = e.target;
+        if (!(target instanceof Element))
+            return;
+        if (target.classList.contains("modal-trigger") ||
+            ((_a = target.parentElement) === null || _a === void 0 ? void 0 : _a.classList.contains("modal-trigger")) ||
+            ((_c = (_b = target.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement) === null || _c === void 0 ? void 0 : _c.classList.contains("modal-trigger")) ||
+            ((_f = (_e = (_d = target.parentElement) === null || _d === void 0 ? void 0 : _d.parentElement) === null || _e === void 0 ? void 0 : _e.parentElement) === null || _f === void 0 ? void 0 : _f.classList.contains("modal-trigger"))) {
+            var modalTrigger = target.closest(".modal-trigger");
+            var str = modalTrigger === null || modalTrigger === void 0 ? void 0 : modalTrigger.getAttribute("data-modal-trigger-target");
+            if (str) {
+                var modal = document.querySelector(str);
+                if (modal)
+                    openModal(modal);
+            }
+        }
+    });
+};
+exports["default"] = addModal;
 
 
 /***/ }),
@@ -2803,6 +3370,241 @@ exports["default"] = addPopper;
 
 /***/ }),
 
+/***/ 2971:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addToggleClass = function () {
+    document.querySelectorAll("[data-toggle-class]").forEach(function (elem) {
+        if (!(elem instanceof HTMLElement))
+            return;
+        var className = elem.dataset.toggleClass;
+        var selector = elem.dataset.target;
+        var targets = selector ? document.querySelectorAll(selector) : undefined;
+        if (className && targets) {
+            elem.addEventListener("click", function (e) {
+                targets.forEach(function (target) {
+                    target.classList.toggle(className);
+                });
+            });
+        }
+    });
+};
+exports["default"] = addToggleClass;
+
+
+/***/ }),
+
+/***/ 1421:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
+var addVideoPlayer = function () {
+    var _a, _b;
+    var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
+    var videoPlayer = document.getElementById("videoPlayer");
+    if (!videoPlayer)
+        return;
+    if (!player)
+        return;
+    (0, addOnAttrChange_1.default)(videoPlayer, "class", function () {
+        var isOpen = videoPlayer.classList.contains("open");
+        if (!isOpen) {
+            player === null || player === void 0 ? void 0 : player.api("pause");
+        }
+    });
+    (0, addOnAttrChange_1.default)(videoPlayer, "data-src", function () {
+        var src = videoPlayer.getAttribute("data-src");
+        if (src) {
+            player === null || player === void 0 ? void 0 : player.api("file", src);
+        }
+    });
+    var openVideoPlayer = function (src) {
+        videoPlayer.classList.add("open");
+        videoPlayer.setAttribute("data-src", src);
+    };
+    var closeVideoPlayer = function () {
+        videoPlayer.classList.remove("open");
+        videoPlayer.removeAttribute("data-src");
+    };
+    (_a = videoPlayer.querySelector(".video-player__close-btn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", closeVideoPlayer);
+    (_b = videoPlayer.querySelector(".video-player__backdrop")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", closeVideoPlayer);
+    document.querySelectorAll("[data-video-triggers-container]").forEach(function (container) {
+        container.addEventListener("click", function (e) {
+            if (!(e.target instanceof Element))
+                return;
+            var trigger = e.target.closest("[data-video-trigger]");
+            var url = trigger === null || trigger === void 0 ? void 0 : trigger.getAttribute("data-video-trigger");
+            if (url) {
+                openVideoPlayer(url);
+            }
+        });
+    });
+};
+exports["default"] = addVideoPlayer;
+
+
+/***/ }),
+
+/***/ 7540:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var core_1 = __webpack_require__(4750);
+var popperModifiers_1 = __webpack_require__(1607);
+var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
+var VIEWPORT_PADDING = 12;
+var createTooltip = function (text) {
+    var tooltipContent = document.createElement("div");
+    tooltipContent.classList.add("tooltip__content");
+    tooltipContent.textContent = text;
+    var tooltip = document.createElement("div");
+    tooltip.classList.add("tooltip");
+    tooltip.appendChild(tooltipContent);
+    return tooltip;
+};
+var addWithTooltip = function () {
+    $(".with-tooltip").each(function (i, trigger) {
+        var _a;
+        var placement = trigger.dataset.withTooltipPlacement || "top";
+        var text = ((_a = trigger === null || trigger === void 0 ? void 0 : trigger.dataset) === null || _a === void 0 ? void 0 : _a.withTooltipText) || "";
+        var tooltip = trigger.querySelector(".tooltip") || createTooltip(text);
+        if (!(tooltip instanceof HTMLElement))
+            return;
+        var popper;
+        var disappearTimeoutId = -1;
+        trigger.addEventListener("mouseenter", function () {
+            if (tooltip.parentElement !== document.body) {
+                document.body.appendChild(tooltip);
+            }
+            if (!popper)
+                popper = (0, core_1.createPopper)(trigger, tooltip, {
+                    placement: placement,
+                    strategy: "absolute",
+                    modifiers: [
+                        {
+                            name: "flip",
+                            options: {
+                                fallbackPlacements: ['auto'],
+                            },
+                        },
+                        {
+                            name: 'preventOverflow',
+                            options: {
+                                padding: VIEWPORT_PADDING
+                            },
+                        },
+                        (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
+                            element.classList.remove("top");
+                            element.classList.remove("left");
+                            element.classList.remove("right");
+                            element.classList.remove("bottom");
+                            element.classList.add(placement);
+                        }),
+                    ],
+                });
+            tooltip.style.maxWidth = "calc(100vw - ".concat(VIEWPORT_PADDING * 2, "px)");
+            tooltip.classList.add("show");
+            tooltip.classList.remove("fade-out-slow");
+            clearTimeout(disappearTimeoutId);
+            popper.update();
+        });
+        trigger.addEventListener("mouseleave", function () {
+            tooltip.classList.add("fade-out-slow");
+            disappearTimeoutId = window.setTimeout(function () {
+                tooltip.classList.remove("show");
+                if (popper) {
+                    popper.destroy();
+                    popper = undefined;
+                }
+            }, ANIMATION_SLOW_MS);
+        });
+    });
+};
+exports["default"] = addWithTooltip;
+
+
+/***/ }),
+
+/***/ 158:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
+var addYoutubePlayer = function () {
+    var stopVideo = function (iframe) {
+        iframe.src = iframe.src;
+    };
+    var setSrc = function (iframe, youtubeId) {
+        var src = youtubeId !== undefined ?
+            "https://www.youtube.com/embed/".concat(youtubeId) :
+            iframe.dataset.src;
+        if (src && iframe.src !== src) {
+            iframe.src = src;
+        }
+    };
+    document.querySelectorAll(".youtube-trigger").forEach(function (trigger) {
+        if (!(trigger instanceof HTMLElement))
+            return;
+        var targetId = trigger.dataset.youtubeTriggerTarget;
+        var target = targetId ? document.getElementById(targetId) || document.querySelector(targetId) : undefined;
+        if (!(target instanceof HTMLElement))
+            return;
+        var youtubeId = trigger.dataset.youtubeId;
+        trigger.addEventListener("click", function () {
+            var iframe = target.querySelector("iframe");
+            if (iframe)
+                setSrc(iframe, youtubeId);
+            document.querySelectorAll(".youtube-embedded").forEach(function (other) {
+                if (!(other instanceof HTMLElement))
+                    return;
+                other.classList.remove("open");
+                other.hidden = true;
+            });
+            target.classList.add("open");
+            target.hidden = false;
+        });
+    });
+    document.querySelectorAll(".youtube-embedded").forEach(function (container) {
+        if (!(container instanceof HTMLElement))
+            return;
+        var overlay = container.querySelector(".youtube-embedded__overlay");
+        var iframe = container.querySelector("iframe");
+        if (!(overlay instanceof HTMLElement) || !iframe)
+            return;
+        container.hidden = true;
+        var hiddenTimeout = -1;
+        overlay.addEventListener("click", function () {
+            clearTimeout(hiddenTimeout);
+            container.classList.remove("open");
+            stopVideo(iframe);
+            hiddenTimeout = window.setTimeout(function () {
+                container.hidden = true;
+            }, ANIMATION_SLOW_MS);
+        });
+    });
+};
+exports["default"] = addYoutubePlayer;
+
+
+/***/ }),
+
 /***/ 7901:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -2866,6 +3668,9 @@ var routes = {
     materials: {
         path: function () { return "/materials"; }
     },
+    credit: {
+        path: function () { return "/credit"; }
+    },
     cashout: {
         path: function () { return "/cashout"; }
     },
@@ -2905,6 +3710,33 @@ exports["default"] = routes;
 
 /***/ }),
 
+/***/ 9418:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addOnAttrChange = function (element, attrName, callback) {
+    var prevAttr = element.getAttribute(attrName);
+    var observer = new MutationObserver(function (mutationList) {
+        var attr = element.getAttribute(attrName);
+        if (attr !== prevAttr) {
+            callback(attr);
+        }
+        prevAttr = attr;
+    });
+    observer.observe(element, {
+        attributes: true,
+        attributeFilter: [attrName],
+    });
+    return function () {
+        observer.disconnect();
+    };
+};
+exports["default"] = addOnAttrChange;
+
+
+/***/ }),
+
 /***/ 1503:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -2927,6 +3759,22 @@ exports["default"] = {
     popperViewportPadding: popperViewportPadding,
     breakpointMobileBig: breakpointMobileBig
 };
+
+
+/***/ }),
+
+/***/ 145:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var isTouchEnabled = function () {
+    return ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        // @ts-expect-error
+        (navigator.msMaxTouchPoints > 0);
+};
+exports["default"] = isTouchEnabled;
 
 
 /***/ }),
@@ -2958,6 +3806,43 @@ var parsePx = function (value) {
     return undefined;
 };
 exports["default"] = parsePx;
+
+
+/***/ }),
+
+/***/ 1607:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createPlacementHandler = exports.sameWidth = void 0;
+exports.sameWidth = {
+    name: "sameWidth",
+    enabled: true,
+    phase: "beforeWrite",
+    requires: ["computeStyles"],
+    fn: function (_a) {
+        var state = _a.state;
+        state.styles.popper.width = "".concat(state.rects.reference.width, "px");
+    },
+    effect: function (_a) {
+        var state = _a.state;
+        state.elements.popper.style.width = "".concat(state.elements.reference.offsetWidth, "px");
+    }
+};
+var createPlacementHandler = function (onPlacementChange) {
+    return {
+        name: "placementHandler",
+        enabled: true,
+        phase: "beforeWrite",
+        requires: ["computeStyles"],
+        fn: function (_a) {
+            var state = _a.state;
+            onPlacementChange(state.placement, state.elements.popper);
+        }
+    };
+};
+exports.createPlacementHandler = createPlacementHandler;
 
 
 /***/ }),
@@ -3052,7 +3937,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(9252);
+/******/ 	var __webpack_exports__ = __webpack_require__(1951);
 /******/ 	
 /******/ })()
 ;

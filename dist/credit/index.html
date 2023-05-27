@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Arbitroom | Личный кабинет | Партнёрские материалы</title>
+	<title>Arbitroom | Личный кабинет | Кредитование</title>
 	<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -12,10 +12,34 @@
 	<!-- vendors -->
 	<link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet">
 	<!-- layout css -->
-	<link href="../_layout-assets/css/styles9.1.2.css" rel="stylesheet">
+	<link href="../_layout-assets/css/common-103ef5408440.css" rel="stylesheet">
+	<link href="../_layout-assets/css/pages/credit-cf8eaaf6ff83.css" rel="stylesheet">
 </head>
 
 <body>
+	<div class="page-loader" id="pageLoader"> Загрузка... </div>
+	<style>
+	.page-loader {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: #141321;
+		color: rgba(255, 255, 255, 0.32);
+		z-index: 100000;
+		opacity: 1;
+	}
+
+	.page-loader.loaded {
+		top: -200vh;
+		opacity: 0;
+		transition: top 0s 0.2s, opacity 0.2s;
+	}
+	</style>
 	<!-- POPPERS -->
 	<div class="notifications popper paper elevation1" data-popper-anchor-element="#notifyBtn">
 		<div class="notifications__header">
@@ -58,356 +82,7 @@
 			<img src="../_layout-assets/img/flags/lang-2.svg" alt="">KZ
 		</div>
 	</div>
-	<!-- Оборот структуры -->
-	<div class="structure-turn paper elevation1 popper" data-popper-anchor-element=".program__cell-structure .program__info" data-popper-on-hover>
-		<div class="structure-turn__title">Как считается оборот</div>
-		<div class="structure-turn__header">
-			<div class="structure-turn__row">
-				<div class="structure-turn__cell">Все инвестиции партнеров</div>
-				<div class="structure-turn__cell">Процент зачета оборота</div>
-			</div>
-		</div>
-		<div class="structure-turn__body">
-			<div class="structure-turn__row">
-				<div class="structure-turn__cell">Уровень 1</div>
-				<div class="structure-turn__cell">100%</div>
-			</div>
-			<div class="structure-turn__row">
-				<div class="structure-turn__cell">Уровень 2</div>
-				<div class="structure-turn__cell">50%</div>
-			</div>
-			<div class="structure-turn__row">
-				<div class="structure-turn__cell">Уровень 3</div>
-				<div class="structure-turn__cell">30%</div>
-			</div>
-			<div class="structure-turn__row selected">
-				<div class="structure-turn__cell">Уровень 4</div>
-				<div class="structure-turn__cell">10%</div>
-			</div>
-			<div class="structure-turn__row">
-				<div class="structure-turn__cell">Уровень 5</div>
-				<div class="structure-turn__cell">5%</div>
-			</div>
-		</div>
-	</div>
 	<!-- MODALS -->
-	<div class="modal" id="cashoutConfirm">
-		<div class="modal__content">
-			<div class="cashout-confirm block paper max-width-440 full-width">
-				<div class="block__title"> Подтверждение вывода <div class="block__title-action align-top">
-						<button class="modal__close-btn icon-button contained color-gray small">
-							<!-- icon: close -->
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="block__content">
-					<div class="cashout-confirm__rate">
-						<div class="cashout-confirm__rate-label"> Текущая ставка </div>
-						<div class="cashout-confirm__rate-value"> 5<span class="h5 no-margin">&nbsp;%</span>
-						</div>
-					</div>
-					<div class="cashout-confirm__message"> При выводе средств взимается комиссия. Регламент вывода до 3-х дней. Вы уверены, что хотите продолжить? </div>
-					<div class="cashout-confirm__tfa-title"> Включена двухфакторная аутентификация </div>
-					<div class="cashout-confirm__tfa-fields">
-						<div class="cashout-confirm__tfa-field">
-							<div class="cashout-confirm__tfa-label"> Введите 6-значный код, отправленный на почту <span class="email">andrey7****</span>
-							</div>
-							<div class="cashout-confirm__tfa-input contained-input input-code">
-								<input type="text" placeholder="Код">
-								<button class="cashout-confirm__tfa-send-btn"> Отправить код </button>
-								<span class="cashout-confirm__tfa-confirmed"> Подтверждено </span>
-							</div>
-						</div>
-						<div class="cashout-confirm__tfa-field">
-							<div class="cashout-confirm__tfa-label"> Введите 6-значный код из приложения Authenticator </div>
-							<div class="cashout-confirm__tfa-input contained-input input-code">
-								<input type="text" placeholder="Код подтверждения Google">
-								<button class="cashout-confirm__tfa-send-btn"> Вставить </button>
-								<span class="cashout-confirm__tfa-confirmed"> Подтверждено </span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block__actions">
-					<button class="modal__close-btn button contained full-width">Продолжить</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal" id="userdataEditModal">
-		<div class="modal__content">
-			<div class="block paper max-width-xs full-width">
-				<div class="block__title"> Изменить личные данные <div class="block__title-action align-top">
-						<button class="modal__close-btn icon-button contained color-gray small">
-							<!-- icon: close -->
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="block__content">
-					<div class="fields">
-						<div class="field">
-							<label class="field__label">Логин</label>
-							<div class="field__input">
-								<div class="input">
-									<input type="text" placeholder="kris_anfalova" value="Кристина">
-								</div>
-							</div>
-						</div>
-						<div class="field disabled">
-							<label class="field__label">Ваше имя</label>
-							<div class="field__input">
-								<div class="input">
-									<input type="text" placeholder="Кристина">
-								</div>
-							</div>
-						</div>
-						<div class="field disabled">
-							<label class="field__label">Электронная почта</label>
-							<div class="field__input">
-								<div class="input">
-									<input type="text" placeholder="anfalovakristina@mail.ru">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block__actions">
-					<button class="modal__close-btn button contained full-width">Сохранить</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal" id="walletEditModal">
-		<div class="modal__content">
-			<div class="block paper max-width-xs full-width">
-				<div class="block__title"> Изменить адрес кошелька <div class="block__title-action align-top">
-						<button class="modal__close-btn icon-button contained color-gray small">
-							<!-- icon: close -->
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="block__content">
-					<div class="inputs">
-						<div class="input">
-							<input type="text" placeholder="anfalovakristina@mail.ru" value="0x29D7d1dd5B6f9C864d9db560D72a28qwerqv">
-						</div>
-						<div class="input">
-							<input type="text" placeholder="Код с Google Authenticator">
-						</div>
-					</div>
-				</div>
-				<div class="block__actions">
-					<button class="modal__close-btn button contained full-width">Сохранить</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal" id="passwordEditModal">
-		<div class="modal__content">
-			<div class="block paper max-width-xs full-width">
-				<div class="block__title"> Сменить пароль <div class="block__title-action align-top">
-						<button class="modal__close-btn icon-button contained color-gray small">
-							<!-- icon: close -->
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="block__content">
-					<div class="fields">
-						<div class="field">
-							<label class="field__label">Старый пароль</label>
-							<div class="field__input">
-								<div class="input input-password">
-									<input type="password" placeholder="••••••••">
-									<button class="input-password__eye-btn icon-button text color-text-color">
-										<svg class="input-password__eye-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-											<path d="M12.0004 9.00462C14.2095 9.00462 16.0004 10.7955 16.0004 13.0046C16.0004 15.2138 14.2095 17.0046 12.0004 17.0046C9.79122 17.0046 8.00036 15.2138 8.00036 13.0046C8.00036 10.7955 9.79122 9.00462 12.0004 9.00462ZM12.0004 5.5C16.6139 5.5 20.5965 8.65001 21.7015 13.0644C21.8021 13.4662 21.5579 13.8735 21.1561 13.9741C20.7542 14.0746 20.347 13.8305 20.2464 13.4286C19.3075 9.67796 15.9217 7 12.0004 7C8.07729 7 4.69046 9.68026 3.75322 13.4332C3.65286 13.835 3.24572 14.0794 2.84385 13.9791C2.44197 13.8787 2.19755 13.4716 2.29792 13.0697C3.40101 8.65272 7.38484 5.5 12.0004 5.5Z"></path>
-										</svg>
-										<svg class="input-password__eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-											<path d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"></path>
-										</svg>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="field">
-							<label class="field__label">Новый пароль</label>
-							<div class="field__input">
-								<div class="input input-password">
-									<input type="password" placeholder="••••••••">
-									<button class="input-password__eye-btn icon-button text color-text-color">
-										<svg class="input-password__eye-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-											<path d="M12.0004 9.00462C14.2095 9.00462 16.0004 10.7955 16.0004 13.0046C16.0004 15.2138 14.2095 17.0046 12.0004 17.0046C9.79122 17.0046 8.00036 15.2138 8.00036 13.0046C8.00036 10.7955 9.79122 9.00462 12.0004 9.00462ZM12.0004 5.5C16.6139 5.5 20.5965 8.65001 21.7015 13.0644C21.8021 13.4662 21.5579 13.8735 21.1561 13.9741C20.7542 14.0746 20.347 13.8305 20.2464 13.4286C19.3075 9.67796 15.9217 7 12.0004 7C8.07729 7 4.69046 9.68026 3.75322 13.4332C3.65286 13.835 3.24572 14.0794 2.84385 13.9791C2.44197 13.8787 2.19755 13.4716 2.29792 13.0697C3.40101 8.65272 7.38484 5.5 12.0004 5.5Z"></path>
-										</svg>
-										<svg class="input-password__eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-											<path d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"></path>
-										</svg>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="field">
-							<label class="field__label">Повторите новый пароль</label>
-							<div class="field__input">
-								<div class="input input-password">
-									<input type="password" placeholder="••••••••">
-									<button class="input-password__eye-btn icon-button text color-text-color">
-										<svg class="input-password__eye-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-											<path d="M12.0004 9.00462C14.2095 9.00462 16.0004 10.7955 16.0004 13.0046C16.0004 15.2138 14.2095 17.0046 12.0004 17.0046C9.79122 17.0046 8.00036 15.2138 8.00036 13.0046C8.00036 10.7955 9.79122 9.00462 12.0004 9.00462ZM12.0004 5.5C16.6139 5.5 20.5965 8.65001 21.7015 13.0644C21.8021 13.4662 21.5579 13.8735 21.1561 13.9741C20.7542 14.0746 20.347 13.8305 20.2464 13.4286C19.3075 9.67796 15.9217 7 12.0004 7C8.07729 7 4.69046 9.68026 3.75322 13.4332C3.65286 13.835 3.24572 14.0794 2.84385 13.9791C2.44197 13.8787 2.19755 13.4716 2.29792 13.0697C3.40101 8.65272 7.38484 5.5 12.0004 5.5Z"></path>
-										</svg>
-										<svg class="input-password__eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-											<path d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"></path>
-										</svg>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block__actions">
-					<button class="modal__close-btn button contained full-width">Сохранить</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal" id="predictionModal">
-		<div class="modal__content">
-			<div class="block paper max-width-440 full-width">
-				<div class="block__title"> Сделать прогноз <div class="block__title-action align-top">
-						<button class="modal__close-btn icon-button contained color-gray small">
-							<!-- icon: close -->
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="block__content">
-					<div class="prediction-form">
-						<div class="prediction-form__description"> Укажите количество билетов, которые хотите использовать в прогнозе: </div>
-						<div class="prediction-form__tickets">
-							<div class="prediction-form__tickets-label">
-								<!-- icon: ticket diagonal -->
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-									<path d="M15.5908 2.5301C14.7121 1.65142 13.2875 1.65142 12.4088 2.5301L2.5301 12.4088C1.65143 13.2875 1.65142 14.7121 2.5301 15.5908L3.70164 16.7623C4.21233 17.273 4.92921 17.1816 5.36237 16.9241C5.54837 16.8135 5.7654 16.7498 5.99959 16.7498C6.68994 16.7498 7.24959 17.3095 7.24959 17.9998C7.24959 18.234 7.18589 18.451 7.07533 18.6371C6.81786 19.0702 6.72643 19.7871 7.23712 20.2978L8.40878 21.4694C9.28746 22.3481 10.7121 22.3481 11.5908 21.4694L21.4694 11.5908C22.3481 10.7121 22.3481 9.28747 21.4694 8.40878L20.2978 7.23718C19.7871 6.72642 19.0701 6.81795 18.6369 7.07549C18.4509 7.18611 18.2338 7.24983 17.9996 7.24983C17.3092 7.24983 16.7496 6.69019 16.7496 5.99983C16.7496 5.76558 16.8133 5.54851 16.9239 5.36247C17.1815 4.92931 17.273 4.21233 16.7622 3.70158L15.5908 2.5301Z"></path>
-								</svg> Мои билеты:
-							</div>
-							<div class="prediction-form__tickets-amount">10 шт</div>
-						</div>
-						<div class="prediction-form__fields">
-							<div class="field">
-								<label class="field__label color-text-more-secondary">Моя ставка</label>
-								<div class="field__input">
-									<div class="input">
-										<input type="text" placeholder="Введите ставку">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="prediction-form__details">
-							<div class="prediction-form__detail">
-								<div class="prediction-form__detail-label"> Пара: </div>
-								<div class="prediction-form__detail-value"> BTC/USDT </div>
-							</div>
-							<div class="prediction-form__detail">
-								<div class="prediction-form__detail-label"> Цена: </div>
-								<div class="prediction-form__detail-value"> 16561.02 </div>
-							</div>
-							<div class="prediction-form__detail">
-								<div class="prediction-form__detail-label"> Мой прогноз: </div>
-								<div class="prediction-form__detail-value color-success"> Рост </div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block__actions two-actions">
-					<button class="modal__close-btn button outlined">Отмена</button>
-					<button class="modal__close-btn button contained">Ставка</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal" id="finishQuestModal">
-		<div class="modal__content">
-			<div class="block paper max-width-440 full-width">
-				<div class="block__title"> Сделать прогноз <div class="block__title-action align-top">
-						<button class="modal__close-btn icon-button contained color-gray small">
-							<!-- icon: close -->
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-								<path d="M15.9819 3.35147C16.4505 3.8201 16.4505 4.5799 15.9819 5.04853L11.364 9.66667L15.9819 14.2848C16.4115 14.7144 16.4473 15.3886 16.0893 15.859L15.9819 15.9819C15.5132 16.4505 14.7535 16.4505 14.2848 15.9819L9.66667 11.364L5.04853 15.9819C4.5799 16.4505 3.8201 16.4505 3.35147 15.9819C2.88284 15.5132 2.88284 14.7535 3.35147 14.2848L7.96933 9.66667L3.35147 5.04853C2.9219 4.61895 2.8861 3.94471 3.24408 3.47436L3.35147 3.35147C3.8201 2.88284 4.5799 2.88284 5.04853 3.35147L9.66667 7.96933L14.2848 3.35147C14.7535 2.88284 15.5132 2.88284 15.9819 3.35147Z"></path>
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="block__content">
-					<div class="finish-quest-form">
-						<div class="finish-quest-form__description"> Вставте ссылку с выполненым заданием </div>
-						<div class="finish-quest-form__fields">
-							<div class="field">
-								<label class="field__label color-text-more-secondary">Ссылка</label>
-								<div class="field__input">
-									<div class="input">
-										<input type="text" placeholder="Вставьте ссылку">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block__actions two-actions">
-					<button class="modal__close-btn button outlined">Отмена</button>
-					<button class="modal__close-btn button contained">Сохранить</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- YOUTUBE VIDEOS -->
-	<!-- Как пополнить баланс личного кабинета Arbitroom? -->
-	<div class="youtube-embedded" id="howToRechargeBalance">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	<!-- Как инвестировать в пул ликвидности Arbitroom? -->
-	<div class="youtube-embedded" id="howToInvestPool">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	<!-- Как вывести средства c платформы Arbitroom? - "Кошелек" - USDT TRC 20 -->
-	<div class="youtube-embedded" id="howToCashoutWalletUSDT">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	<!-- Как вывести средства c платформы Arbitroom? - "Кошелек" - Внутренний перевод -->
-	<div class="youtube-embedded" id="howToCashoutWalletInner">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	<!-- Как вывести средства c платформы Arbitroom? - "Партнерский баланс"-->
-	<div class="youtube-embedded" id="howToCashoutPartner">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	<!-- Как вывести средства c платформы Arbitroom? - "Прибыль с пула"-->
-	<div class="youtube-embedded" id="howToCashoutPoolIncome">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	<!-- Как вывести средства c платформы Arbitroom? - "Пул ликвидности"-->
-	<div class="youtube-embedded" id="howToCashoutPool">
-		<div class="youtube-embedded__overlay"></div>
-		<iframe width="1024" height="576" data-src="https://www.youtube.com/embed/jNQXAC9IVRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
 	<!-- PLAYERS -->
 	<div class="video-player" id="videoPlayer">
 		<div class="video-player__backdrop"></div>
@@ -419,29 +94,6 @@
 		</button>
 		<div class="video-player__video">
 			<div id="player"></div>
-		</div>
-	</div>
-	<!-- MEDIA VIEWER -->
-	<div class="media-viewer">
-		<div class="media-viewer__body">
-			<div class="media-viewer__prev">
-				<svg data-icon-name="chevron-left" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-					<path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z"></path>
-				</svg>
-			</div>
-			<div class="media-viewer__media-container">
-				<a class="media-viewer__download-image download-image large" href="#" download>
-					<svg data-icon-name="arrow-download" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-						<path d="M15.2446 16.4972C15.6589 16.4972 15.9946 16.833 15.9946 17.2472C15.9946 17.6269 15.7125 17.9407 15.3464 17.9904L15.2446 17.9972H4.75C4.33579 17.9972 4 17.6614 4 17.2472C4 16.8675 4.28215 16.5537 4.64823 16.5041L4.75 16.4972H15.2446ZM10.0036 1.99902C10.3833 1.99902 10.6971 2.28118 10.7468 2.64725L10.7536 2.74902L10.753 12.942L13.7192 9.97144C13.9852 9.70493 14.4019 9.68034 14.6957 9.89792L14.7799 9.97046C15.0464 10.2365 15.071 10.6531 14.8534 10.9469L14.7809 11.0311L10.538 15.2818L10.4674 15.3443L10.3764 15.4029L10.34 15.424L10.2488 15.462L10.1283 15.4921L10.0591 15.5L9.999 15.5019C9.94888 15.5019 9.89801 15.4964 9.84828 15.4859L9.76741 15.4627C9.6714 15.4317 9.58429 15.3815 9.51014 15.3167L5.22056 11.032C4.92746 10.7393 4.92712 10.2644 5.21981 9.97133C5.48588 9.70487 5.90253 9.68037 6.1963 9.89802L6.28047 9.97057L9.253 12.938L9.25362 2.74902C9.25362 2.33481 9.58941 1.99902 10.0036 1.99902Z"></path>
-					</svg>
-				</a>
-				<img class="media-viewer__image" src="#" alt="">
-			</div>
-			<div class="media-viewer__next">
-				<svg data-icon-name="chevron-right" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-					<path d="M8.29289 4.29289C7.90237 4.68342 7.90237 5.31658 8.29289 5.70711L14.5858 12L8.29289 18.2929C7.90237 18.6834 7.90237 19.3166 8.29289 19.7071C8.68342 20.0976 9.31658 20.0976 9.70711 19.7071L16.7071 12.7071C17.0976 12.3166 17.0976 11.6834 16.7071 11.2929L9.70711 4.29289C9.31658 3.90237 8.68342 3.90237 8.29289 4.29289Z"></path>
-				</svg>
-			</div>
 		</div>
 	</div>
 	<!-- MAIN -->
@@ -557,7 +209,7 @@
 							</svg>
 							<div class="tab__name">Leader bonus</div>
 						</a>
-						<div class="tab-group expanded">
+						<div class="tab-group">
 							<div class="tab-group__label">
 								<svg data-icon-name="globe-persone" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 									<path d="M9.99966 1.66602C14.6028 1.66602 18.3343 5.39755 18.3343 10.0006C18.3343 10.5537 18.2804 11.0942 18.1776 11.6172C17.9733 11.0663 17.5804 10.607 17.0773 10.3178C17.082 10.2126 17.0843 10.1069 17.0843 10.0006C17.0843 9.42614 17.0159 8.8676 16.8868 8.33274L14.0885 8.33345C14.1406 8.87296 14.1676 9.43063 14.1676 10.0006C14.1676 10.2129 14.1639 10.4234 14.1565 10.6319C13.6507 11.0894 13.3329 11.7508 13.3329 12.4865C13.3329 12.9806 13.4762 13.4411 13.7235 13.8289C13.696 13.9395 13.6672 14.0486 13.6373 14.1562C12.8849 14.1961 12.2384 14.6353 11.9058 15.2658C12.1126 14.8241 12.2964 14.3143 12.4488 13.7504H7.55058C8.09395 15.7622 9.0384 17.0853 9.99966 17.0853C10.6632 17.0853 11.3187 16.4549 11.8398 15.4028C11.7282 15.6581 11.6663 15.9401 11.6663 16.2365C11.6663 16.9174 11.8311 17.5336 12.1296 18.0606C11.4497 18.2398 10.7358 18.3353 9.99966 18.3353C5.39658 18.3353 1.66504 14.6037 1.66504 10.0006C1.66504 5.39755 5.39658 1.66602 9.99966 1.66602ZM6.25659 13.7509L3.98785 13.7508C4.78647 15.0283 5.98101 16.033 7.39966 16.593C6.96443 15.9098 6.60527 15.0545 6.3411 14.0801L6.25659 13.7509ZM5.91085 8.33343H3.11285L3.10888 8.34777C2.98215 8.87807 2.91504 9.43152 2.91504 10.0006C2.91504 10.8808 3.07553 11.7234 3.36884 12.5009L6.01314 12.5006C5.89456 11.7097 5.83171 10.8695 5.83171 10.0006C5.83171 9.43063 5.85876 8.87296 5.91085 8.33343ZM7.16889 8.33349C7.11221 8.86704 7.08171 9.42513 7.08171 10.0006C7.08171 10.8836 7.15349 11.7255 7.28148 12.5007H12.7178C12.8458 11.7255 12.9176 10.8836 12.9176 10.0006C12.9176 9.42513 12.8871 8.86704 12.8304 8.33349H7.16889ZM7.40054 3.40827L7.38145 3.41553C5.67536 4.09446 4.29534 5.41722 3.54145 7.08377L6.08156 7.08407C6.34268 5.62341 6.79839 4.35181 7.40054 3.40827ZM9.99966 2.91602L9.90329 2.92043C8.84875 3.0169 7.83002 4.6852 7.35693 7.08373H12.6424C12.1706 4.69192 11.1563 3.02625 10.1049 2.92128L9.99966 2.91602ZM12.5997 3.40832L12.6887 3.5534C13.2464 4.48045 13.6698 5.69702 13.9178 7.08407L16.4579 7.08377C15.7373 5.49093 14.4448 4.21215 12.8423 3.50938L12.5997 3.40832Z"></path>
@@ -587,14 +239,14 @@
 										<path d="M13 17H14.5C15.8807 17 17 15.8807 17 14.5V13H13V17ZM13 12V8H17V12H13ZM12 12H8V8H12V12ZM8 13H12V17H8V13ZM7 12V8H3V12H7ZM3 13H7V17H5.5C4.11929 17 3 15.8807 3 14.5V13ZM13 7H17V5.5C17 4.11929 15.8807 3 14.5 3H13V7ZM12 3V7H8V3H12ZM7 3V7H3V5.5C3 4.11929 4.11929 3 5.5 3H7Z"></path>
 									</svg>
 									<div class="tab__name"> Анализ структуры </div>
-								</a><a class="tab tab_active" data-key="materials" href="">
+								</a><a class="tab" data-key="materials" href="../materials">
 									<svg data-icon-name="document" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 										<path d="M10 6.5V2H5.5C4.67157 2 4 2.67157 4 3.5V16.5C4 17.3284 4.67157 18 5.5 18H14.5C15.3284 18 16 17.3284 16 16.5V8H11.5C10.6716 8 10 7.32843 10 6.5ZM6 10.5C6 10.2239 6.22386 10 6.5 10C6.77614 10 7 10.2239 7 10.5C7 10.7761 6.77614 11 6.5 11C6.22386 11 6 10.7761 6 10.5ZM6 12.5C6 12.2239 6.22386 12 6.5 12C6.77614 12 7 12.2239 7 12.5C7 12.7761 6.77614 13 6.5 13C6.22386 13 6 12.7761 6 12.5ZM6 14.5C6 14.2239 6.22386 14 6.5 14C6.77614 14 7 14.2239 7 14.5C7 14.7761 6.77614 15 6.5 15C6.22386 15 6 14.7761 6 14.5ZM8 10.5C8 10.2239 8.22386 10 8.5 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H8.5C8.22386 11 8 10.7761 8 10.5ZM8 12.5C8 12.2239 8.22386 12 8.5 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7761 13.7761 13 13.5 13H8.5C8.22386 13 8 12.7761 8 12.5ZM8 14.5C8 14.2239 8.22386 14 8.5 14H13.5C13.7761 14 14 14.2239 14 14.5C14 14.7761 13.7761 15 13.5 15H8.5C8.22386 15 8 14.7761 8 14.5ZM11 6.5V2.25L15.75 7H11.5C11.2239 7 11 6.77614 11 6.5Z"></path>
 									</svg>
 									<div class="tab__name"> Партнерские материалы </div>
 								</a>
 							</div>
-						</div><a class="tab" data-key="credit" href="../credit">
+						</div><a class="tab tab_active" data-key="credit" href="">
 							<svg data-icon-name="credit-card-person" class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 								<path d="M4.75 4C3.23122 4 2 5.23122 2 6.75V7H12.7639C13.3132 6.38625 14.1115 6 15 6C15.8885 6 16.6868 6.38625 17.2361 7H18V6.75C18 5.23122 16.7688 4 15.25 4H4.75ZM12.1707 8H2V12.25C2 13.7688 3.23122 15 4.75 15H10.245C10.0852 14.5389 10 14.0362 10 13.5C10 12.1193 11.1193 11 12.5 11H12.7639C12.2889 10.4692 12 9.76835 12 9C12 8.64936 12.0602 8.31278 12.1707 8ZM13 9C13 7.89543 13.8954 7 15 7C16.1046 7 17 7.89543 17 9C17 10.1046 16.1046 11 15 11C13.8954 11 13 10.1046 13 9ZM12.5 12L17.5 12C18.3284 12 19 12.6716 19 13.5C19 14.6161 18.541 15.5103 17.7879 16.1148C17.0466 16.7098 16.0531 17 15 17C13.9469 17 12.9534 16.7098 12.2121 16.1148C11.459 15.5103 11 14.6161 11 13.5C11 12.6716 11.6716 12 12.5 12Z"></path>
 							</svg>
@@ -656,7 +308,7 @@
 								</div>
 							</div>
 						</button>
-						<div class="header__title overflow"> Партнёрские материалы </div>
+						<div class="header__title overflow"> Кредитование </div>
 					</div>
 					<div class="header__right">
 						<div class="header__balance">
@@ -696,168 +348,281 @@
 						<a class="header__exit mdn" href="#">Выйти</a>
 					</div>
 				</div>
-				<div class="tab__content" data-key="materials">
-					<div class="tab__materials tabs">
-						<div class="tab__materials-tabs-menu tabs__menu">
-							<div class="tabs__menu-item active"> Баннеры </div>
-							<div class="tabs__menu-item"> PDF </div>
-							<div class="tabs__menu-item"> Видео </div>
-							<div class="tabs__menu-item"> Креативы </div>
-							<div class="tabs__menu-more-items hidden">
-								<!-- icon: more hor -->
-								<svg width="24" height="24">
-									<path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
-								</svg>
-							</div>
-							<div class="tabs__menu-more-items-menu menu paper elevation1">
-								<div class="menu__item active"> Баннеры </div>
-								<div class="menu__item"> PDF </div>
-								<div class="menu__item"> Видео </div>
-								<div class="menu__item"> Креативы </div>
+				<div class="tab__content">
+					<div class="tab__credit">
+						<div class="tab__credit-my-credit my-credit block paper">
+							<div class="block__title"> Мой кредит </div>
+							<div class="my-credit__content block__content">
+								<div class="my-credit__section">
+									<div class="my-credit__chip success"> 10 000 USDT </div>
+									<div class="my-credit__text"> Сумма выданного кредита </div>
+								</div>
+								<div class="my-credit__divider"></div>
+								<div class="my-credit__section">
+									<div class="my-credit__chip error"> 8 200 USDT </div>
+									<div class="my-credit__text"> Остаток по задолженности </div>
+								</div>
 							</div>
 						</div>
-						<div class="tabs__content">
-							<div class="tabs__content-item materials">
-								<div class="materials__title"> English </div>
-								<div class="materials__banners">
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">250x250</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 250px; height: 250px">
-										</div>
+						<div class="tab__credit-stats credit-stats block paper">
+							<div class="block__title"> Сводная статистика </div>
+							<div class="credit-stats__content block__content">
+								<div class="credit-stats__table">
+									<div class="credit-stats__row">
+										<div class="credit-stats__cell">Пул ликвидности</div>
+										<div class="credit-stats__cell">10 000 USDT</div>
+										<div class="credit-stats__cell error">Не доступно к выводу</div>
 									</div>
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">300x200</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 300px; height: 200px">
-										</div>
+									<div class="credit-stats__row">
+										<div class="credit-stats__cell">Прибыль с пула</div>
+										<div class="credit-stats__cell">270 USDT</div>
+										<div class="credit-stats__cell error">Не доступно к выводу</div>
 									</div>
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">300x50</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 300px; height: 50px">
-										</div>
+									<div class="credit-stats__row">
+										<div class="credit-stats__cell">Парт-кая прибыль</div>
+										<div class="credit-stats__cell">1 000 USDT</div>
+										<div class="credit-stats__cell success">Доступно к выводу 90%</div>
 									</div>
-								</div>
-								<div class="materials__banners">
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">200x200</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 200px; height: 200px">
-										</div>
+									<div class="credit-stats__row">
+										<div class="credit-stats__cell">Доход от дохода</div>
+										<div class="credit-stats__cell">783 USDT</div>
+										<div class="credit-stats__cell success">Доступно к выводу 90%</div>
 									</div>
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">300x100</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 300px; height: 100px">
-										</div>
-									</div>
-								</div>
-								<div class="materials__title"> Русский </div>
-								<div class="materials__banners">
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">250x250</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 250px; height: 250px">
-										</div>
-									</div>
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">300x200</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 300px; height: 200px">
-										</div>
-									</div>
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">300x50</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 300px; height: 50px">
-										</div>
-									</div>
-								</div>
-								<div class="materials__banners">
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">200x200</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 200px; height: 200px">
-										</div>
-									</div>
-									<div class="materials__banner">
-										<div class="materials__banner-info">
-											<div class="materials__banner-size">300x100</div>
-											<div class="materials__banner-copy-btn">Копировать html код</div>
-										</div>
-										<div class="materials__banner-preview" style="width: 300px; height: 100px">
-										</div>
+									<div class="credit-stats__row">
+										<div class="credit-stats__cell">Премия</div>
+										<div class="credit-stats__cell">1 350 USDT</div>
+										<div class="credit-stats__cell success">Доступно к выводу 90%</div>
 									</div>
 								</div>
 							</div>
-							<div class="tabs__content-item materials">
-								<div class="materials__pdfs">
-									<div class="materials__pdf">
-										<div class="materials__pdf-preview"></div>
-										<div class="materials__pdf-name">Название документа</div>
-									</div>
-									<div class="materials__pdf">
-										<div class="materials__pdf-preview"></div>
-										<div class="materials__pdf-name">Название документа</div>
-									</div>
-									<div class="materials__pdf">
-										<div class="materials__pdf-preview"></div>
-										<div class="materials__pdf-name">Название документа</div>
-									</div>
+						</div>
+						<div class="tab__credit-terms block paper">
+							<div class="block__title"> Условия кредитования </div>
+							<div class="block__content">
+								<div class="steps">
+									<div class="step">Перейти на вкладку «Пополнение кошелька»</div>
+									<div class="step">В строке «Сумма» ввести желаемую сумму пополнения и нажать кнопку «Пополнить кошелек»</div>
+									<div class="step">В появившемся окне необходимо отсканировать QR код с номером кошелька или скопировать его в строке ниже</div>
+									<div class="step">Далее совершить перевод на кошелек USDT TRC20 указанную ранее сумму и нажать кнопку «Ок»</div>
 								</div>
 							</div>
-							<div class="tabs__content-item materials">
-								<div class="materials__videos">
-									<div class="materials__video">
-										<div class="materials__video-preview">
-											<div class="materials__video-play">
-												<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-													<path d="M12.2246 4.46243C9.89137 3.14126 7 4.82675 7 7.50806V24.4993C7 27.1811 9.89234 28.8665 12.2256 27.5444L27.2233 19.0455C29.5897 17.7046 29.5891 14.295 27.2223 12.9549L12.2246 4.46243Z"></path>
-												</svg>
+						</div>
+						<img class="tab__credit-img" src="../_layout-assets/img/crypto-coins.png" alt="">
+						<div class="tab__credit-form credit-form block paper">
+							<div class="block__title"> Погашение кредита </div>
+							<div class="credit-form__content block__content">
+								<form class="credit-form__form">
+									<div class="credit-form__form-header">Автоматическое погашение с партнерского баланса</div>
+									<div class="credit-form__form-body" data-drag-to-scroll data-cursor-disabled>
+										<div class="linear-select">
+											<div class="linear-select__body">
+												<input class="linear-select__input" name="auto" value="10">
+												<div class="linear-select__item disabled" data-value="0"> 0 </div>
+												<div class="linear-select__item" data-value="10"> 10 </div>
+												<div class="linear-select__item" data-value="20"> 20 </div>
+												<div class="linear-select__item" data-value="30"> 30 </div>
+												<div class="linear-select__item" data-value="40"> 40 </div>
+												<div class="linear-select__item" data-value="50"> 50 </div>
+												<div class="linear-select__item" data-value="60"> 60 </div>
+												<div class="linear-select__item" data-value="70"> 70 </div>
+												<div class="linear-select__item" data-value="80"> 80 </div>
+												<div class="linear-select__item" data-value="90"> 90 </div>
+												<div class="linear-select__item disabled" data-value="100"> 100 </div>
+											</div>
+											<div class="linear-select__unit">%</div>
+										</div>
+										<button class="button outlined medium"> Сохранить </button>
+									</div>
+								</form>
+								<form class="credit-form__form">
+									<div class="credit-form__form-header">Погашение с баланса кошелька</div>
+									<div class="credit-form__form-body variant2" data-drag-to-scroll data-cursor-disabled>
+										<div class="field" style="flex-grow:1">
+											<div class="field__label">Указать сумму</div>
+											<div class="field__input">
+												<div class="input">
+													<input class="input-url-sync" data-url-sync-disabled name="sum" type="number" placeholder="50.00">
+												</div>
 											</div>
 										</div>
-										<div class="materials__video-name">Название видео</div>
+										<div class="text-block small">
+											<div class="text-block__label">Всего на балансе</div>
+											<div class="text-block__value"> 100.35 USDT </div>
+										</div>
+										<button class="button outlined medium"> Добавить </button>
 									</div>
-									<div class="materials__video">
-										<div class="materials__video-preview">
-											<div class="materials__video-play">
-												<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-													<path d="M12.2246 4.46243C9.89137 3.14126 7 4.82675 7 7.50806V24.4993C7 27.1811 9.89234 28.8665 12.2256 27.5444L27.2233 19.0455C29.5897 17.7046 29.5891 14.295 27.2223 12.9549L12.2246 4.46243Z"></path>
-												</svg>
+								</form>
+							</div>
+						</div>
+						<div class="tab__credit-operations operations block">
+							<div class="operations__title block__title"> История выплаты кредита </div>
+							<div class="operations__table scroll-container">
+								<div class="scroll-container__inner">
+									<div class="table">
+										<div class="table__header">
+											<div class="table__row">
+												<div class="table__cell">Операции</div>
+												<div class="table__cell">Статус</div>
+												<div class="table__cell">Сумма</div>
+												<div class="table__cell">Дата</div>
+												<div class="table__cell">Комментарий</div>
 											</div>
 										</div>
-										<div class="materials__video-name">Название видео</div>
-									</div>
-								</div>
-							</div>
-							<div class="tabs__content-item materials">
-								<div class="materials__creatives">
-									<div class="materials__creative">
-										<div class="materials__creative-download-btn">Скачать</div>
-										<div class="materials__creative-preview"></div>
-									</div>
-									<div class="materials__creative">
-										<div class="materials__creative-download-btn">Скачать</div>
-										<div class="materials__creative-preview"></div>
+										<div class="table__body">
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value"> Пополнение кошелька </div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip success"> Оплачено </div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">USDT</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value"> Пополнение кошелька </div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip"> В&nbsp;процессе </div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value"> Внутренний перевод </div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value"> Пополнение кошелька </div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip success"> Оплачено </div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value"> Внутренний перевод </div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value"> Пополнение кошелька </div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip error"> Отклонено </div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value"> Внутренний перевод </div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value"> Пополнение кошелька </div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip success"> Оплачено </div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">USDT</div>
+												</div>
+											</div>
+											<div class="table__row">
+												<div class="table__cell">
+													<div class="table__cell-label">Операции</div>
+													<div class="table__cell-value"> Пополнение кошелька </div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Статус</div>
+													<div class="table__cell-value">
+														<div class="operations__cell-status-chip chip"> В&nbsp;процессе </div>
+													</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Сумма</div>
+													<div class="table__cell-value">14 244 USDT</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Дата</div>
+													<div class="table__cell-value">10.06.2021</div>
+												</div>
+												<div class="table__cell">
+													<div class="table__cell-label">Комментарий</div>
+													<div class="table__cell-value">USDT</div>
+												</div>
+											</div>
+										</div>
+										<div class="table__footer">
+											<div class="pages">
+												<div class="page active">1</div>
+												<div class="page">2</div>
+												<div class="page">3</div>
+												<div class="pages__skip">...</div>
+												<div class="page">20</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -870,8 +635,14 @@
 	<!-- vendors -->
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="../_layout-assets/js/playerjs.js" type="text/javascript"></script>
-	<!-- layout script -->
-	<script src="../_layout-assets/js/legacy-ea89bf15f3ad.js">
+	<script src="../_layout-assets/js/common-c217dd6e61ff.js">
+	</script>
+	<script src="../_layout-assets/js/pages/credit-167b9c744f79.js"></script>
+	<script>
+	window.addEventListener("load", () => {
+		const pageLoader = document.getElementById("pageLoader");
+		if(pageLoader) pageLoader.classList.add("loaded");
+	})
 	</script>
 </body>
 

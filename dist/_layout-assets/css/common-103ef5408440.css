@@ -4288,7 +4288,7 @@ html.media-viewer-open {
   width: calc(100% + 0.75rem);
   height: 100%;
 }
-.linear-select__item:hover {
+.linear-select__item:hover:not(.disabled) {
   background: rgba(255, 255, 255, 0.06);
 }
 .linear-select__item.highlighted {
@@ -4296,6 +4296,10 @@ html.media-viewer-open {
 }
 .linear-select__item.selected {
   background: #FF6500;
+}
+.linear-select__item.disabled {
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .operations {
