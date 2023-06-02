@@ -8,15 +8,16 @@
   row-gap: 0.75rem;
 }
 .arbitr-opports__filters > .multi-select {
-  min-width: 0;
+  min-width: 120px;
   max-width: 272px;
 }
 .arbitr-opports__filters > .input {
+  min-width: 120px;
   max-width: 272px;
 }
-.arbitr-opports__filters > .toggle-button-group {
-  min-width: 0;
-  width: fit-content;
+.arbitr-opports__filters > .select {
+  min-width: 120px;
+  max-width: 272px;
 }
 
 .arbitr-opports__table {
