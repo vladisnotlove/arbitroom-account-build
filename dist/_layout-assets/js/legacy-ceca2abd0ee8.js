@@ -4324,6 +4324,8 @@ var addInputUrlSync = function () {
         element.addEventListener("change", function (e) {
             if (!(e.currentTarget instanceof HTMLInputElement))
                 return;
+            if (e.currentTarget.getAttribute("data-only-init") !== undefined)
+                return;
             updateUrl(e.currentTarget);
         });
         if (element instanceof HTMLInputElement)

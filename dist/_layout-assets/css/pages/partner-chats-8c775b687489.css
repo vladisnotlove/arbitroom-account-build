@@ -109,6 +109,7 @@
   gap: 1rem;
   max-width: 100%;
   padding: 2.5rem 3.75rem;
+  -webkit-backdrop-filter: blur(32px);
   backdrop-filter: blur(32px);
 }
 .partner-chat__window-body > .button {

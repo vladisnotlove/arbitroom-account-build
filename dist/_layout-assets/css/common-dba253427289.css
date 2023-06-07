@@ -3890,6 +3890,7 @@ html.media-viewer-open {
   height: 0;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   z-index: 700;
   opacity: 0;
@@ -4069,6 +4070,10 @@ html.media-viewer-open {
   cursor: pointer;
   width: calc((100% - 2rem) / 3);
 }
+.card.triple .card__descr > * {
+  width: calc((100% - 2rem) / 3);
+  flex-grow: 1;
+}
 
 .card__title {
   display: flex;
@@ -4112,6 +4117,7 @@ html.media-viewer-open {
   margin-top: 1.75rem;
 }
 
+.card__item,
 .card__private,
 .card__partner {
   display: flex;
@@ -4119,6 +4125,7 @@ html.media-viewer-open {
   min-width: 80px;
 }
 
+.card__item,
 .card__private-sum,
 .card__partner-sum {
   margin: 0;
@@ -4127,6 +4134,7 @@ html.media-viewer-open {
   line-height: 1.25rem;
 }
 
+.card__item-name,
 .card__private-name,
 .card__partner-name {
   font-weight: 400;
@@ -4135,6 +4143,7 @@ html.media-viewer-open {
   color: rgba(255, 255, 255, 0.64);
 }
 
+.card__item-label,
 .card__private-label,
 .card__partner-label {
   font-weight: 400;
@@ -4144,6 +4153,7 @@ html.media-viewer-open {
   color: rgba(255, 255, 255, 0.64);
 }
 
+.card__subitems,
 .card__subprivates,
 .card__subpartners {
   display: flex;
@@ -4151,6 +4161,7 @@ html.media-viewer-open {
   gap: 0.625rem;
 }
 
+.card__subitem,
 .card__subprivate,
 .card__subpartner {
   display: flex;

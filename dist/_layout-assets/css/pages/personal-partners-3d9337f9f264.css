@@ -53,6 +53,7 @@
 
 .my-partner-link__copy-text {
   background: rgba(255, 198, 255, 0.12);
+  -webkit-backdrop-filter: blur(13.5px);
   backdrop-filter: blur(13.5px);
 }
 

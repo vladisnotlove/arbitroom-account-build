@@ -2,6 +2,60 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 2397:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var constants_1 = __webpack_require__(5111);
+var addInputUrlSync = function () {
+    var elements = document.querySelectorAll(".input-url-sync:not([data-url-sync-disabled])");
+    var updateValue = function (input) {
+        var url = new URL(window.location.href);
+        var paramValues = url.searchParams.getAll(input.name);
+        var value = paramValues.join(constants_1.INPUT_VALUE_SEP);
+        if (input.value !== value) {
+            input.setAttribute("value", value);
+            input.dispatchEvent(new Event('change'));
+        }
+    };
+    var updateUrl = function (input) {
+        var name = input.name;
+        var value = input.value;
+        var url = new URL(window.location.href);
+        url.searchParams.set(name, value);
+        if (window.location.href !== url.href) {
+            window.localStorage.setItem("page-scroll-top", "" + document.documentElement.scrollTop);
+            window.location.replace(url.href);
+        }
+    };
+    elements.forEach(function (element) {
+        element.addEventListener("change", function (e) {
+            if (!(e.currentTarget instanceof HTMLInputElement))
+                return;
+            if (e.currentTarget.getAttribute("data-only-init") !== undefined)
+                return;
+            updateUrl(e.currentTarget);
+        });
+        if (element instanceof HTMLInputElement)
+            updateValue(element);
+    });
+    window.addEventListener("locationchange", function (e) {
+        elements.forEach(function (element) {
+            if (element instanceof HTMLInputElement)
+                updateValue(element);
+        });
+    });
+    var pageScrollTop = parseFloat(window.localStorage.getItem("page-scroll-top") || "0");
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo({ top: pageScrollTop });
+    document.documentElement.style.scrollBehavior = "";
+};
+exports["default"] = addInputUrlSync;
+
+
+/***/ }),
+
 /***/ 577:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -103,10 +157,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
+var addInputUrlSync_1 = __importDefault(__webpack_require__(2397));
 window.addEventListener("load", function () {
     // toggle button group
     (0, addToggleButtonGroup_1.default)();
+    // input url sync
+    (0, addInputUrlSync_1.default)();
 });
+
+
+/***/ }),
+
+/***/ 5111:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.INPUT_VALUE_SEP = void 0;
+exports.INPUT_VALUE_SEP = ",";
 
 
 /***/ })
