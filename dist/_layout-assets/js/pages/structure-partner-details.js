@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8272:
+/***/ 9906:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -10,7 +10,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes_1 = __importDefault(__webpack_require__(7901));
+var routes_1 = __importDefault(__webpack_require__(8254));
 window.addEventListener("load", function () {
     (function () {
         var details = document.querySelector(".partner-details");
@@ -56,7 +56,7 @@ window.addEventListener("load", function () {
 
 /***/ }),
 
-/***/ 7901:
+/***/ 8254:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -125,8 +125,11 @@ var routes = {
     cashout: {
         path: function () { return "/cashout"; }
     },
-    promo: {
+    promos: {
         path: function () { return "/promo"; }
+    },
+    promo: {
+        path: function (name) { return "/promo/" + name; }
     },
     events: {
         path: function () { return "/events"; }
@@ -192,7 +195,7 @@ exports["default"] = routes;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(8272);
+/******/ 	var __webpack_exports__ = __webpack_require__(9906);
 /******/ 	
 /******/ })()
 ;

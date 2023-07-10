@@ -2,12 +2,12 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 2397:
+/***/ 2496:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var constants_1 = __webpack_require__(5111);
+var constants_1 = __webpack_require__(3183);
 var addInputUrlSync = function () {
     var elements = document.querySelectorAll(".input-url-sync:not([data-url-sync-disabled])");
     var updateValue = function (input) {
@@ -56,7 +56,7 @@ exports["default"] = addInputUrlSync;
 
 /***/ }),
 
-/***/ 577:
+/***/ 5811:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -148,7 +148,7 @@ exports["default"] = addToggleButtonGroup;
 
 /***/ }),
 
-/***/ 5469:
+/***/ 5214:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -156,8 +156,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
-var addInputUrlSync_1 = __importDefault(__webpack_require__(2397));
+var addToggleButtonGroup_1 = __importDefault(__webpack_require__(5811));
+var addInputUrlSync_1 = __importDefault(__webpack_require__(2496));
 window.addEventListener("load", function () {
     // toggle button group
     (0, addToggleButtonGroup_1.default)();
@@ -168,7 +168,7 @@ window.addEventListener("load", function () {
 
 /***/ }),
 
-/***/ 5111:
+/***/ 3183:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -210,7 +210,7 @@ exports.INPUT_VALUE_SEP = ",";
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(5469);
+/******/ 	var __webpack_exports__ = __webpack_require__(5214);
 /******/ 	
 /******/ })()
 ;

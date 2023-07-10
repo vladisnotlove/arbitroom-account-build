@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 4819:
+/***/ 8133:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -56,7 +56,7 @@ exports["default"] = addLinearSelect;
 
 /***/ }),
 
-/***/ 1202:
+/***/ 294:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -64,8 +64,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addLinearSelect_1 = __importDefault(__webpack_require__(4819));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
+var addLinearSelect_1 = __importDefault(__webpack_require__(8133));
+var addDragToScroll_1 = __importDefault(__webpack_require__(2341));
 window.addEventListener("load", function () {
     // linear select
     (0, addLinearSelect_1.default)();
@@ -76,7 +76,7 @@ window.addEventListener("load", function () {
 
 /***/ }),
 
-/***/ 1912:
+/***/ 2341:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -95,7 +95,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
+var isTouchEnabled_1 = __importDefault(__webpack_require__(6129));
 var addDragToScroll = function () {
     var stopCoef = 0.95;
     if ((0, isTouchEnabled_1.default)())
@@ -210,7 +210,7 @@ exports["default"] = addDragToScroll;
 
 /***/ }),
 
-/***/ 145:
+/***/ 6129:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -257,7 +257,7 @@ exports["default"] = isTouchEnabled;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(1202);
+/******/ 	var __webpack_exports__ = __webpack_require__(294);
 /******/ 	
 /******/ })()
 ;

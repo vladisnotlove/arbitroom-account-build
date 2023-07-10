@@ -17276,7 +17276,7 @@ module.exports = function pointInPolygonNested (point, vs, start, end) {
 
 /***/ }),
 
-/***/ 8474:
+/***/ 2799:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17286,12 +17286,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var lodash_1 = __webpack_require__(6486);
-var routes_1 = __importDefault(__webpack_require__(7901));
-var Queue_1 = __importDefault(__webpack_require__(8801));
-var Vector_1 = __importDefault(__webpack_require__(1196));
+var routes_1 = __importDefault(__webpack_require__(8254));
+var Queue_1 = __importDefault(__webpack_require__(7889));
+var Vector_1 = __importDefault(__webpack_require__(9289));
 var point_in_polygon_1 = __importDefault(__webpack_require__(6960));
-var addOnFontsLoad_1 = __importDefault(__webpack_require__(3542));
-var setSmartInterval_1 = __importDefault(__webpack_require__(2539));
+var addOnFontsLoad_1 = __importDefault(__webpack_require__(8989));
+var setSmartInterval_1 = __importDefault(__webpack_require__(2295));
 // constants
 var minScale = 0.34;
 var maxScale = 5;
@@ -17802,7 +17802,7 @@ exports["default"] = addStructurePartners;
 
 /***/ }),
 
-/***/ 3713:
+/***/ 3057:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17811,7 +17811,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addStructurePartners_1 = __importDefault(__webpack_require__(8474));
+var addStructurePartners_1 = __importDefault(__webpack_require__(2799));
 window.addEventListener("load", function () {
     // structure partners
     (0, addStructurePartners_1.default)();
@@ -17820,7 +17820,7 @@ window.addEventListener("load", function () {
 
 /***/ }),
 
-/***/ 7901:
+/***/ 8254:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -17890,8 +17890,11 @@ var routes = {
     cashout: {
         path: function () { return "/cashout"; }
     },
-    promo: {
+    promos: {
         path: function () { return "/promo"; }
+    },
+    promo: {
+        path: function (name) { return "/promo/" + name; }
     },
     events: {
         path: function () { return "/events"; }
@@ -17926,7 +17929,7 @@ exports["default"] = routes;
 
 /***/ }),
 
-/***/ 8801:
+/***/ 7889:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -17982,7 +17985,7 @@ exports["default"] = Queue;
 
 /***/ }),
 
-/***/ 1196:
+/***/ 9289:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -18076,7 +18079,7 @@ exports["default"] = Vector;
 
 /***/ }),
 
-/***/ 3542:
+/***/ 8989:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -18108,7 +18111,7 @@ exports["default"] = addOnFontsLoad;
 
 /***/ }),
 
-/***/ 2539:
+/***/ 2295:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -18211,7 +18214,7 @@ exports["default"] = setSmartInveral;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(3713);
+/******/ 	var __webpack_exports__ = __webpack_require__(3057);
 /******/ 	
 /******/ })()
 ;

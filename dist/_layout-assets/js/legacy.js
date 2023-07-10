@@ -4136,7 +4136,7 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 3722:
+/***/ 3467:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -4144,7 +4144,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
@@ -4204,7 +4204,7 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 7215:
+/***/ 8518:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -4213,9 +4213,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
+var copyToClipboard_1 = __importDefault(__webpack_require__(3874));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var SHOW_TIME_MS = 2000;
 var addCopyText = function () {
@@ -4293,12 +4293,12 @@ exports["default"] = addCopyText;
 
 /***/ }),
 
-/***/ 2397:
+/***/ 2496:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var constants_1 = __webpack_require__(5111);
+var constants_1 = __webpack_require__(3183);
 var addInputUrlSync = function () {
     var elements = document.querySelectorAll(".input-url-sync:not([data-url-sync-disabled])");
     var updateValue = function (input) {
@@ -4347,7 +4347,7 @@ exports["default"] = addInputUrlSync;
 
 /***/ }),
 
-/***/ 4819:
+/***/ 8133:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -4401,7 +4401,7 @@ exports["default"] = addLinearSelect;
 
 /***/ }),
 
-/***/ 4287:
+/***/ 2837:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -4416,9 +4416,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperEnable_1 = __webpack_require__(444);
-var popperModifiers_1 = __webpack_require__(1607);
-var constants_1 = __webpack_require__(5111);
+var popperEnable_1 = __webpack_require__(9356);
+var popperModifiers_1 = __webpack_require__(3787);
+var constants_1 = __webpack_require__(3183);
 var addMultiSelect = function () {
     document.querySelectorAll(".multi-select").forEach(function (select) {
         var input = select.querySelector("input.multi-select__input");
@@ -4547,14 +4547,14 @@ exports["default"] = addMultiSelect;
 
 /***/ }),
 
-/***/ 2548:
+/***/ 3419:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperEnable_1 = __webpack_require__(444);
-var popperModifiers_1 = __webpack_require__(1607);
+var popperEnable_1 = __webpack_require__(9356);
+var popperModifiers_1 = __webpack_require__(3787);
 var addSelect = function () {
     document.querySelectorAll(".select").forEach(function (select) {
         var input = select.querySelector("input");
@@ -4650,7 +4650,7 @@ exports["default"] = addSelect;
 
 /***/ }),
 
-/***/ 4742:
+/***/ 9780:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -4686,7 +4686,7 @@ exports["default"] = addTextareaAutosize;
 
 /***/ }),
 
-/***/ 5856:
+/***/ 7417:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -4753,11 +4753,8 @@ var addTimer = function () {
         var hoursContainer = timer.querySelector("[data-timer-hours]");
         var minutesContainer = timer.querySelector("[data-timer-minutes]");
         var secondsContainer = timer.querySelector("[data-timer-seconds]");
-        var intervalId = window.setInterval(function () {
-            var isFinished = updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer }).isFinished;
-            if (isFinished) {
-                window.clearInterval(intervalId);
-            }
+        window.setInterval(function () {
+            updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer });
         }, 1000);
         updateTimer({ timer: timer, daysContainer: daysContainer, hoursContainer: hoursContainer, minutesContainer: minutesContainer, secondsContainer: secondsContainer });
     });
@@ -4767,7 +4764,7 @@ exports["default"] = addTimer;
 
 /***/ }),
 
-/***/ 577:
+/***/ 5811:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -4859,7 +4856,7 @@ exports["default"] = addToggleButtonGroup;
 
 /***/ }),
 
-/***/ 8393:
+/***/ 6862:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -4868,10 +4865,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var popperEnable_1 = __webpack_require__(444);
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
+var popperEnable_1 = __webpack_require__(9356);
 var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var createTooltip = function (content) {
     var tooltip = document.createElement("div");
@@ -4954,7 +4951,7 @@ exports["default"] = addTooltiped;
 
 /***/ }),
 
-/***/ 2533:
+/***/ 2891:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -4962,44 +4959,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
+var isTouchEnabled_1 = __importDefault(__webpack_require__(6129));
 // common
-var addHeader_1 = __importDefault(__webpack_require__(8112));
-var addSideMenu_1 = __importDefault(__webpack_require__(3722));
-var addPopper_1 = __importDefault(__webpack_require__(2744));
-var addInput_1 = __importDefault(__webpack_require__(3846));
-var addModal_1 = __importDefault(__webpack_require__(1949));
-var addCopyText_1 = __importDefault(__webpack_require__(7215));
-var addTabs_1 = __importDefault(__webpack_require__(2179));
-var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
-var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
-var addCollapseTable_1 = __importDefault(__webpack_require__(8558));
-var addInputCode_1 = __importDefault(__webpack_require__(8575));
-var addToggleClass_1 = __importDefault(__webpack_require__(2971));
-var addDragScroll_1 = __importDefault(__webpack_require__(6009));
-var addWithLinkedSelect_1 = __importDefault(__webpack_require__(7403));
-var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
-var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
-var addMediaViewer_1 = __importDefault(__webpack_require__(840));
-var addSwiper_1 = __importDefault(__webpack_require__(9498));
-var addTooltiped_1 = __importDefault(__webpack_require__(8393));
-var addTimer_1 = __importDefault(__webpack_require__(5856));
-var addLinearSelect_1 = __importDefault(__webpack_require__(4819));
-var addSelect_1 = __importDefault(__webpack_require__(2548));
-var addMultiSelect_1 = __importDefault(__webpack_require__(4287));
-var addInputUrlSync_1 = __importDefault(__webpack_require__(2397));
-var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
+var addHeader_1 = __importDefault(__webpack_require__(4087));
+var addSideMenu_1 = __importDefault(__webpack_require__(3467));
+var addPopper_1 = __importDefault(__webpack_require__(7381));
+var addInput_1 = __importDefault(__webpack_require__(3469));
+var addModal_1 = __importDefault(__webpack_require__(7188));
+var addCopyText_1 = __importDefault(__webpack_require__(8518));
+var addTabs_1 = __importDefault(__webpack_require__(5547));
+var addTextareaAutosize_1 = __importDefault(__webpack_require__(9780));
+var addWithTooltip_1 = __importDefault(__webpack_require__(7931));
+var addCollapseTable_1 = __importDefault(__webpack_require__(1807));
+var addInputCode_1 = __importDefault(__webpack_require__(1443));
+var addToggleClass_1 = __importDefault(__webpack_require__(2998));
+var addDragScroll_1 = __importDefault(__webpack_require__(3320));
+var addWithLinkedSelect_1 = __importDefault(__webpack_require__(6856));
+var addVideoPlayer_1 = __importDefault(__webpack_require__(6829));
+var addYoutubePlayer_1 = __importDefault(__webpack_require__(8166));
+var addDragToScroll_1 = __importDefault(__webpack_require__(2341));
+var addMediaViewer_1 = __importDefault(__webpack_require__(7854));
+var addSwiper_1 = __importDefault(__webpack_require__(7215));
+var addTooltiped_1 = __importDefault(__webpack_require__(6862));
+var addTimer_1 = __importDefault(__webpack_require__(7417));
+var addLinearSelect_1 = __importDefault(__webpack_require__(8133));
+var addSelect_1 = __importDefault(__webpack_require__(3419));
+var addMultiSelect_1 = __importDefault(__webpack_require__(2837));
+var addInputUrlSync_1 = __importDefault(__webpack_require__(2496));
+var addToggleButtonGroup_1 = __importDefault(__webpack_require__(5811));
 // special
-var addEvent_1 = __importDefault(__webpack_require__(4860));
-var addEventTicket_1 = __importDefault(__webpack_require__(5656));
-var addBuyEventTicketModals_1 = __importDefault(__webpack_require__(7687));
-var addPrograms_1 = __importDefault(__webpack_require__(7813));
-var addLineList_1 = __importDefault(__webpack_require__(3559));
-var addChat_1 = __importDefault(__webpack_require__(2270));
-var addCashoutPool_1 = __importDefault(__webpack_require__(3400));
-var addAllNotifications_1 = __importDefault(__webpack_require__(2121));
-var addPromoCard_1 = __importDefault(__webpack_require__(8442));
+var addEvent_1 = __importDefault(__webpack_require__(4293));
+var addEventTicket_1 = __importDefault(__webpack_require__(143));
+var addBuyEventTicketModals_1 = __importDefault(__webpack_require__(5846));
+var addPrograms_1 = __importDefault(__webpack_require__(9453));
+var addLineList_1 = __importDefault(__webpack_require__(3471));
+var addChat_1 = __importDefault(__webpack_require__(3169));
+var addCashoutPool_1 = __importDefault(__webpack_require__(992));
+var addAllNotifications_1 = __importDefault(__webpack_require__(9642));
+var addPromoCard_1 = __importDefault(__webpack_require__(4632));
 window.addEventListener("load", function () {
     // header
     (0, addHeader_1.default)();
@@ -5078,7 +5075,7 @@ window.addEventListener("load", function () {
 
 /***/ }),
 
-/***/ 2121:
+/***/ 9642:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5100,7 +5097,7 @@ exports["default"] = addAllNotifications;
 
 /***/ }),
 
-/***/ 7687:
+/***/ 5846:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -5108,7 +5105,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var showTooltip_1 = __importDefault(__webpack_require__(232));
+var showTooltip_1 = __importDefault(__webpack_require__(3400));
 var addBuyEventTicketModals = function () {
     var modal = document.getElementById("buyEventTicketModal");
     if (!modal)
@@ -5165,7 +5162,7 @@ exports["default"] = addBuyEventTicketModals;
 
 /***/ }),
 
-/***/ 3400:
+/***/ 992:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5200,7 +5197,7 @@ exports["default"] = addCashoutPool;
 
 /***/ }),
 
-/***/ 2270:
+/***/ 3169:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5227,7 +5224,7 @@ exports["default"] = addChat;
 
 /***/ }),
 
-/***/ 8558:
+/***/ 1807:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5251,7 +5248,7 @@ exports["default"] = addCollapseTable;
 
 /***/ }),
 
-/***/ 6009:
+/***/ 3320:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -5259,7 +5256,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
+var isTouchEnabled_1 = __importDefault(__webpack_require__(6129));
 var scrollbooster_1 = __importDefault(__webpack_require__(1701));
 var addDragScroll = function () {
     // !IMPORTANT: data-drag-scroll must have style "overflow: <hidden | scroll>"
@@ -5285,7 +5282,7 @@ exports["default"] = addDragScroll;
 
 /***/ }),
 
-/***/ 1912:
+/***/ 2341:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -5304,7 +5301,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
+var isTouchEnabled_1 = __importDefault(__webpack_require__(6129));
 var addDragToScroll = function () {
     var stopCoef = 0.95;
     if ((0, isTouchEnabled_1.default)())
@@ -5419,7 +5416,7 @@ exports["default"] = addDragToScroll;
 
 /***/ }),
 
-/***/ 4860:
+/***/ 4293:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5438,7 +5435,7 @@ exports["default"] = addEvent;
 
 /***/ }),
 
-/***/ 5656:
+/***/ 143:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -5479,7 +5476,7 @@ exports["default"] = addEventTicket;
 
 /***/ }),
 
-/***/ 8112:
+/***/ 4087:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5502,7 +5499,7 @@ exports["default"] = addHeader;
 
 /***/ }),
 
-/***/ 3846:
+/***/ 3469:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5552,7 +5549,7 @@ exports["default"] = addInput;
 
 /***/ }),
 
-/***/ 8575:
+/***/ 1443:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5575,7 +5572,7 @@ exports["default"] = addInputCode;
 
 /***/ }),
 
-/***/ 3559:
+/***/ 3471:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5602,7 +5599,7 @@ exports["default"] = addLineList;
 
 /***/ }),
 
-/***/ 840:
+/***/ 7854:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5668,7 +5665,7 @@ exports["default"] = addMediaViewer;
 
 /***/ }),
 
-/***/ 1949:
+/***/ 7188:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5717,7 +5714,7 @@ exports["default"] = addModal;
 
 /***/ }),
 
-/***/ 2744:
+/***/ 7381:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -5737,7 +5734,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
@@ -5823,7 +5820,7 @@ exports["default"] = addPopper;
 
 /***/ }),
 
-/***/ 7813:
+/***/ 9453:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5847,7 +5844,7 @@ exports["default"] = addPrograms;
 
 /***/ }),
 
-/***/ 8442:
+/***/ 4632:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5882,7 +5879,7 @@ exports["default"] = addPromoCard;
 
 /***/ }),
 
-/***/ 9498:
+/***/ 7215:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -5930,7 +5927,7 @@ exports["default"] = addSwiper;
 
 /***/ }),
 
-/***/ 2179:
+/***/ 5547:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -6049,7 +6046,7 @@ exports["default"] = addTabs;
 
 /***/ }),
 
-/***/ 2971:
+/***/ 2998:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6075,7 +6072,7 @@ exports["default"] = addToggleClass;
 
 /***/ }),
 
-/***/ 1421:
+/***/ 6829:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -6083,7 +6080,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
 var addVideoPlayer = function () {
     var _a, _b;
     var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
@@ -6131,7 +6128,7 @@ exports["default"] = addVideoPlayer;
 
 /***/ }),
 
-/***/ 7403:
+/***/ 6856:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6173,7 +6170,7 @@ exports["default"] = addWithLinkedSelect;
 
 /***/ }),
 
-/***/ 7540:
+/***/ 7931:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -6182,8 +6179,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
@@ -6258,7 +6255,7 @@ exports["default"] = addWithTooltip;
 
 /***/ }),
 
-/***/ 158:
+/***/ 8166:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -6266,7 +6263,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
@@ -6326,7 +6323,7 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 5111:
+/***/ 3183:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6337,7 +6334,7 @@ exports.INPUT_VALUE_SEP = ",";
 
 /***/ }),
 
-/***/ 9418:
+/***/ 8900:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6364,7 +6361,7 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
-/***/ 9797:
+/***/ 3874:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6399,7 +6396,7 @@ exports["default"] = copyToClipboard;
 
 /***/ }),
 
-/***/ 1503:
+/***/ 2056:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -6408,7 +6405,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
-var parsePx_1 = __importDefault(__webpack_require__(6871));
+var parsePx_1 = __importDefault(__webpack_require__(1211));
 var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
 var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
 var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
@@ -6425,7 +6422,7 @@ exports["default"] = {
 
 /***/ }),
 
-/***/ 145:
+/***/ 6129:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6441,7 +6438,7 @@ exports["default"] = isTouchEnabled;
 
 /***/ }),
 
-/***/ 6871:
+/***/ 1211:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -6449,7 +6446,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var remToPx_1 = __importDefault(__webpack_require__(8638));
+var remToPx_1 = __importDefault(__webpack_require__(5983));
 var parsePx = function (value) {
     if (typeof value === "number")
         return value;
@@ -6472,7 +6469,7 @@ exports["default"] = parsePx;
 
 /***/ }),
 
-/***/ 444:
+/***/ 9356:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -6515,7 +6512,7 @@ exports.disablePopper = disablePopper;
 
 /***/ }),
 
-/***/ 1607:
+/***/ 3787:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6552,7 +6549,7 @@ exports.createPlacementHandler = createPlacementHandler;
 
 /***/ }),
 
-/***/ 8638:
+/***/ 5983:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -6565,7 +6562,7 @@ exports["default"] = remToPx;
 
 /***/ }),
 
-/***/ 232:
+/***/ 3400:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -6574,8 +6571,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var showTooltip = function (anchor, message, options) {
     if (options === void 0) { options = {}; }
@@ -15857,7 +15854,7 @@ function EffectCards({
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(2533);
+/******/ 	var __webpack_exports__ = __webpack_require__(2891);
 /******/ 	
 /******/ })()
 ;

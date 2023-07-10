@@ -2570,7 +2570,7 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 3722:
+/***/ 3467:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2578,7 +2578,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
@@ -2638,96 +2638,85 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 7215:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 2278:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-var copyToClipboard_1 = __importDefault(__webpack_require__(9797));
-var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
-var SHOW_TIME_MS = 2000;
-var addCopyText = function () {
-    document.querySelectorAll(".copy-text").forEach(function (copyText) {
-        var _a, _b;
-        var value = (_b = (_a = copyText.querySelector(".copy-text__value")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim();
-        var tooltip = copyText.querySelector(".copy-text__success-tooltip");
-        if (!value || !(tooltip instanceof HTMLElement))
-            return;
-        var placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0];
-        var popper = (0, core_1.createPopper)(copyText, tooltip, {
-            placement: placement,
-            strategy: "absolute",
-            modifiers: [
-                {
-                    name: "flip",
-                    options: {
-                        fallbackPlacements: ['auto'],
-                    },
-                },
-                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
-                    element.classList.remove("top");
-                    element.classList.remove("left");
-                    element.classList.remove("right");
-                    element.classList.remove("bottom");
-                    element.classList.add(placement);
-                }),
-            ],
-        });
-        var hidingTimeout;
-        var autoHidingTimeout;
-        var showTooltip = function () {
-            clearTimeout(hidingTimeout);
-            popper.update();
-            tooltip.classList.add("show");
-            tooltip.classList.remove("fade-out-slow");
-        };
-        var hideTooltip = function (options) {
-            if (options === void 0) { options = {}; }
-            clearTimeout(hidingTimeout);
-            if (options.rightNow) {
-                tooltip.classList.remove("show");
-                tooltip.classList.remove("fade-out-slow");
-            }
-            else {
-                tooltip.classList.add("fade-out-slow");
-                hidingTimeout = window.setTimeout(function () {
-                    tooltip.classList.remove("show");
-                    tooltip.classList.remove("fade-out-slow");
-                }, ANIMATION_SLOW_MS);
-            }
-        };
-        var onClickOutside = function (e) {
-            if (e.target instanceof HTMLElement && e.target.closest(".copy-text") === copyText)
-                return;
-            hideTooltip({ rightNow: true });
-            document.documentElement.removeEventListener("click", onClickOutside);
-        };
-        copyText.addEventListener("click", function () {
-            (0, copyToClipboard_1.default)(value).then(function () {
-                clearTimeout(autoHidingTimeout);
-                showTooltip();
-                autoHidingTimeout = window.setTimeout(function () {
-                    hideTooltip();
-                    document.documentElement.removeEventListener("click", onClickOutside);
-                }, SHOW_TIME_MS);
-            });
-            document.documentElement.addEventListener("click", onClickOutside);
-        });
-        document.body.appendChild(tooltip);
-    });
+var throttle_debounce_1 = __webpack_require__(2189);
+var normalizeString = function (str) {
+    return str.trim().toUpperCase();
 };
-exports["default"] = addCopyText;
+var addPartnerChatList = function () {
+    try {
+        // tab switching
+        var tabs = document.querySelectorAll(".partner-chat-list__tab");
+        var tabContents_1 = document.querySelectorAll(".partner-chat-list__tab-content");
+        var items_1 = document.querySelectorAll(".partner-chat-list__item");
+        var chat_1 = document.getElementById("partnerChatFrame");
+        var search = document.querySelector(".partner-chat-list__search");
+        tabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                var targetKey = tab.getAttribute("data-tab-key");
+                tabContents_1.forEach(function (tabContent) {
+                    var key = tabContent.getAttribute("data-key");
+                    if (key === targetKey) {
+                        tabContent.classList.add("active");
+                    }
+                    else {
+                        tabContent.classList.remove("active");
+                    }
+                });
+            });
+        });
+        items_1.forEach(function (item) {
+            item.addEventListener("click", function (e) {
+                // set src in iframe
+                var url = item.getAttribute("data-chat-url");
+                if (chat_1 instanceof HTMLIFrameElement && url) {
+                    chat_1.src = url;
+                }
+                // set class
+                items_1.forEach(function (item) { return item.classList.remove("selected"); });
+                item.classList.add("selected");
+            });
+        });
+        if (search instanceof HTMLInputElement) {
+            var filterItems_1 = (0, throttle_debounce_1.debounce)(250, function (value) {
+                if (value === "") {
+                    items_1.forEach(function (item) {
+                        item.classList.remove("hidden");
+                    });
+                }
+                else {
+                    items_1.forEach(function (item) {
+                        var _a;
+                        var name = normalizeString(((_a = item.querySelector(".partner-chat-list__item-name")) === null || _a === void 0 ? void 0 : _a.textContent) || "");
+                        if (name && name.includes(value)) {
+                            item.classList.remove("hidden");
+                        }
+                        else {
+                            item.classList.add("hidden");
+                        }
+                    });
+                }
+            });
+            search.addEventListener("input", function (e) {
+                var value = normalizeString(e.currentTarget.value);
+                filterItems_1(value);
+            });
+        }
+    }
+    catch (e) {
+        console.error(e);
+    }
+};
+exports["default"] = addPartnerChatList;
 
 
 /***/ }),
 
-/***/ 7421:
+/***/ 9620:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2736,19 +2725,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 // common
-var addPopper_1 = __importDefault(__webpack_require__(2744));
-var addInput_1 = __importDefault(__webpack_require__(3846));
-var addModal_1 = __importDefault(__webpack_require__(1949));
-var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
-var addSideMenu_1 = __importDefault(__webpack_require__(3722));
-var addHeader_1 = __importDefault(__webpack_require__(8112));
-var addToggleClass_1 = __importDefault(__webpack_require__(2971));
-var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
-var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addMediaViewer_1 = __importDefault(__webpack_require__(840));
+var addPopper_1 = __importDefault(__webpack_require__(7381));
+var addInput_1 = __importDefault(__webpack_require__(3469));
+var addModal_1 = __importDefault(__webpack_require__(7188));
+var addWithTooltip_1 = __importDefault(__webpack_require__(7931));
+var addSideMenu_1 = __importDefault(__webpack_require__(3467));
+var addHeader_1 = __importDefault(__webpack_require__(4087));
+var addToggleClass_1 = __importDefault(__webpack_require__(2998));
+var addVideoPlayer_1 = __importDefault(__webpack_require__(6829));
+var addYoutubePlayer_1 = __importDefault(__webpack_require__(8166));
+var addMediaViewer_1 = __importDefault(__webpack_require__(7854));
 // special
-var addCopyText_1 = __importDefault(__webpack_require__(7215));
+var addPartnerChatList_1 = __importDefault(__webpack_require__(2278));
 window.addEventListener("load", function () {
+    // common
     // popper
     (0, addPopper_1.default)();
     // input
@@ -2769,14 +2759,15 @@ window.addEventListener("load", function () {
     (0, addMediaViewer_1.default)();
     // youtube
     (0, addYoutubePlayer_1.default)();
-    // copy text
-    (0, addCopyText_1.default)();
+    // special
+    // partner chat list
+    (0, addPartnerChatList_1.default)();
 });
 
 
 /***/ }),
 
-/***/ 8112:
+/***/ 4087:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2799,7 +2790,7 @@ exports["default"] = addHeader;
 
 /***/ }),
 
-/***/ 3846:
+/***/ 3469:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2849,7 +2840,7 @@ exports["default"] = addInput;
 
 /***/ }),
 
-/***/ 840:
+/***/ 7854:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2915,7 +2906,7 @@ exports["default"] = addMediaViewer;
 
 /***/ }),
 
-/***/ 1949:
+/***/ 7188:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2964,7 +2955,7 @@ exports["default"] = addModal;
 
 /***/ }),
 
-/***/ 2744:
+/***/ 7381:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2984,7 +2975,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
@@ -3070,7 +3061,7 @@ exports["default"] = addPopper;
 
 /***/ }),
 
-/***/ 2971:
+/***/ 2998:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3096,7 +3087,7 @@ exports["default"] = addToggleClass;
 
 /***/ }),
 
-/***/ 1421:
+/***/ 6829:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3104,7 +3095,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
 var addVideoPlayer = function () {
     var _a, _b;
     var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
@@ -3152,7 +3143,7 @@ exports["default"] = addVideoPlayer;
 
 /***/ }),
 
-/***/ 7540:
+/***/ 7931:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3161,8 +3152,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
@@ -3237,7 +3228,7 @@ exports["default"] = addWithTooltip;
 
 /***/ }),
 
-/***/ 158:
+/***/ 8166:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3245,7 +3236,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
@@ -3305,7 +3296,7 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 9418:
+/***/ 8900:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3332,42 +3323,7 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
-/***/ 9797:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-// return a promise
-function copyToClipboard(textToCopy) {
-    // navigator clipboard api needs a secure context (https)
-    if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard api method'
-        return navigator.clipboard.writeText(textToCopy);
-    }
-    else {
-        // text area method
-        var textArea_1 = document.createElement("textarea");
-        textArea_1.value = textToCopy;
-        // make the textarea out of viewport
-        textArea_1.style.position = "fixed";
-        textArea_1.style.left = "-999999px";
-        textArea_1.style.top = "-999999px";
-        document.body.appendChild(textArea_1);
-        textArea_1.focus();
-        textArea_1.select();
-        return new Promise(function (res, rej) {
-            // here the magic happens
-            document.execCommand('copy') ? res(undefined) : rej();
-            textArea_1.remove();
-        });
-    }
-}
-exports["default"] = copyToClipboard;
-
-
-/***/ }),
-
-/***/ 1503:
+/***/ 2056:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3376,7 +3332,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
-var parsePx_1 = __importDefault(__webpack_require__(6871));
+var parsePx_1 = __importDefault(__webpack_require__(1211));
 var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
 var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
 var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
@@ -3393,7 +3349,7 @@ exports["default"] = {
 
 /***/ }),
 
-/***/ 6871:
+/***/ 1211:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3401,7 +3357,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var remToPx_1 = __importDefault(__webpack_require__(8638));
+var remToPx_1 = __importDefault(__webpack_require__(5983));
 var parsePx = function (value) {
     if (typeof value === "number")
         return value;
@@ -3424,7 +3380,7 @@ exports["default"] = parsePx;
 
 /***/ }),
 
-/***/ 1607:
+/***/ 3787:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3461,7 +3417,7 @@ exports.createPlacementHandler = createPlacementHandler;
 
 /***/ }),
 
-/***/ 8638:
+/***/ 5983:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3470,6 +3426,190 @@ var remToPx = function (rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
 exports["default"] = remToPx;
+
+
+/***/ }),
+
+/***/ 2189:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+/* eslint-disable no-undefined,no-param-reassign,no-shadow */
+
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param {number} delay -                  A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher)
+ *                                            are most useful.
+ * @param {Function} callback -               A function to be executed after delay milliseconds. The `this` context and all arguments are passed through,
+ *                                            as-is, to `callback` when the throttled-function is executed.
+ * @param {object} [options] -              An object to configure options.
+ * @param {boolean} [options.noTrailing] -   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds
+ *                                            while the throttled-function is being called. If noTrailing is false or unspecified, callback will be executed
+ *                                            one final time after the last throttled-function call. (After the throttled-function has not been called for
+ *                                            `delay` milliseconds, the internal counter is reset).
+ * @param {boolean} [options.noLeading] -   Optional, defaults to false. If noLeading is false, the first throttled-function call will execute callback
+ *                                            immediately. If noLeading is true, the first the callback execution will be skipped. It should be noted that
+ *                                            callback will never executed if both noLeading = true and noTrailing = true.
+ * @param {boolean} [options.debounceMode] - If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is
+ *                                            false (at end), schedule `callback` to execute after `delay` ms.
+ *
+ * @returns {Function} A new, throttled, function.
+ */
+function throttle (delay, callback, options) {
+  var _ref = options || {},
+      _ref$noTrailing = _ref.noTrailing,
+      noTrailing = _ref$noTrailing === void 0 ? false : _ref$noTrailing,
+      _ref$noLeading = _ref.noLeading,
+      noLeading = _ref$noLeading === void 0 ? false : _ref$noLeading,
+      _ref$debounceMode = _ref.debounceMode,
+      debounceMode = _ref$debounceMode === void 0 ? undefined : _ref$debounceMode;
+  /*
+   * After wrapper has stopped being called, this timeout ensures that
+   * `callback` is executed at the proper times in `throttle` and `end`
+   * debounce modes.
+   */
+
+
+  var timeoutID;
+  var cancelled = false; // Keep track of the last time `callback` was executed.
+
+  var lastExec = 0; // Function to clear existing timeout
+
+  function clearExistingTimeout() {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+  } // Function to cancel next exec
+
+
+  function cancel(options) {
+    var _ref2 = options || {},
+        _ref2$upcomingOnly = _ref2.upcomingOnly,
+        upcomingOnly = _ref2$upcomingOnly === void 0 ? false : _ref2$upcomingOnly;
+
+    clearExistingTimeout();
+    cancelled = !upcomingOnly;
+  }
+  /*
+   * The `wrapper` function encapsulates all of the throttling / debouncing
+   * functionality and when executed will limit the rate at which `callback`
+   * is executed.
+   */
+
+
+  function wrapper() {
+    for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
+      arguments_[_key] = arguments[_key];
+    }
+
+    var self = this;
+    var elapsed = Date.now() - lastExec;
+
+    if (cancelled) {
+      return;
+    } // Execute `callback` and update the `lastExec` timestamp.
+
+
+    function exec() {
+      lastExec = Date.now();
+      callback.apply(self, arguments_);
+    }
+    /*
+     * If `debounceMode` is true (at begin) this is used to clear the flag
+     * to allow future `callback` executions.
+     */
+
+
+    function clear() {
+      timeoutID = undefined;
+    }
+
+    if (!noLeading && debounceMode && !timeoutID) {
+      /*
+       * Since `wrapper` is being called for the first time and
+       * `debounceMode` is true (at begin), execute `callback`
+       * and noLeading != true.
+       */
+      exec();
+    }
+
+    clearExistingTimeout();
+
+    if (debounceMode === undefined && elapsed > delay) {
+      if (noLeading) {
+        /*
+         * In throttle mode with noLeading, if `delay` time has
+         * been exceeded, update `lastExec` and schedule `callback`
+         * to execute after `delay` ms.
+         */
+        lastExec = Date.now();
+
+        if (!noTrailing) {
+          timeoutID = setTimeout(debounceMode ? clear : exec, delay);
+        }
+      } else {
+        /*
+         * In throttle mode without noLeading, if `delay` time has been exceeded, execute
+         * `callback`.
+         */
+        exec();
+      }
+    } else if (noTrailing !== true) {
+      /*
+       * In trailing throttle mode, since `delay` time has not been
+       * exceeded, schedule `callback` to execute `delay` ms after most
+       * recent execution.
+       *
+       * If `debounceMode` is true (at begin), schedule `clear` to execute
+       * after `delay` ms.
+       *
+       * If `debounceMode` is false (at end), schedule `callback` to
+       * execute after `delay` ms.
+       */
+      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+    }
+  }
+
+  wrapper.cancel = cancel; // Return the wrapper function.
+
+  return wrapper;
+}
+
+/* eslint-disable no-undefined */
+/**
+ * Debounce execution of a function. Debouncing, unlike throttling,
+ * guarantees that a function is only executed a single time, either at the
+ * very beginning of a series of calls, or at the very end.
+ *
+ * @param {number} delay -               A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @param {Function} callback -          A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                        to `callback` when the debounced-function is executed.
+ * @param {object} [options] -           An object to configure options.
+ * @param {boolean} [options.atBegin] -  Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
+ *                                        after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
+ *                                        (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
+ *
+ * @returns {Function} A new, debounced function.
+ */
+
+function debounce (delay, callback, options) {
+  var _ref = options || {},
+      _ref$atBegin = _ref.atBegin,
+      atBegin = _ref$atBegin === void 0 ? false : _ref$atBegin;
+
+  return throttle(delay, callback, {
+    debounceMode: atBegin !== false
+  });
+}
+
+exports.debounce = debounce;
+exports.throttle = throttle;
+//# sourceMappingURL=index.js.map
 
 
 /***/ })
@@ -3551,7 +3691,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(7421);
+/******/ 	var __webpack_exports__ = __webpack_require__(9620);
 /******/ 	
 /******/ })()
 ;

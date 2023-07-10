@@ -634,6 +634,9 @@ template {
 .block__title + .block__subtitle {
   margin-top: -2.625rem;
 }
+.block__title + .block__subtitle.normal {
+  margin-top: -1.5rem;
+}
 
 .block__subtitle {
   padding: 1.5rem;
@@ -641,6 +644,13 @@ template {
   font-size: 0.75rem;
   line-height: 1rem;
   color: rgba(255, 255, 255, 0.32);
+}
+.block__subtitle.normal {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.15px;
+  color: rgba(255, 255, 255, 0.64);
 }
 
 .block__title-action {
@@ -897,6 +907,12 @@ h4 {
   font-size: 0.75rem;
   line-height: 1rem;
   color: rgba(255, 255, 255, 0.64);
+}
+
+.subtitle1 {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .subtitle2 {
@@ -1233,6 +1249,9 @@ input:checked + .switch__slider:before {
 }
 .toggle-button-group.simple .toggle-button.active {
   background: rgba(255, 255, 255, 0.32);
+}
+.toggle-button-group.equal-columns .toggle-button {
+  flex-grow: 1;
 }
 
 .button {
@@ -4063,15 +4082,23 @@ html.media-viewer-open {
   display: flex;
   gap: 1rem;
 }
+.cards > .card {
+  width: calc((100% - 2rem) / 3);
+}
 
 .card {
+  display: flex;
+  flex-direction: column;
   position: relative;
   padding: 1.5rem;
   cursor: pointer;
-  width: calc((100% - 2rem) / 3);
 }
 .card.triple .card__descr > * {
   width: calc((100% - 2rem) / 3);
+  flex-grow: 1;
+}
+.card.single .card__descr > * {
+  width: 100%;
   flex-grow: 1;
 }
 
@@ -4089,6 +4116,17 @@ html.media-viewer-open {
   fill: #FF6500;
 }
 
+.card__subtitle {
+  margin-top: 1rem;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(255, 255, 255, 0.64);
+}
+.card__subtitle > .card__descr {
+  margin-top: 1.5rem;
+}
+
 .card__img img {
   max-width: 54px;
   max-height: 54px;
@@ -4103,9 +4141,11 @@ html.media-viewer-open {
 }
 
 .card__descr {
+  flex-grow: 1;
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   flex-wrap: wrap;
   gap: 1rem;
 }
@@ -4175,7 +4215,7 @@ html.media-viewer-open {
     flex-direction: column;
     gap: 1rem;
   }
-  .card {
+  .cards > .card {
     width: 100%;
   }
 }

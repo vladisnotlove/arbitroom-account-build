@@ -2570,7 +2570,7 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 3722:
+/***/ 3467:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2578,7 +2578,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
@@ -2638,135 +2638,7 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 4742:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addTextareaAutosize = function () {
-    var updateHeight = function (element) {
-        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
-        var prevHeight = element.style.height;
-        element.style.height = "auto";
-        if (maxHeight && element.scrollHeight < maxHeight) {
-            $(element).css({
-                height: element.scrollHeight,
-                overflowY: "hidden",
-            });
-        }
-        else {
-            $(element).css({
-                height: prevHeight,
-                overflowY: "auto",
-            });
-        }
-    };
-    $(".textarea-autosize").each(function (i, textareaAutosize) {
-        // add handlers
-        $(textareaAutosize).on("input", function (e) {
-            if (e.currentTarget instanceof HTMLElement)
-                updateHeight(e.currentTarget);
-        });
-    });
-};
-exports["default"] = addTextareaAutosize;
-
-
-/***/ }),
-
-/***/ 577:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-// HELPERS
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var setValue = function (elements, value) {
-    var _a, _b;
-    (_a = elements.input) === null || _a === void 0 ? void 0 : _a.setAttribute("value", value);
-    (_b = elements.input) === null || _b === void 0 ? void 0 : _b.dispatchEvent(new Event("change"));
-};
-var updateActive = function (elements) {
-    var _a;
-    var value = elements.input.value;
-    var activeIndex = 0;
-    elements.toggleButtonGroup.querySelectorAll(".toggle-button").forEach(function (button, index) {
-        if (button.getAttribute("data-value") === value) {
-            button.classList.add("active");
-            activeIndex = index;
-        }
-        else {
-            button.classList.remove("active");
-        }
-    });
-    (_a = elements.target) === null || _a === void 0 ? void 0 : _a.forEach(function (elem) {
-        Array.from(elem.children).forEach(function (child, index) {
-            if (index === activeIndex) {
-                child.classList.add("active");
-            }
-            else {
-                child.classList.remove("active");
-            }
-        });
-    });
-};
-// MAIN
-var addToggleButtonGroup = function () {
-    document.querySelectorAll(".toggle-button-group").forEach(function (toggleButtonGroup) {
-        if (!(toggleButtonGroup instanceof HTMLElement)) {
-            console.error(".toggleButtonGroup is not a HTMLElement", toggleButtonGroup);
-            return;
-        }
-        var input = toggleButtonGroup.querySelector("input");
-        var buttons = Array.from(toggleButtonGroup.querySelectorAll(".toggle-button"));
-        var str = toggleButtonGroup.getAttribute("data-toggle-button-group-target");
-        var target = str ? Array.from(document.querySelectorAll(str)) : undefined;
-        toggleButtonGroup.addEventListener("click", function (e) {
-            if (!(e.target instanceof HTMLElement) || !e.target.closest(".toggle-button"))
-                return;
-            var activeButton = e.target;
-            var value = activeButton.getAttribute("data-value");
-            // set value in input
-            if (input && value !== null) {
-                setValue({ input: input }, value);
-            }
-            // change active button
-            buttons.forEach(function (button) {
-                if (button === activeButton) {
-                    button.classList.add("active");
-                }
-                else {
-                    button.classList.remove("active");
-                }
-            });
-            // change active target
-            if (target) {
-                var activeIndex_1 = buttons.findIndex(function (button) { return button === activeButton; });
-                target.forEach(function (elem) {
-                    Array.from(elem.children).forEach(function (child, index) {
-                        if (index === activeIndex_1) {
-                            child.classList.add("active");
-                        }
-                        else {
-                            child.classList.remove("active");
-                        }
-                    });
-                });
-            }
-        });
-        if (input) {
-            updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
-            input.addEventListener("change", function () {
-                updateActive({ input: input, target: target, toggleButtonGroup: toggleButtonGroup });
-            });
-        }
-    });
-};
-exports["default"] = addToggleButtonGroup;
-
-
-/***/ }),
-
-/***/ 602:
+/***/ 8518:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2774,101 +2646,88 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes_1 = __importDefault(__webpack_require__(7901));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
-// MAIN
-var addHexagonPartners = function () {
-    try {
-        document.querySelectorAll(".hexagon-partners").forEach(function (hexagonPartners) {
-            if (!(hexagonPartners instanceof HTMLElement))
-                return;
-            // get elements
-            var partnersIframe = hexagonPartners.querySelector(".hexagon-partners__hexs > iframe");
-            var details = hexagonPartners.querySelector(".hexagon-partners__details");
-            var chat = hexagonPartners.querySelector(".hexagon-partners__chat");
-            if (!(details instanceof HTMLElement))
-                throw Error(".hexagon-partners has no .hexagon-partners__details");
-            if (!chat)
-                throw Error(".hexagon-partners has no .hexagon-partners__chat");
-            if (!(partnersIframe instanceof HTMLIFrameElement))
-                throw Error(".hexagon-partners has no .hexagon-partners__hexs > iframe");
-            // helpers
-            var openDetails = function (url) {
-                chat.classList.remove("open");
-                var iframe = document.createElement("iframe");
-                iframe.src = url;
-                details.innerHTML = "";
-                details.appendChild(iframe);
-                details.classList.add("open");
-                iframe.onload = function () {
-                    var _a;
-                    var height = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.scrollHeight;
-                    if (height)
-                        details.style.height = "".concat(height, "px");
-                };
-            };
-            var openChat = function (url) {
-                details.classList.remove("open");
-                var iframe = document.createElement("iframe");
-                iframe.src = url;
-                iframe.onload = function () {
-                    var _a;
-                    if (window.innerWidth < parseFloat(cssVariables_1.default["breakpointMobileBig"])) {
-                        (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document.documentElement.classList.add("full-screen");
-                    }
-                };
-                chat.innerHTML = "";
-                chat.appendChild(iframe);
-                chat.classList.add("open");
-            };
-            // add event listeners
-            window.addEventListener("message", function (event) {
-                var data = JSON.parse(event.data);
-                if (typeof data !== "object")
-                    return;
-                // from partners iframe
-                if (data.source === routes_1.default.structurePartners.path()) {
-                    if (data.type === "open-details") {
-                        openDetails(data.payload.partner.partnerDetailsUrl);
-                    }
-                }
-                // from chat iframe
-                if (data.source === routes_1.default.structurePartnerChat.path()) {
-                    if (data.type === "close") {
-                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
-                    }
-                    if (data.type === "back") {
-                        chat === null || chat === void 0 ? void 0 : chat.classList.remove("open");
-                        details === null || details === void 0 ? void 0 : details.classList.add("open");
-                    }
-                }
-                // from details iframe
-                if (data.source === routes_1.default.structurePartnerDetails.path()) {
-                    if (data.type === "open-chat") {
-                        openChat(data.payload.chatUrl);
-                    }
-                    if (data.type === "open-partners") {
-                        chat.classList.remove("open");
-                        details.classList.remove("open");
-                        partnersIframe.src = data.payload.partnersUrl;
-                    }
-                    if (data.type === "close") {
-                        details === null || details === void 0 ? void 0 : details.classList.remove("open");
-                    }
-                }
-            });
+var core_1 = __webpack_require__(4750);
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
+var copyToClipboard_1 = __importDefault(__webpack_require__(3874));
+var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
+var SHOW_TIME_MS = 2000;
+var addCopyText = function () {
+    document.querySelectorAll(".copy-text").forEach(function (copyText) {
+        var _a, _b;
+        var value = (_b = (_a = copyText.querySelector(".copy-text__value")) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim();
+        var tooltip = copyText.querySelector(".copy-text__success-tooltip");
+        if (!value || !(tooltip instanceof HTMLElement))
+            return;
+        var placement = (tooltip.className.match(/left|right|top|bottom/g) || [])[0];
+        var popper = (0, core_1.createPopper)(copyText, tooltip, {
+            placement: placement,
+            strategy: "absolute",
+            modifiers: [
+                {
+                    name: "flip",
+                    options: {
+                        fallbackPlacements: ['auto'],
+                    },
+                },
+                (0, popperModifiers_1.createPlacementHandler)(function (placement, element) {
+                    element.classList.remove("top");
+                    element.classList.remove("left");
+                    element.classList.remove("right");
+                    element.classList.remove("bottom");
+                    element.classList.add(placement);
+                }),
+            ],
         });
-    }
-    catch (e) {
-        console.error(e);
-    }
+        var hidingTimeout;
+        var autoHidingTimeout;
+        var showTooltip = function () {
+            clearTimeout(hidingTimeout);
+            popper.update();
+            tooltip.classList.add("show");
+            tooltip.classList.remove("fade-out-slow");
+        };
+        var hideTooltip = function (options) {
+            if (options === void 0) { options = {}; }
+            clearTimeout(hidingTimeout);
+            if (options.rightNow) {
+                tooltip.classList.remove("show");
+                tooltip.classList.remove("fade-out-slow");
+            }
+            else {
+                tooltip.classList.add("fade-out-slow");
+                hidingTimeout = window.setTimeout(function () {
+                    tooltip.classList.remove("show");
+                    tooltip.classList.remove("fade-out-slow");
+                }, ANIMATION_SLOW_MS);
+            }
+        };
+        var onClickOutside = function (e) {
+            if (e.target instanceof HTMLElement && e.target.closest(".copy-text") === copyText)
+                return;
+            hideTooltip({ rightNow: true });
+            document.documentElement.removeEventListener("click", onClickOutside);
+        };
+        copyText.addEventListener("click", function () {
+            (0, copyToClipboard_1.default)(value).then(function () {
+                clearTimeout(autoHidingTimeout);
+                showTooltip();
+                autoHidingTimeout = window.setTimeout(function () {
+                    hideTooltip();
+                    document.documentElement.removeEventListener("click", onClickOutside);
+                }, SHOW_TIME_MS);
+            });
+            document.documentElement.addEventListener("click", onClickOutside);
+        });
+        document.body.appendChild(tooltip);
+    });
 };
-exports["default"] = addHexagonPartners;
+exports["default"] = addCopyText;
 
 
 /***/ }),
 
-/***/ 1951:
+/***/ 3748:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2877,24 +2736,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 // common
-var addPopper_1 = __importDefault(__webpack_require__(2744));
-var addInput_1 = __importDefault(__webpack_require__(3846));
-var addModal_1 = __importDefault(__webpack_require__(1949));
-var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
-var addSideMenu_1 = __importDefault(__webpack_require__(3722));
-var addHeader_1 = __importDefault(__webpack_require__(8112));
-var addToggleClass_1 = __importDefault(__webpack_require__(2971));
-var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
-var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addMediaViewer_1 = __importDefault(__webpack_require__(840));
+var addPopper_1 = __importDefault(__webpack_require__(7381));
+var addInput_1 = __importDefault(__webpack_require__(3469));
+var addModal_1 = __importDefault(__webpack_require__(7188));
+var addWithTooltip_1 = __importDefault(__webpack_require__(7931));
+var addSideMenu_1 = __importDefault(__webpack_require__(3467));
+var addHeader_1 = __importDefault(__webpack_require__(4087));
+var addToggleClass_1 = __importDefault(__webpack_require__(2998));
+var addVideoPlayer_1 = __importDefault(__webpack_require__(6829));
+var addYoutubePlayer_1 = __importDefault(__webpack_require__(8166));
+var addMediaViewer_1 = __importDefault(__webpack_require__(7854));
 // special
-var addToggleButtonGroup_1 = __importDefault(__webpack_require__(577));
-var addHexagonPartners_1 = __importDefault(__webpack_require__(602));
-var addDragToScroll_1 = __importDefault(__webpack_require__(1912));
-var addTextareaAutosize_1 = __importDefault(__webpack_require__(4742));
+var addCopyText_1 = __importDefault(__webpack_require__(8518));
 window.addEventListener("load", function () {
-    // common
-    var _a;
     // popper
     (0, addPopper_1.default)();
     // input
@@ -2915,168 +2769,14 @@ window.addEventListener("load", function () {
     (0, addMediaViewer_1.default)();
     // youtube
     (0, addYoutubePlayer_1.default)();
-    // special
-    // toggle button group
-    (0, addToggleButtonGroup_1.default)();
-    // structure toggler
-    (_a = document.querySelector(".tab__structure-toggler input")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", function (e) {
-        var tabStructure = document.querySelector(".tab__structure");
-        var value = e.currentTarget instanceof HTMLInputElement ? e.currentTarget.value : "none";
-        if (value === "scheme") {
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("info");
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("scheme");
-        }
-        if (value === "info") {
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.remove("scheme");
-            tabStructure === null || tabStructure === void 0 ? void 0 : tabStructure.classList.add("info");
-        }
-    });
-    // hexagon partners
-    (0, addHexagonPartners_1.default)();
-    // drag to scroll
-    (0, addDragToScroll_1.default)();
-    // textarea autosize
-    (0, addTextareaAutosize_1.default)();
+    // copy text
+    (0, addCopyText_1.default)();
 });
 
 
 /***/ }),
 
-/***/ 1912:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled_1 = __importDefault(__webpack_require__(145));
-var addDragToScroll = function () {
-    var stopCoef = 0.95;
-    if ((0, isTouchEnabled_1.default)())
-        return;
-    document.querySelectorAll("[data-drag-to-scroll]").forEach(function (element) {
-        if (!(element instanceof HTMLElement))
-            return;
-        var isCursorDisabled = element.dataset.cursorDisabled !== undefined;
-        // for grab
-        var startPos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-        };
-        var pos = {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-        };
-        var prevPos = __assign({}, pos);
-        var isGrabbed = false;
-        // for intertia
-        var transform = { x: 0, y: 0 };
-        var onMouseDown = function (e) {
-            startPos = {
-                left: element.scrollLeft,
-                top: element.scrollTop,
-                x: e.clientX,
-                y: e.clientY,
-            };
-            pos = __assign({}, startPos);
-            prevPos = __assign({}, pos);
-            prevPos;
-            isGrabbed = true;
-            transform = {
-                x: 0,
-                y: 0,
-            };
-            if (!isCursorDisabled)
-                element.style.cursor = "grabbing";
-            element.style.userSelect = "none";
-            element
-                .querySelectorAll("img")
-                .forEach(function (img) { return (img.draggable = false); });
-            document.addEventListener("mousemove", onMouseMove);
-            document.addEventListener("mouseup", onMouseUp);
-            requestAnimationFrame(move);
-        };
-        var onMouseMove = function (e) {
-            var dx = e.clientX - startPos.x;
-            var dy = e.clientY - startPos.y;
-            pos.left = startPos.left - dx;
-            pos.top = startPos.top - dy;
-            pos.x = e.clientX;
-            pos.y = e.clientY;
-        };
-        var onMouseUp = function (e) {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-            isGrabbed = false;
-            if (!isCursorDisabled)
-                element.style.cursor = "grab";
-            element.style.removeProperty("user-select");
-            requestAnimationFrame(moveByInertia);
-        };
-        var move = function () {
-            if (!isGrabbed)
-                return;
-            transform = {
-                x: prevPos.left - pos.left,
-                y: prevPos.top - pos.top,
-            };
-            element.scrollTop = pos.top;
-            element.scrollLeft = pos.left;
-            prevPos = __assign({}, pos);
-            requestAnimationFrame(move);
-        };
-        var moveByInertia = function () {
-            if (isGrabbed)
-                return;
-            if (Math.pow(transform.x, 2) + Math.pow(transform.y, 2) <
-                0.3)
-                return;
-            transform.x *= stopCoef;
-            transform.y *= stopCoef;
-            element.scrollLeft -= transform.x;
-            element.scrollTop -= transform.y;
-            requestAnimationFrame(moveByInertia);
-        };
-        var preventClickIfMove = function (e) {
-            var diff = {
-                x: startPos.x - e.clientX,
-                y: startPos.y - e.clientY,
-            };
-            var diffLength = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-            if (diffLength > 4) {
-                e.stopPropagation();
-            }
-        };
-        if (!isCursorDisabled)
-            element.style.cursor = "grab";
-        element.addEventListener("mousedown", onMouseDown);
-        element.addEventListener("click", preventClickIfMove, {
-            capture: true,
-        });
-    });
-};
-exports["default"] = addDragToScroll;
-
-
-/***/ }),
-
-/***/ 8112:
+/***/ 4087:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3099,7 +2799,7 @@ exports["default"] = addHeader;
 
 /***/ }),
 
-/***/ 3846:
+/***/ 3469:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3149,7 +2849,7 @@ exports["default"] = addInput;
 
 /***/ }),
 
-/***/ 840:
+/***/ 7854:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3215,7 +2915,7 @@ exports["default"] = addMediaViewer;
 
 /***/ }),
 
-/***/ 1949:
+/***/ 7188:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3264,7 +2964,7 @@ exports["default"] = addModal;
 
 /***/ }),
 
-/***/ 2744:
+/***/ 7381:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3284,7 +2984,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
@@ -3370,7 +3070,7 @@ exports["default"] = addPopper;
 
 /***/ }),
 
-/***/ 2971:
+/***/ 2998:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3396,7 +3096,7 @@ exports["default"] = addToggleClass;
 
 /***/ }),
 
-/***/ 1421:
+/***/ 6829:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3404,7 +3104,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
 var addVideoPlayer = function () {
     var _a, _b;
     var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
@@ -3452,7 +3152,7 @@ exports["default"] = addVideoPlayer;
 
 /***/ }),
 
-/***/ 7540:
+/***/ 7931:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3461,8 +3161,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
@@ -3537,7 +3237,7 @@ exports["default"] = addWithTooltip;
 
 /***/ }),
 
-/***/ 158:
+/***/ 8166:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3545,7 +3245,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
@@ -3605,112 +3305,7 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 7901:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var routes = {
-    index: {
-        path: function () { return "/"; }
-    },
-    stableFund: {
-        path: function () { return "/stable-fund"; }
-    },
-    moneyBox: {
-        path: function () { return "/money-box"; }
-    },
-    arbitration: {
-        path: function () { return "/arbitration"; }
-    },
-    arbitrationInnerExchange: {
-        path: function () { return "/arbitration-inner-exchange"; }
-    },
-    arbitrationBetweenExchange: {
-        path: function () { return "/arbitration-between-exchange"; }
-    },
-    arbitrationMultiExchange: {
-        path: function () { return "/arbitration-multi-exchange"; }
-    },
-    arbitrationAnalyst: {
-        path: function () { return "/arbitration-analyst"; }
-    },
-    balance: {
-        path: function () { return "/balance"; }
-    },
-    pool: {
-        path: function () { return "/pool"; }
-    },
-    learn: {
-        path: function () { return "/learn"; }
-    },
-    leader: {
-        path: function () { return "/leader"; }
-    },
-    personalPartners: {
-        path: function () { return "/personal-partners"; }
-    },
-    status: {
-        path: function () { return "/status"; }
-    },
-    structure: {
-        path: function () { return "/structure"; }
-    },
-    structurePartners: {
-        path: function () { return "/structure-partners"; }
-    },
-    structurePartnerChat: {
-        path: function () { return "/structure-partner-chat"; }
-    },
-    structurePartnerDetails: {
-        path: function () { return "/structure-partner-details"; }
-    },
-    materials: {
-        path: function () { return "/materials"; }
-    },
-    credit: {
-        path: function () { return "/credit"; }
-    },
-    cashout: {
-        path: function () { return "/cashout"; }
-    },
-    promo: {
-        path: function () { return "/promo"; }
-    },
-    events: {
-        path: function () { return "/events"; }
-    },
-    event: {
-        path: function (name) { return "/events/" + name; }
-    },
-    presentations: {
-        path: function () { return "/presentations"; }
-    },
-    operations: {
-        path: function () { return "/operations"; }
-    },
-    profile: {
-        path: function () { return "/profile"; }
-    },
-    chat: {
-        path: function () { return "/chat"; }
-    },
-    partnerChat: {
-        path: function (id) { return "/partner-chats/" + id; }
-    },
-    info: {
-        path: function () { return "/info"; }
-    },
-    notifications: {
-        path: function () { return "/notifications"; }
-    }
-};
-exports["default"] = routes;
-
-
-/***/ }),
-
-/***/ 9418:
+/***/ 8900:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3737,7 +3332,42 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
-/***/ 1503:
+/***/ 3874:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+// return a promise
+function copyToClipboard(textToCopy) {
+    // navigator clipboard api needs a secure context (https)
+    if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard api method'
+        return navigator.clipboard.writeText(textToCopy);
+    }
+    else {
+        // text area method
+        var textArea_1 = document.createElement("textarea");
+        textArea_1.value = textToCopy;
+        // make the textarea out of viewport
+        textArea_1.style.position = "fixed";
+        textArea_1.style.left = "-999999px";
+        textArea_1.style.top = "-999999px";
+        document.body.appendChild(textArea_1);
+        textArea_1.focus();
+        textArea_1.select();
+        return new Promise(function (res, rej) {
+            // here the magic happens
+            document.execCommand('copy') ? res(undefined) : rej();
+            textArea_1.remove();
+        });
+    }
+}
+exports["default"] = copyToClipboard;
+
+
+/***/ }),
+
+/***/ 2056:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3746,7 +3376,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
-var parsePx_1 = __importDefault(__webpack_require__(6871));
+var parsePx_1 = __importDefault(__webpack_require__(1211));
 var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
 var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
 var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
@@ -3763,23 +3393,7 @@ exports["default"] = {
 
 /***/ }),
 
-/***/ 145:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var isTouchEnabled = function () {
-    return ('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        // @ts-expect-error
-        (navigator.msMaxTouchPoints > 0);
-};
-exports["default"] = isTouchEnabled;
-
-
-/***/ }),
-
-/***/ 6871:
+/***/ 1211:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3787,7 +3401,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var remToPx_1 = __importDefault(__webpack_require__(8638));
+var remToPx_1 = __importDefault(__webpack_require__(5983));
 var parsePx = function (value) {
     if (typeof value === "number")
         return value;
@@ -3810,7 +3424,7 @@ exports["default"] = parsePx;
 
 /***/ }),
 
-/***/ 1607:
+/***/ 3787:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3847,7 +3461,7 @@ exports.createPlacementHandler = createPlacementHandler;
 
 /***/ }),
 
-/***/ 8638:
+/***/ 5983:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3937,7 +3551,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(1951);
+/******/ 	var __webpack_exports__ = __webpack_require__(3748);
 /******/ 	
 /******/ })()
 ;

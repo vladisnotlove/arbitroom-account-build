@@ -2570,7 +2570,7 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 3722:
+/***/ 3467:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2578,7 +2578,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_NORMAL_MS = cssVariables_1.default.animationNormalMs;
 var addSideMenu = function () {
     var hidingTimeoutId = -1;
@@ -2638,7 +2638,86 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
-/***/ 2349:
+/***/ 5239:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addEmojiPicker = function () {
+    try {
+        var EmojiMart_1 = window.EmojiMart;
+        if (EmojiMart_1 === undefined) {
+            throw new Error("EmojiMart is not defined");
+        }
+        document.querySelectorAll(".emoji-picker").forEach(function (trigger) {
+            if (!(trigger instanceof HTMLElement))
+                throw new Error(".emoji-picker is not HTMLElement");
+            var menu = trigger.nextElementSibling;
+            if (!(menu instanceof HTMLElement))
+                throw new Error(".emoji-picker__menu is not HTMLElement");
+            var locale = trigger.getAttribute("data-locale");
+            var inputSelector = trigger.getAttribute("data-input");
+            var input = inputSelector ? document.querySelector(inputSelector) : undefined;
+            if (!(input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement))
+                throw new Error(".emoji-picker has invalid selector in 'data-input'");
+            var picker = new EmojiMart_1.Picker({
+                onEmojiSelect: function (data) {
+                    input.value += data.native;
+                },
+                locale: locale !== null && locale !== void 0 ? locale : undefined,
+                theme: "dark",
+                previewPosition: "none",
+            });
+            // @ts-ignore
+            menu.append(picker);
+        });
+    }
+    catch (e) {
+        console.error(e);
+    }
+};
+exports["default"] = addEmojiPicker;
+
+
+/***/ }),
+
+/***/ 9780:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addTextareaAutosize = function () {
+    var updateHeight = function (element) {
+        var maxHeight = parseFloat(element.dataset.textareaAutosizeMaxWidth || "0");
+        var prevHeight = element.style.height;
+        element.style.height = "auto";
+        if (maxHeight && element.scrollHeight < maxHeight) {
+            $(element).css({
+                height: element.scrollHeight,
+                overflowY: "hidden",
+            });
+        }
+        else {
+            $(element).css({
+                height: prevHeight,
+                overflowY: "auto",
+            });
+        }
+    };
+    $(".textarea-autosize").each(function (i, textareaAutosize) {
+        // add handlers
+        $(textareaAutosize).on("input", function (e) {
+            if (e.currentTarget instanceof HTMLElement)
+                updateHeight(e.currentTarget);
+        });
+    });
+};
+exports["default"] = addTextareaAutosize;
+
+
+/***/ }),
+
+/***/ 3272:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2647,18 +2726,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 // common
-var addPopper_1 = __importDefault(__webpack_require__(2744));
-var addInput_1 = __importDefault(__webpack_require__(3846));
-var addModal_1 = __importDefault(__webpack_require__(1949));
-var addWithTooltip_1 = __importDefault(__webpack_require__(7540));
-var addSideMenu_1 = __importDefault(__webpack_require__(3722));
-var addHeader_1 = __importDefault(__webpack_require__(8112));
-var addToggleClass_1 = __importDefault(__webpack_require__(2971));
-var addVideoPlayer_1 = __importDefault(__webpack_require__(1421));
-var addYoutubePlayer_1 = __importDefault(__webpack_require__(158));
-var addMediaViewer_1 = __importDefault(__webpack_require__(840));
+var addPopper_1 = __importDefault(__webpack_require__(7381));
+var addInput_1 = __importDefault(__webpack_require__(3469));
+var addModal_1 = __importDefault(__webpack_require__(7188));
+var addWithTooltip_1 = __importDefault(__webpack_require__(7931));
+var addSideMenu_1 = __importDefault(__webpack_require__(3467));
+var addHeader_1 = __importDefault(__webpack_require__(4087));
+var addToggleClass_1 = __importDefault(__webpack_require__(2998));
+var addVideoPlayer_1 = __importDefault(__webpack_require__(6829));
+var addYoutubePlayer_1 = __importDefault(__webpack_require__(8166));
+var addMediaViewer_1 = __importDefault(__webpack_require__(7854));
 // special
-var addCollapse_1 = __importDefault(__webpack_require__(9719));
+var addEmojiPicker_1 = __importDefault(__webpack_require__(5239));
+var addTextareaAutosize_1 = __importDefault(__webpack_require__(9780));
 window.addEventListener("load", function () {
     // common
     // popper
@@ -2682,73 +2762,27 @@ window.addEventListener("load", function () {
     // youtube
     (0, addYoutubePlayer_1.default)();
     // special
-    // collapse
-    (0, addCollapse_1.default)();
+    // chat scroll
+    (function () {
+        try {
+            var chat = document.querySelector(".partner-chat__messages");
+            if (chat)
+                chat.scrollTop = chat.scrollHeight;
+        }
+        catch (e) {
+            console.error(e);
+        }
+    })();
+    // emoji picker
+    (0, addEmojiPicker_1.default)();
+    // text area autosize
+    (0, addTextareaAutosize_1.default)();
 });
 
 
 /***/ }),
 
-/***/ 9719:
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addCollapse = function () {
-    try {
-        document.querySelectorAll("[data-collapse]").forEach(function (trigger) {
-            if (!(trigger instanceof HTMLElement))
-                throw new Error("[data-collapse] is not HTMLElement");
-            var str = trigger.dataset.target;
-            var collapses = str ? document.querySelectorAll(str) : [];
-            collapses.forEach(function (collapse) {
-                var content = collapse.querySelector(".collapse__content");
-                if (!(collapse instanceof HTMLElement)) {
-                    throw new Error("\".collapse\" is not HTMLElement");
-                }
-                if (!(content instanceof HTMLElement)) {
-                    throw new Error("Element \".collapse__content\" is not found");
-                }
-                collapse.style.height = "0px";
-                collapse.style.overflow = "hidden";
-                var heightAutoTimeout = -1;
-                var collapseTimeout = -1;
-                trigger.addEventListener("click", function () {
-                    var contentHeight = content.getBoundingClientRect().height;
-                    var animationTime = Math.sqrt(contentHeight) / 28;
-                    collapse.style.transition = "height ".concat(animationTime, "s");
-                    clearTimeout(heightAutoTimeout);
-                    clearTimeout(collapseTimeout);
-                    if (trigger.classList.contains("expanded")) {
-                        collapse.style.height = contentHeight + "px";
-                        collapseTimeout = window.setTimeout(function () {
-                            trigger.classList.remove("expanded");
-                            collapse.classList.remove("expanded");
-                            collapse.style.height = "0";
-                        }, 1);
-                    }
-                    else {
-                        trigger.classList.add("expanded");
-                        collapse.classList.add("expanded");
-                        collapse.style.height = contentHeight + "px";
-                        heightAutoTimeout = window.setTimeout(function () {
-                            collapse.style.height = "auto";
-                        }, animationTime * 1000);
-                    }
-                });
-            });
-        });
-    }
-    catch (e) {
-        console.error(e);
-    }
-};
-exports["default"] = addCollapse;
-
-
-/***/ }),
-
-/***/ 8112:
+/***/ 4087:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2771,7 +2805,7 @@ exports["default"] = addHeader;
 
 /***/ }),
 
-/***/ 3846:
+/***/ 3469:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2821,7 +2855,7 @@ exports["default"] = addInput;
 
 /***/ }),
 
-/***/ 840:
+/***/ 7854:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2887,7 +2921,7 @@ exports["default"] = addMediaViewer;
 
 /***/ }),
 
-/***/ 1949:
+/***/ 7188:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -2936,7 +2970,7 @@ exports["default"] = addModal;
 
 /***/ }),
 
-/***/ 2744:
+/***/ 7381:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -2956,7 +2990,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var POPPER_VIEWPORT_PADDING = cssVariables_1.default.popperViewportPadding;
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addPopper = function () {
@@ -3042,7 +3076,7 @@ exports["default"] = addPopper;
 
 /***/ }),
 
-/***/ 2971:
+/***/ 2998:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3068,7 +3102,7 @@ exports["default"] = addToggleClass;
 
 /***/ }),
 
-/***/ 1421:
+/***/ 6829:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3076,7 +3110,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var addOnAttrChange_1 = __importDefault(__webpack_require__(9418));
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
 var addVideoPlayer = function () {
     var _a, _b;
     var player = window.Playerjs ? new window.Playerjs({ id: "player" }) : undefined;
@@ -3124,7 +3158,7 @@ exports["default"] = addVideoPlayer;
 
 /***/ }),
 
-/***/ 7540:
+/***/ 7931:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3133,8 +3167,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __webpack_require__(4750);
-var popperModifiers_1 = __webpack_require__(1607);
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var popperModifiers_1 = __webpack_require__(3787);
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var VIEWPORT_PADDING = 12;
 var createTooltip = function (text) {
@@ -3209,7 +3243,7 @@ exports["default"] = addWithTooltip;
 
 /***/ }),
 
-/***/ 158:
+/***/ 8166:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3217,7 +3251,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var cssVariables_1 = __importDefault(__webpack_require__(1503));
+var cssVariables_1 = __importDefault(__webpack_require__(2056));
 var ANIMATION_SLOW_MS = cssVariables_1.default.animationSlowMs;
 var addYoutubePlayer = function () {
     var stopVideo = function (iframe) {
@@ -3277,7 +3311,7 @@ exports["default"] = addYoutubePlayer;
 
 /***/ }),
 
-/***/ 9418:
+/***/ 8900:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3304,7 +3338,7 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
-/***/ 1503:
+/***/ 2056:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3313,7 +3347,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var variables_module_scss_1 = __importDefault(__webpack_require__(4908));
-var parsePx_1 = __importDefault(__webpack_require__(6871));
+var parsePx_1 = __importDefault(__webpack_require__(1211));
 var animationFastMs = parseFloat(variables_module_scss_1.default["animation-fast"]) * 1000;
 var animationNormalMs = parseFloat(variables_module_scss_1.default["animation-normal"]) * 1000;
 var animationSlowMs = parseFloat(variables_module_scss_1.default["animation-slow"]) * 1000;
@@ -3330,7 +3364,7 @@ exports["default"] = {
 
 /***/ }),
 
-/***/ 6871:
+/***/ 1211:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -3338,7 +3372,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var remToPx_1 = __importDefault(__webpack_require__(8638));
+var remToPx_1 = __importDefault(__webpack_require__(5983));
 var parsePx = function (value) {
     if (typeof value === "number")
         return value;
@@ -3361,7 +3395,7 @@ exports["default"] = parsePx;
 
 /***/ }),
 
-/***/ 1607:
+/***/ 3787:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3398,7 +3432,7 @@ exports.createPlacementHandler = createPlacementHandler;
 
 /***/ }),
 
-/***/ 8638:
+/***/ 5983:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -3488,7 +3522,7 @@ exports["default"] = remToPx;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(2349);
+/******/ 	var __webpack_exports__ = __webpack_require__(3272);
 /******/ 	
 /******/ })()
 ;
