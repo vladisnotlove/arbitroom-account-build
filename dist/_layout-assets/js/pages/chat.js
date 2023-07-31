@@ -2922,7 +2922,7 @@ var addModal = function () {
     };
     $('.modal').each(function (i, modal) {
         $(modal).addClass("ready");
-        $(modal).find(".block__title-action > .modal__close-btn").click(function () { return closeModal(modal); });
+        $(modal).find("*:not(.block__actions) > .modal__close-btn").click(function () { return closeModal(modal); });
     });
     $('.modal-trigger').each(function (i, modalTrigger) {
         var targetStr = $(modalTrigger).attr("data-modal-trigger-target");

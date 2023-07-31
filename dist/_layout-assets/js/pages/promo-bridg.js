@@ -88,7 +88,7 @@ var updateTimer = function (_a) {
     var format = getFormat(timer);
     if (!finishDate) {
         return {
-            isFinished: true
+            isFinished: false
         };
     }
     var finish = finishDate.getTime();
@@ -126,11 +126,6 @@ var updateTimer = function (_a) {
 var addTimer = function () {
     var timers = document.querySelectorAll(".timer");
     timers.forEach(function (timer) {
-        var finishDate = getFinishDate(timer);
-        if (!finishDate) {
-            console.error("timer has no finish date", timer);
-            return;
-        }
         var daysContainer = timer.querySelector("[data-timer-days]");
         var hoursContainer = timer.querySelector("[data-timer-hours]");
         var minutesContainer = timer.querySelector("[data-timer-minutes]");
@@ -239,6 +234,114 @@ exports["default"] = addToggleButtonGroup;
 
 /***/ }),
 
+/***/ 3932:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addOnResize_1 = __importDefault(__webpack_require__(9985));
+var almostEquals = function (a, b) {
+    return Math.abs(a - b) < 2;
+};
+var addBridgPath = function () {
+    var root = document.querySelector(".bridg-path");
+    var body = document.querySelector(".bridg-path__body");
+    var prevBtn = root === null || root === void 0 ? void 0 : root.querySelector(".bridg-path__slider-prev");
+    var nextBtn = root === null || root === void 0 ? void 0 : root.querySelector(".bridg-path__slider-next");
+    if (!root) {
+        console.error("No '.bridg-path__body'");
+        return;
+    }
+    if (!body) {
+        console.error("No '.bridg-path__body'");
+        return;
+    }
+    if (!prevBtn) {
+        console.error("No '.bridg-path__slider-prev'");
+        return;
+    }
+    if (!nextBtn) {
+        console.error("No '.bridg-path__slider-next'");
+        return;
+    }
+    var bodyWidth = body.getBoundingClientRect().width;
+    var updateBodyWidth = function () {
+        bodyWidth = body.getBoundingClientRect().width;
+    };
+    var canScroll = {
+        left: false,
+        right: false,
+    };
+    var updateCanScroll = function () {
+        var result = {
+            left: true,
+            right: true,
+        };
+        if (body.scrollLeft === 0) {
+            result.left = false;
+        }
+        if (almostEquals(body.scrollLeft, body.scrollWidth - bodyWidth)) {
+            result.right = false;
+        }
+        if (body.scrollWidth < bodyWidth) {
+            result.left = false;
+            result.right = false;
+        }
+        canScroll = result;
+    };
+    var scrollStep = 100;
+    var updateScrollStep = function () {
+        var count = (body.scrollWidth - bodyWidth) / body.children[0].clientWidth;
+        scrollStep = (body.scrollWidth - bodyWidth) / Math.max(Math.round(count), 1) + 1;
+    };
+    var updateBtnStyles = function () {
+        if (canScroll.left)
+            prevBtn.classList.remove("resting");
+        else
+            prevBtn.classList.add("resting");
+        if (canScroll.right)
+            nextBtn.classList.remove("resting");
+        else
+            nextBtn.classList.add("resting");
+    };
+    console.log(scrollStep);
+    // event listeners
+    (0, addOnResize_1.default)(root, function () {
+        updateBodyWidth();
+        updateScrollStep();
+        updateCanScroll();
+        updateBtnStyles();
+    });
+    body.addEventListener("scroll", function () {
+        updateCanScroll();
+        updateBtnStyles();
+    });
+    nextBtn.addEventListener("click", function () {
+        body.scrollBy({
+            left: scrollStep,
+            behavior: "smooth"
+        });
+    });
+    prevBtn.addEventListener("click", function () {
+        body.scrollBy({
+            left: -scrollStep,
+            behavior: "smooth"
+        });
+    });
+    updateBodyWidth();
+    updateScrollStep();
+    updateCanScroll();
+    updateBtnStyles();
+};
+exports["default"] = addBridgPath;
+
+
+/***/ }),
+
 /***/ 8579:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -250,7 +353,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var addTimer_1 = __importDefault(__webpack_require__(7417));
 var addToggleButtonGroup_1 = __importDefault(__webpack_require__(5811));
+var addBridgPath_1 = __importDefault(__webpack_require__(3932));
 var addConnector_1 = __importDefault(__webpack_require__(5560));
+var addRemoveClassByDate_1 = __importDefault(__webpack_require__(8385));
 window.addEventListener("load", function () {
     // timer 
     (0, addTimer_1.default)();
@@ -258,6 +363,10 @@ window.addEventListener("load", function () {
     (0, addConnector_1.default)();
     // toggle btn
     (0, addToggleButtonGroup_1.default)();
+    // toggle class by date
+    (0, addRemoveClassByDate_1.default)();
+    // bridg path
+    (0, addBridgPath_1.default)();
 });
 
 
@@ -377,6 +486,54 @@ exports["default"] = addConnector;
 
 /***/ }),
 
+/***/ 8385:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
+var getTarget = function (elem) {
+    var str = elem.dataset.target;
+    if (!str)
+        return undefined;
+    if (str === "self")
+        return [elem];
+    return Array.from(document.querySelectorAll(str));
+};
+var addRemoveClassByDate = function () {
+    document.querySelectorAll("[data-remove-class-by-date]").forEach(function (elem) {
+        if (!(elem instanceof HTMLElement))
+            return;
+        var timeoutId = -1;
+        var reset = function () {
+            var className = elem.dataset.removeClassByDate;
+            var targets = getTarget(elem);
+            var date = elem.dataset.date ? new Date(elem.dataset.date) : undefined;
+            if (className && targets && date) {
+                window.clearTimeout(timeoutId);
+                targets.forEach(function (target) {
+                    target.classList.add(className);
+                });
+                timeoutId = window.setTimeout(function () {
+                    targets.forEach(function (target) {
+                        target.classList.remove(className);
+                    });
+                }, date.getTime() - Date.now());
+            }
+        };
+        reset();
+        (0, addOnAttrChange_1.default)(elem, "data-date", reset);
+    });
+};
+exports["default"] = addRemoveClassByDate;
+
+
+/***/ }),
+
 /***/ 9289:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -467,6 +624,34 @@ var Vector = /** @class */ (function () {
     return Vector;
 }());
 exports["default"] = Vector;
+
+
+/***/ }),
+
+/***/ 8900:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var addOnAttrChange = function (element, attrName, callback) {
+    var prevAttr = element.getAttribute(attrName);
+    var observer = new MutationObserver(function (mutationList) {
+        var attr = element.getAttribute(attrName);
+        if (attr !== prevAttr) {
+            callback(attr);
+        }
+        prevAttr = attr;
+    });
+    observer.observe(element, {
+        attributes: true,
+        attributeFilter: [attrName],
+    });
+    return function () {
+        observer.disconnect();
+    };
+};
+exports["default"] = addOnAttrChange;
 
 
 /***/ }),

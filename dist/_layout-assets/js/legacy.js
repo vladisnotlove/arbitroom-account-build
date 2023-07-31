@@ -4706,7 +4706,7 @@ var updateTimer = function (_a) {
     var format = getFormat(timer);
     if (!finishDate) {
         return {
-            isFinished: true
+            isFinished: false
         };
     }
     var finish = finishDate.getTime();
@@ -4744,11 +4744,6 @@ var updateTimer = function (_a) {
 var addTimer = function () {
     var timers = document.querySelectorAll(".timer");
     timers.forEach(function (timer) {
-        var finishDate = getFinishDate(timer);
-        if (!finishDate) {
-            console.error("timer has no finish date", timer);
-            return;
-        }
         var daysContainer = timer.querySelector("[data-timer-days]");
         var hoursContainer = timer.querySelector("[data-timer-hours]");
         var minutesContainer = timer.querySelector("[data-timer-minutes]");
@@ -5681,7 +5676,7 @@ var addModal = function () {
     };
     $('.modal').each(function (i, modal) {
         $(modal).addClass("ready");
-        $(modal).find(".block__title-action > .modal__close-btn").click(function () { return closeModal(modal); });
+        $(modal).find("*:not(.block__actions) > .modal__close-btn").click(function () { return closeModal(modal); });
     });
     $('.modal-trigger').each(function (i, modalTrigger) {
         var targetStr = $(modalTrigger).attr("data-modal-trigger-target");
