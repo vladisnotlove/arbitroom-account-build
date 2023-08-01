@@ -2011,14 +2011,14 @@ html.modal-open {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  counter-reset: instruction;
+  counter-reset: step;
 }
 
 .step {
   display: flex;
   align-items: flex-start;
   gap: 1.5rem;
-  counter-increment: section;
+  counter-increment: step;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -2026,7 +2026,7 @@ html.modal-open {
 }
 .step::before {
   display: inline-block;
-  content: counter(section);
+  content: counter(step);
   box-sizing: content-box;
   padding: 0.25rem;
   border-radius: 0.5rem;
