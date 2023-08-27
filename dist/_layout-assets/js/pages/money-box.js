@@ -2638,6 +2638,231 @@ exports["default"] = addSideMenu;
 
 /***/ }),
 
+/***/ 1021:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var stringToElement_1 = __importDefault(__webpack_require__(1460));
+var openAccumFormState_1 = __importDefault(__webpack_require__(855));
+var clamp_1 = __importDefault(__webpack_require__(5821));
+// MAIN
+var addOpenAccumForm = function () {
+    var form = document.querySelector(".open-accum-form");
+    var sumProgress = form === null || form === void 0 ? void 0 : form.querySelectorAll(".progress-bar")[0];
+    var daysProgress = form === null || form === void 0 ? void 0 : form.querySelectorAll(".progress-bar")[1];
+    var statusSelect = form === null || form === void 0 ? void 0 : form.querySelector(".select");
+    var statusSelectMenu = form === null || form === void 0 ? void 0 : form.querySelector(".select__menu");
+    var statusSelectInput = statusSelect === null || statusSelect === void 0 ? void 0 : statusSelect.querySelector("input");
+    var sumInput = form === null || form === void 0 ? void 0 : form.querySelector(".open-accum-form__row2  input");
+    var goalSumText = form === null || form === void 0 ? void 0 : form.querySelectorAll(".text-block__value")[0];
+    var minSumText = form === null || form === void 0 ? void 0 : form.querySelectorAll(".text-block__value")[1];
+    var lastDaysText = form === null || form === void 0 ? void 0 : form.querySelectorAll(".text-block__value")[2];
+    if (!(form instanceof HTMLElement)) {
+        console.error("There is no sum progress in .open-accum-form");
+        return;
+    }
+    if (!(sumProgress instanceof HTMLElement)) {
+        console.error("There is no sum progress in .open-accum-form");
+        return;
+    }
+    if (!(daysProgress instanceof HTMLElement)) {
+        console.error("There is no days progress in .open-accum-form");
+        return;
+    }
+    if (!(statusSelect instanceof HTMLElement)) {
+        console.error("There is no status select in .open-accum-form");
+        return;
+    }
+    if (!(statusSelectMenu instanceof HTMLElement)) {
+        console.error("There is no menu in status select in .open-accum-form");
+        return;
+    }
+    if (!(statusSelectInput instanceof HTMLInputElement)) {
+        console.error("There is no input in status select in .open-accum-form");
+        return;
+    }
+    if (!(sumInput instanceof HTMLInputElement)) {
+        console.error("There is no sum input in .open-accum-form");
+        return;
+    }
+    if (!(goalSumText instanceof HTMLElement)) {
+        console.error("There is no goal sum text in .open-accum-form");
+        return;
+    }
+    if (!(minSumText instanceof HTMLElement)) {
+        console.error("There is no min sum text in .open-accum-form");
+        return;
+    }
+    if (!(lastDaysText instanceof HTMLElement)) {
+        console.error("There is no last days text in .open-accum-form");
+        return;
+    }
+    var state = (0, openAccumFormState_1.default)(form);
+    if (!state)
+        return;
+    var url = form.getAttribute("data-get-conditions");
+    if (url) {
+        fetch(url)
+            .then(function (resp) { return resp.json(); })
+            .then(function (data) {
+            var conds = data.data.filter(function (cond) { return cond.status; });
+            state.conds.set(conds);
+            var cond = conds[0];
+            if (cond) {
+                statusSelectInput.value = cond.name;
+                statusSelectInput.dispatchEvent(new Event("change"));
+            }
+        });
+    }
+    state.conds.subscribe(function (conds) {
+        statusSelectMenu.innerHTML = "";
+        conds.forEach(function (cond) {
+            var item = (0, stringToElement_1.default)("<div class=\"select__menu-item\" data-value=".concat(cond.name, ">").concat(cond.name, "</div>"));
+            if (item) {
+                statusSelectMenu.append(item);
+            }
+        });
+    });
+    statusSelectInput.addEventListener("change", function () {
+        var conds = state.conds.get();
+        var cond = conds.find(function (cond) { return cond.name === statusSelectInput.value; });
+        state.cond.set(cond !== null && cond !== void 0 ? cond : null);
+    });
+    state.cond.subscribe(function (cond) {
+        if (cond) {
+            // update sum, days in state
+            var percent = 0.5;
+            var sum = Math.round((cond.max - cond.min) * percent + cond.min);
+            var days = Math.round((cond.days1 - cond.days2) * percent + cond.days2);
+            state.sum.set(sum);
+            state.days.set(days);
+            // update progress
+            var sumTicks = [
+                {
+                    percent: 0,
+                    value: cond.min,
+                    start: true,
+                },
+                {
+                    percent: 0.5,
+                    value: cond.max,
+                    end: true,
+                },
+                {
+                    percent: 1,
+                    value: cond.goal,
+                },
+            ];
+            sumProgress.setAttribute("data-ticks", JSON.stringify(sumTicks));
+            // update progress
+            var daysTicks = [
+                {
+                    percent: 0,
+                    value: cond.days1,
+                    start: true,
+                },
+                {
+                    percent: 0.69,
+                    value: cond.days2,
+                    end: true,
+                },
+                {
+                    percent: 1,
+                    value: 0,
+                },
+            ];
+            daysProgress.setAttribute("data-ticks", JSON.stringify(daysTicks));
+            // update texts
+            goalSumText.textContent = "" + cond.goal;
+            minSumText.textContent = "" + cond.min;
+        }
+    });
+    state.days.subscribe(function (days) {
+        // udpate text
+        lastDaysText.textContent = "" + days;
+        // update sum state
+        var cond = state.cond.get();
+        if (cond) {
+            var percent = Math.abs(days - cond.days1) / Math.abs(cond.days2 - cond.days1);
+            var sum = Math.round(cond.min + (cond.max - cond.min) * percent);
+            state.sum.set(sum);
+        }
+    });
+    state.sum.subscribe(function (sum) {
+        // update text input
+        if (sumInput.value !== "" + sum)
+            sumInput.value = "" + sum;
+        // update days state
+        var cond = state.cond.get();
+        if (cond) {
+            var percent = Math.abs(sum - cond.min) / Math.abs(cond.max - cond.min);
+            var days = Math.round(cond.days1 + (cond.days2 - cond.days1) * percent);
+            state.days.set(days);
+        }
+    });
+    sumInput.addEventListener("change", function () {
+        var cond = state.cond.get();
+        var sum = parseFloat(sumInput.value);
+        if (cond) {
+            state.sum.set((0, clamp_1.default)(sum, cond.min, cond.max));
+        }
+        else {
+            state.sum.set(sum);
+        }
+    });
+};
+exports["default"] = addOpenAccumForm;
+
+
+/***/ }),
+
+/***/ 855:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var dataState_1 = __webpack_require__(6926);
+var state_1 = __importDefault(__webpack_require__(8650));
+var createOpenAccumFormState = function (form) {
+    var sumProgress = form === null || form === void 0 ? void 0 : form.querySelectorAll(".progress-bar")[0];
+    var daysProgress = form === null || form === void 0 ? void 0 : form.querySelectorAll(".progress-bar")[1];
+    if (!(sumProgress instanceof HTMLElement)) {
+        console.error("There is no sum progress in .open-accum-form");
+        return;
+    }
+    if (!(daysProgress instanceof HTMLElement)) {
+        console.error("There is no days progress in .open-accum-form");
+        return;
+    }
+    var sum = (0, dataState_1.createNumberDataState)({
+        element: sumProgress,
+        dataName: "data-value",
+    });
+    var days = (0, dataState_1.createNumberDataState)({
+        element: daysProgress,
+        dataName: "data-value",
+    });
+    var cond = (0, state_1.default)(null);
+    var conds = (0, state_1.default)([]);
+    return {
+        sum: sum,
+        days: days,
+        cond: cond,
+        conds: conds,
+    };
+};
+exports["default"] = createOpenAccumFormState;
+
+
+/***/ }),
+
 /***/ 2496:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -2893,109 +3118,135 @@ exports["default"] = addMultiSelect;
 /***/ }),
 
 /***/ 5475:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var helpers_1 = __webpack_require__(9277);
-var getCurrentPercent = function (slider) {
-    if (!slider.parentElement)
-        return 0;
-    var sliderStyles = getComputedStyle(slider);
-    var parentStyles = getComputedStyle(slider.parentElement);
-    return parseFloat(sliderStyles.left) / parseFloat(parentStyles.width) * 100;
-};
-var updateTicks = function (progressBar, min, max) {
-    var labels = progressBar.querySelectorAll(".progress-bar__label.real-position");
-    labels.forEach(function (label, index) {
-        if (!(label instanceof HTMLElement))
-            return;
-        var valueStr = label.getAttribute("data-value");
-        if (valueStr === null)
-            return;
-        var value = parseFloat(valueStr);
-        if (isNaN(value)) {
-            console.error("data-value is not a number in element ", label);
-            return;
-        }
-        ;
-        var percent = (0, helpers_1.clamp)((0, helpers_1.valueToPercent)(value, min, max), 0, 100);
-        label.style.position = "absolute";
-        label.style.bottom = "0px";
-        label.style.left = percent + "%";
-        label.style.transform = "translateX(-50%)";
-    });
-};
-var updateLineValue = function (_a, min, max) {
-    var slider = _a.slider, lineValue = _a.lineValue, input = _a.input;
-    var value = parseFloat(input.value);
-    var valuePercent = (0, helpers_1.clamp)((0, helpers_1.valueToPercent)(value, min, max), 0, 100);
-    slider.style.left = "".concat(valuePercent, "%");
-    lineValue.style.width = "".concat(valuePercent, "%");
-};
+var clamp_1 = __importDefault(__webpack_require__(5821));
+var progressBarState_1 = __importDefault(__webpack_require__(7231));
 var addProgressBar = function () {
     document.querySelectorAll(".progress-bar.editable").forEach(function (progressBar) {
-        var min = parseFloat(progressBar.getAttribute("data-min") || "0");
-        var max = parseFloat(progressBar.getAttribute("data-max") || "100");
+        // elements
+        var labels = progressBar.querySelector(".progress-bar__labels");
         var slider = progressBar.querySelector(".progress-bar__slider");
-        var lineValue = progressBar.querySelector(".progress-bar__value");
+        var line = progressBar.querySelector(".progress-bar__value");
         var input = progressBar.querySelector("input.progress-bar__input");
         if (!(progressBar instanceof HTMLElement)) {
             console.error("Progress bar is not HTMLElement");
             return;
         }
-        ;
+        if (!(labels instanceof HTMLElement)) {
+            console.error("Progress bar has no '.progress-bar__labels'");
+            return;
+        }
         if (!(slider instanceof HTMLElement)) {
             console.error("Progress bar has no '.progress-bar__slider'");
             return;
         }
-        ;
-        if (!(lineValue instanceof HTMLElement)) {
+        if (!(line instanceof HTMLElement)) {
             console.error("Progress bar has no '.progress-bar__value'");
             return;
         }
-        ;
         if (!(input instanceof HTMLInputElement)) {
             console.error("Progress bar has no 'input.progress-bar__input'");
             return;
         }
-        ;
-        updateLineValue({ slider: slider, lineValue: lineValue, input: input }, min, max);
-        updateTicks(progressBar, min, max);
-        var run = false;
-        var percent = getCurrentPercent(slider);
-        var update = function () {
-            if (!run)
+        // state
+        var state = (0, progressBarState_1.default)(progressBar);
+        // event handlers
+        state.ticks.subscribe(function (ticks) {
+            if (!labels)
                 return;
-            slider.style.left = "".concat(percent, "%");
-            lineValue.style.width = "".concat(percent, "%");
-            var value = Math.round(percent * (max - min) / 100 + min);
-            input.setAttribute("value", "" + value);
+            labels.innerHTML = "";
+            ticks.map(function (tick) {
+                var element = document.createElement("div");
+                element.classList.add("progress-bar__label");
+                element.textContent = tick.value + " " + state.unit.get();
+                // only inner ticks
+                if (tick.percent !== 0 && tick.percent !== 1) {
+                    element.style.position = "absolute";
+                    element.style.bottom = "0";
+                    element.style.left = "".concat(tick.percent * 100, "%");
+                    element.style.transform = "translateX(-50%)";
+                }
+                labels.append(element);
+            });
+        }, {
+            callOnSubscribe: true,
+        });
+        state.value.subscribe(function (value) {
+            var ticks = state.rangedTicks.get();
+            var order = state.ticksOrder.get();
+            var percent = ticks[0].percent;
+            var notFound = true;
+            for (var i = 1; i < ticks.length && notFound; i++) {
+                var cur = ticks[i];
+                var prev = ticks[i - 1];
+                if ((order === "normal" && value >= prev.value && value <= cur.value) ||
+                    (order === "reverse" && value <= prev.value && value >= cur.value)) {
+                    var percentInside = (value - prev.value) / (cur.value - prev.value);
+                    percent =
+                        prev.percent + (cur.percent - prev.percent) * percentInside;
+                    notFound = false;
+                }
+            }
+            if (notFound)
+                percent = ticks[ticks.length - 1].percent;
+            slider.style.left = "".concat(percent * 100, "%");
             slider.setAttribute("data-tooltip-content", "" + value);
-            requestAnimationFrame(update);
-        };
+            line.style.width = "".concat(percent * 100, "%");
+            input.setAttribute("value", "" + value);
+            input.dispatchEvent(new Event("change"));
+        }, {
+            callOnSubscribe: true,
+        });
+        state.changing.subscribe(function (changing) {
+            if (changing) {
+                document.documentElement.style.userSelect = "none";
+                progressBar.classList.add("changing");
+                slider.classList.add("show");
+            }
+            else {
+                document.documentElement.style.userSelect = "";
+                progressBar.classList.remove("changing");
+                slider.classList.remove("show");
+            }
+        });
         var onPointerDown = function (event) {
             document.documentElement.addEventListener("pointermove", onPointerMove);
             document.documentElement.addEventListener("pointerup", onPointerUp);
-            document.documentElement.style.userSelect = "none";
-            progressBar.classList.add("changing");
-            slider.classList.add("show");
-            run = true;
-            requestAnimationFrame(update);
+            state.changing.set(true);
         };
         var onPointerMove = function (event) {
+            // calc percent
             var rect = progressBar.getBoundingClientRect();
             var progressBarX = rect.x;
             var progressBarWidth = rect.width;
-            percent = (0, helpers_1.clamp)((event.clientX - progressBarX) / progressBarWidth * 100, 0, 100);
+            var percent = (0, clamp_1.default)((event.clientX - progressBarX) / progressBarWidth, 0, 1);
+            // calc value
+            var ticks = state.rangedTicks.get();
+            var order = state.ticksOrder.get();
+            var value = ticks[0].value;
+            var notFound = true;
+            for (var i = 1; i < ticks.length && notFound; i++) {
+                var cur = ticks[i];
+                var prev = ticks[i - 1];
+                if (percent >= prev.percent && percent <= cur.percent) {
+                    var percentInside = (percent - prev.percent) / (cur.percent - prev.percent);
+                    value = Math.round((cur.value - prev.value) * percentInside + prev.value);
+                    notFound = false;
+                }
+            }
+            if (notFound)
+                value = ticks[ticks.length - 1].value;
+            state.value.set(value);
         };
-        var onPointerUp = function (event) {
+        var onPointerUp = function () {
             document.documentElement.removeEventListener("pointermove", onPointerMove);
-            document.documentElement.removeEventListener("pointerup", onPointerUp);
-            document.documentElement.style.userSelect = "";
-            progressBar.classList.remove("changing");
-            slider.classList.remove("show");
-            run = false;
+            state.changing.set(false);
         };
         slider.addEventListener("pointerdown", onPointerDown);
     });
@@ -3005,24 +3256,140 @@ exports["default"] = addProgressBar;
 
 /***/ }),
 
-/***/ 9277:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 7231:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.clamp = exports.valueToPercent = void 0;
-var valueToPercent = function (value, min, max) {
-    return ((value - min) / (max - min)) * 100;
+var dataState_1 = __importStar(__webpack_require__(6926));
+var state_1 = __importDefault(__webpack_require__(8650));
+var strToTicks = function (str) {
+    var ticks = JSON.parse(str);
+    if (!Array.isArray(ticks))
+        throw new Error("ticks has no invalid shape in .progress-bar");
+    for (var i = 0; i < ticks.length; i++) {
+        var step = ticks[i];
+        if (typeof step !== "object" || step === null || Array.isArray(step)) {
+            throw new Error("ticks has no invalid shape in .progress-bar");
+        }
+        if (typeof step.percent !== "number")
+            throw new Error("ticks has no invalid shape in .progress-bar");
+        if (typeof step.value !== "number")
+            throw new Error("ticks has no invalid shape in .progress-bar");
+        if (step.start && typeof step.start !== "boolean")
+            throw new Error("ticks has no invalid shape in .progress-bar");
+        if (step.end && typeof step.end !== "boolean")
+            throw new Error("ticks has no invalid shape in .progress-bar");
+    }
+    return ticks;
 };
-exports.valueToPercent = valueToPercent;
-var clamp = function (value, min, max) {
-    if (value > max)
-        return max;
-    if (value < min)
-        return min;
-    return value;
+var checkTicks = function (ticks) {
+    if (ticks.length < 2)
+        throw new Error("There must be 2 ticks at lease in .progress-bar");
+    var startIndex = ticks.findIndex(function (tick) { return tick.start; });
+    var endIndex = ticks.findIndex(function (tick) { return tick.end; });
+    if (startIndex === -1 || endIndex === -1) {
+        throw new Error("There must be one start tick and one end tick");
+    }
+    if (startIndex > endIndex) {
+        throw new Error("start tick must be before end tick");
+    }
+    var order = ticks[0].value < ticks[1].value ? "normal" : "reverse";
+    for (var i = 1; i < ticks.length; i++) {
+        var cur = ticks[i];
+        var prev = ticks[i - 1];
+        // check persent order
+        if (cur.percent < prev.percent)
+            throw new Error("ticks are not sorted (0,0.5...) by percent in .progress-bar");
+        // check value order
+        if ((order === "normal" && prev.value > cur.value) ||
+            (order === "reverse" && prev.value < cur.value))
+            throw new Error("ticks are not sorted by value (1,2,3 or 3,2,1) in .progress-bar");
+    }
 };
-exports.clamp = clamp;
+var getRangedTicks = function (ticks) {
+    var start = ticks.findIndex(function (tick) { return tick.start; });
+    var end = ticks.findIndex(function (tick) { return tick.end; });
+    return ticks.slice(start, end + 1);
+};
+// MAIN
+var createProgressBarState = function (progressBar) {
+    var _a, _b;
+    var ticks = (0, dataState_1.default)({
+        element: progressBar,
+        dataName: "data-ticks",
+        parse: function (str) {
+            if (!str)
+                return [];
+            try {
+                // parse
+                var ticks_1 = strToTicks(str);
+                // check
+                checkTicks(ticks_1);
+                return ticks_1;
+            }
+            catch (error) {
+                console.error(error);
+                return [];
+            }
+        },
+        stringify: function (value) {
+            return JSON.stringify(value);
+        },
+    });
+    var rangedTicks = (0, state_1.default)(getRangedTicks(ticks.get()));
+    ticks.subscribe(function (ticks) {
+        rangedTicks.set(getRangedTicks(ticks));
+    });
+    var ticksOrder = (0, state_1.default)(((_a = ticks.get()[0]) === null || _a === void 0 ? void 0 : _a.value) < ((_b = ticks.get()[1]) === null || _b === void 0 ? void 0 : _b.value) ? "normal" : "reverse");
+    ticks.subscribe(function (ticks) {
+        ticksOrder.set(ticks[0].value < ticks[1].value ? "normal" : "reverse");
+    });
+    var unit = (0, dataState_1.createStringDataState)({
+        element: progressBar,
+        dataName: "data-unit",
+    });
+    var value = (0, dataState_1.createNumberDataState)({
+        element: progressBar,
+        dataName: "data-value",
+    });
+    var changing = (0, state_1.default)(false);
+    return {
+        ticks: ticks,
+        rangedTicks: rangedTicks,
+        ticksOrder: ticksOrder,
+        value: value,
+        unit: unit,
+        changing: changing,
+    };
+};
+exports["default"] = createProgressBarState;
 
 
 /***/ }),
@@ -3041,7 +3408,6 @@ var addSelect = function () {
         var trigger = select.querySelector(".select__trigger");
         var triggerValue = select.querySelector(".select__trigger-value");
         var menu = select.querySelector(".select__menu");
-        var menuItems = select.querySelectorAll(".select__menu-item");
         if (!input) {
             console.error("'.select' has no input", input);
             return;
@@ -3081,7 +3447,7 @@ var addSelect = function () {
         var updateSelected = function () {
             var displayValue = "";
             var value = input.value;
-            menuItems.forEach(function (menuItem) {
+            select.querySelectorAll(".select__menu-item").forEach(function (menuItem) {
                 if (menuItem.getAttribute("data-value") === value) {
                     menuItem.classList.add("selected");
                     displayValue = menuItem.textContent || "";
@@ -3388,6 +3754,7 @@ var addInputUrlSync_1 = __importDefault(__webpack_require__(2496));
 // special
 var addProgressBar_1 = __importDefault(__webpack_require__(5475));
 var addAccumGoal_1 = __importDefault(__webpack_require__(1857));
+var addOpenAccumForm_1 = __importDefault(__webpack_require__(1021));
 window.addEventListener("load", function () {
     // popper
     (0, addPopper_1.default)();
@@ -3429,6 +3796,8 @@ window.addEventListener("load", function () {
     (0, addProgressBar_1.default)();
     // accum goal
     (0, addAccumGoal_1.default)();
+    // open accum form
+    (0, addOpenAccumForm_1.default)();
 });
 
 
@@ -4135,6 +4504,22 @@ exports["default"] = addOnAttrChange;
 
 /***/ }),
 
+/***/ 5821:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports["default"] = (function (value, min, max) {
+    if (value > max)
+        return max;
+    if (value < min)
+        return min;
+    return value;
+});
+
+
+/***/ }),
+
 /***/ 2056:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -4297,6 +4682,108 @@ var remToPx = function (rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
 exports["default"] = remToPx;
+
+
+/***/ }),
+
+/***/ 6926:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createNumberDataState = exports.createStringDataState = void 0;
+var addOnAttrChange_1 = __importDefault(__webpack_require__(8900));
+var state_1 = __importDefault(__webpack_require__(8650));
+"";
+// example: createDataState(element, "data-value")
+var createDataState = function (_a) {
+    var element = _a.element, dataName = _a.dataName, stringify = _a.stringify, parse = _a.parse;
+    var state = (0, state_1.default)(parse(element.getAttribute(dataName)));
+    var set = function (value) {
+        element.setAttribute(dataName, stringify(value));
+    };
+    (0, addOnAttrChange_1.default)(element, dataName, function (value) {
+        state.set(parse(value));
+    });
+    return __assign(__assign({}, state), { set: set });
+};
+var createStringDataState = function (params) {
+    return createDataState(__assign(__assign({}, params), { stringify: function (value) { return value; }, parse: function (str) { return str || ""; } }));
+};
+exports.createStringDataState = createStringDataState;
+var createNumberDataState = function (params) {
+    return createDataState(__assign(__assign({}, params), { stringify: function (value) { return String(value); }, parse: function (str) { return parseFloat(str || "0"); } }));
+};
+exports.createNumberDataState = createNumberDataState;
+exports["default"] = createDataState;
+
+
+/***/ }),
+
+/***/ 8650:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var createState = function (defaultValue) {
+    var currentValue = defaultValue;
+    var subscribers = [];
+    var set = function (value) {
+        var oldValue = currentValue;
+        currentValue = value;
+        if (value !== oldValue) {
+            subscribers.forEach(function (subscriber) { return subscriber(value, oldValue); });
+        }
+    };
+    var get = function () {
+        return currentValue;
+    };
+    var subscribe = function (callback, options) {
+        if (options === void 0) { options = {}; }
+        subscribers.push(callback);
+        if (options.callOnSubscribe)
+            callback(currentValue, currentValue);
+    };
+    var unsubscribe = function (callback) {
+        subscribers = subscribers.filter(function (subscriber) { return subscriber !== callback; });
+    };
+    return {
+        set: set,
+        get: get,
+        subscribe: subscribe,
+        unsubscribe: unsubscribe,
+    };
+};
+exports["default"] = createState;
+
+
+/***/ }),
+
+/***/ 1460:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var stringToElement = function (str) {
+    var temp = document.createElement("template");
+    temp.innerHTML = str.trim();
+    return temp.content.firstChild;
+};
+exports["default"] = stringToElement;
 
 
 /***/ })

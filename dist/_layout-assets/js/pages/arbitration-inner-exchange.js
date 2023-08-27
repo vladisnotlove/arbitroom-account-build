@@ -2281,7 +2281,6 @@ var addSelect = function () {
         var trigger = select.querySelector(".select__trigger");
         var triggerValue = select.querySelector(".select__trigger-value");
         var menu = select.querySelector(".select__menu");
-        var menuItems = select.querySelectorAll(".select__menu-item");
         if (!input) {
             console.error("'.select' has no input", input);
             return;
@@ -2321,7 +2320,7 @@ var addSelect = function () {
         var updateSelected = function () {
             var displayValue = "";
             var value = input.value;
-            menuItems.forEach(function (menuItem) {
+            select.querySelectorAll(".select__menu-item").forEach(function (menuItem) {
                 if (menuItem.getAttribute("data-value") === value) {
                     menuItem.classList.add("selected");
                     displayValue = menuItem.textContent || "";

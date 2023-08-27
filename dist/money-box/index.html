@@ -694,21 +694,21 @@
 						<div class="tab__money-box-open-accum-form block paper">
 							<div class="block__title"> Открыть накопление </div>
 							<div class="block__content">
-								<form class="open-accum-form" id="openAccumForm">
+								<form class="open-accum-form" id="openAccumForm" data-get-conditions="https://vladisnotlove.github.io/mock-get-api/money-box.json">
 									<div class="open-accum-form__progress-bars">
 										<div class="field">
 											<div class="field__label large">Сумма</div>
 											<div class="field__input">
-												<div class="progress-bar editable" data-min="750" data-max="2500">
+												<div class="progress-bar editable" data-value="1000" data-ticks="[{&#34;value&#34;:750,&#34;percent&#34;:0,&#34;start&#34;:true},{&#34;value&#34;:1250,&#34;percent&#34;:0.5,&#34;end&#34;:true},{&#34;value&#34;:2500,&#34;percent&#34;:1}]" data-unit="USDT">
 													<input class="progress-bar__input" name="sum1" value="1000">
 													<div class="progress-bar__slider tooltiped" data-tooltip-content="1000" data-placement="top"></div>
 													<div class="progress-bar__line">
-														<div class="progress-bar__value" style="width: 14.285714285714285%">
+														<div class="progress-bar__value" style="width: 100%">
 														</div>
 													</div>
 													<div class="progress-bar__labels">
 														<div class="progress-bar__label"> 750 USDT </div>
-														<div class="progress-bar__label"> 1625 USDT </div>
+														<div class="progress-bar__label"> 1250 USDT </div>
 														<div class="progress-bar__label"> 2500 USDT </div>
 													</div>
 												</div>
@@ -717,16 +717,16 @@
 										<div class="field">
 											<div class="field__label large">Срок</div>
 											<div class="field__input">
-												<div class="progress-bar editable" data-min="360" data-max="0">
+												<div class="progress-bar editable" data-value="200" data-ticks="[{&#34;value&#34;:360,&#34;percent&#34;:0,&#34;start&#34;:true},{&#34;value&#34;:110,&#34;percent&#34;:0.69,&#34;end&#34;:true},{&#34;value&#34;:0,&#34;percent&#34;:1}]" data-unit="дней">
 													<input class="progress-bar__input" name="days" value="200">
 													<div class="progress-bar__slider tooltiped" data-tooltip-content="200" data-placement="top"></div>
 													<div class="progress-bar__line">
-														<div class="progress-bar__value" style="width: 44.44444444444444%">
+														<div class="progress-bar__value" style="width: 100%">
 														</div>
 													</div>
 													<div class="progress-bar__labels">
 														<div class="progress-bar__label"> 360 дней </div>
-														<div class="progress-bar__label real-position" data-value="110"> 110 дней </div>
+														<div class="progress-bar__label"> 110 дней </div>
 														<div class="progress-bar__label"> 0 дней </div>
 													</div>
 												</div>
@@ -767,7 +767,7 @@
 									</div>
 									<div class="open-accum-form__row2">
 										<div class="field">
-											<div class="field__label">Мой текущий статус</div>
+											<div class="field__label">Введите сумму</div>
 											<div class="field__input">
 												<div class="input">
 													<input class="input-url-sync" data-url-sync-disabled name="sum2" type="text" placeholder="100 USDT">
@@ -881,7 +881,7 @@
 										</svg> Upgrate
 									</div>
 								</div>
-								<div class="accum-award__timer timer" data-timer-finish-date="Fri Apr 14 2023 12:12:12 GMT+0300 (Москва, стандартное время)">
+								<div class="accum-award__timer timer" data-timer-finish-date="Fri Apr 14 2023 12:12:12 GMT+0300 (GMT+03:00)">
 									<div class="timer__unit">
 										<div class="timer__unit-value" data-timer-days> 00 </div>
 										<div class="timer__unit-label">дней</div>
@@ -1056,7 +1056,7 @@
 									</div>
 									<div class="my-accum__upgrade-section">
 										<button class="button contained disabled full-width"> Upgrade </button>
-										<div class="my-accum__upgrade-timer timer" data-timer-finish-date="Sun Apr 09 2023 12:12:12 GMT+0300 (Москва, стандартное время)" data-timer-format="ddд : hhч : mmм : ssс">
+										<div class="my-accum__upgrade-timer timer" data-timer-finish-date="Sun Apr 09 2023 12:12:12 GMT+0300 (GMT+03:00)" data-timer-format="ddд : hhч : mmм : ssс">
 										</div>
 									</div>
 								</div>
